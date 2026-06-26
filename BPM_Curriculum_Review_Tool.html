@@ -188,7 +188,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 /* Drag-mode name picker bar */
 .drag-mode-bar{background:#fffbe6;border:2px solid #f5c518;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:none;align-items:center;gap:12px;flex-wrap:wrap;}
 .drag-mode-bar.active{display:flex;}
-.drag-mode-hint{font-size:11px;color:#7a5500;font-weight:600;}
+.drag-mode-hint{font-size:13px;color:#7a5500;font-weight:400;}
 .drag-mode-pending{display:none;background:#fff8dc;border:1px solid #f5c518;border-radius:6px;padding:8px 12px;margin-bottom:10px;font-size:11px;}
 .drag-mode-pending.show{display:block;}
 
@@ -247,9 +247,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 .scenario-sidebar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;position:sticky;top:108px;}
 .scenario-sidebar h3{font-size:13px;font-weight:700;margin-bottom:12px;}
 .scenario-unit-list{display:flex;flex-direction:column;gap:5px;max-height:65vh;overflow-y:auto;padding-right:3px;}
-.scenario-unit-item{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:5px;border:1px solid var(--border);background:var(--bg);cursor:pointer;font-size:11px;transition:background .15s;}
-.scenario-unit-item:hover{background:#fde0d6;}
-.scenario-unit-item.removed-item{background:#fffc19;border-color:#b8b800;color:#3a3a00;}
+.scenario-unit-item{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:5px;border:1.5px solid;background:var(--bg);cursor:pointer;font-size:11px;transition:all .12s;user-select:none;}
+.scenario-unit-item:hover{filter:brightness(.96);}
+.scenario-unit-item.selected{outline:2.5px solid var(--usyd-red);outline-offset:1px;box-shadow:0 0 0 3px rgba(230,70,38,.15);}
+.scenario-unit-item.removed-item{background:#f0f0f0 !important;border-color:#bbb !important;opacity:.5;}
 .scenario-unit-item input[type=checkbox]{accent-color:var(--usyd-red);flex-shrink:0;}
 .scenario-unit-code{font-family:var(--font-mono);font-size:9px;color:var(--unit-code-color);width:68px;flex-shrink:0;}
 .scenario-unit-name{flex:1;}
@@ -294,6 +295,61 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:#e0c4b8;border-radius:3px;}
+
+/* ── Degree Planner ── */
+.dp-table{border-collapse:separate;border-spacing:5px;width:100%;table-layout:fixed;}
+.dp-sem-header{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--text);padding:4px 0 5px;text-align:center;}
+.dp-year-label{font-size:10px;font-weight:700;color:var(--text-muted);text-align:right;padding-right:8px;vertical-align:middle;white-space:nowrap;width:44px;}
+.dp-cell{vertical-align:top;padding:2px;width:11%;}
+.dp-spacer-col{width:14px;}
+.dp-unit{
+  border-radius:6px;border:2px solid;padding:5px 6px;
+  width:100%;height:72px;
+  display:flex;flex-direction:column;position:relative;
+  overflow:hidden;box-sizing:border-box;
+}
+.dp-unit.core{background:var(--core-bg);border-color:var(--core-border);}
+.dp-unit.elective{background:var(--elective-bg);border-color:var(--elective-border);}
+/* Major types */
+.dp-unit.major-construction{background:#fff4e6;border-color:#f58509;}
+.dp-unit.major-construction-core{background:var(--core-bg);border-color:#f58509 !important;border-width:2.5px !important;}
+.dp-unit.major-built-env{background:#c8b6fe;border-color:#6739b3;}
+.dp-unit.major-built-env-core{background:var(--core-bg);border-color:#6739b3 !important;border-width:2.5px !important;}
+.dp-unit.major-tables{background:#fffc19;border-color:#b8b800;}
+.dp-unit.removed{background:#f0f0f0 !important;border:2px dashed #bbb !important;opacity:.45;}
+.dp-unit.merged-result{background:#e8f4ff;border-color:#0875a8;border-style:dashed;}
+.dp-unit.merged-source{opacity:.35;}
+.dp-unit-code{font-family:var(--font-mono);font-size:8px;font-weight:600;color:var(--unit-code-color);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dp-unit-name{font-size:8.5px;font-weight:500;line-height:1.3;color:var(--text);overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;}
+.dp-unit.removed .dp-unit-code,.dp-unit.removed .dp-unit-name{color:#bbb;}
+.dp-merge-dot{
+  position:absolute;top:-5px;right:-5px;width:12px;height:12px;border-radius:50%;
+  background:#f58509;border:2px solid white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:6px;color:white;font-weight:700;line-height:1;
+}
+.dp-empty{
+  border-radius:6px;background:rgba(0,0,0,.025);border:1.5px dashed #ddd;
+  width:100%;height:72px;display:flex;align-items:center;justify-content:center;
+  box-sizing:border-box;
+}
+.dp-empty-label{font-size:8px;color:#ccc;text-transform:uppercase;letter-spacing:.05em;text-align:center;padding:3px;}
+
+/* ── Elective Bank ── */
+.dp-layout{display:flex;flex-direction:column;gap:14px;}
+.eb-panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.eb-header{background:transparent;border-bottom:1px solid var(--border);padding:7px 10px;}
+.eb-title{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;}
+.eb-list{display:flex;flex-wrap:wrap;gap:6px;padding:8px;}
+.eb-unit{border-radius:5px;border:1.5px solid var(--elective-border);background:var(--elective-bg);padding:5px 8px;position:relative;width:180px;flex:0 0 180px;transition:all .2s;}
+.eb-unit.removed{background:#f0f0f0 !important;border:1.5px dashed #bbb !important;opacity:.45;}
+.eb-unit.merged-source{opacity:.35;}
+.eb-unit.merged-result{background:#e8f4ff !important;border-color:#0875a8 !important;border-style:dashed !important;}
+.eb-unit-code{font-family:var(--font-mono);font-size:8px;font-weight:600;color:var(--unit-code-color);}
+.eb-unit-name{font-size:9px;font-weight:500;line-height:1.3;color:var(--text);margin-top:1px;}
+.eb-unit-sem{font-size:8px;color:var(--text-muted);margin-top:2px;}
+.eb-unit.removed .eb-unit-name,.eb-unit.removed .eb-unit-code{color:#bbb;text-decoration:line-through;}
+.eb-merge-dot{position:absolute;top:-4px;right:-4px;width:11px;height:11px;border-radius:50%;background:#f58509;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:6px;color:white;font-weight:700;}
 </style>
 </head>
 <body>
@@ -314,7 +370,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
       <div class="header-subtitle">Bachelor of Project Management · Knowledge Hub Mapping</div>
     </div>
   </div>
-  <div class="header-badge">2026 Review</div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+    <div class="header-badge">2026 Review</div>
+    <div id="live-clock" style="font-size:9px;color:rgba(255,255,255,1);letter-spacing:.04em;white-space:nowrap;"></div>
+  </div>
 </div>
 
 <div class="tabs">
@@ -348,27 +407,47 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 
   <!-- Combined control bar -->
   <div class="control-bar" id="main-control-bar">
-    <span class="ctrl-label">Filter:</span>
-    <label class="swatch-check"><input type="checkbox" id="f-core" checked onchange="applyFilters()"><span class="swatch" style="background:var(--core-bg);border:1.5px solid var(--core-border);"></span> Core</label>
-    <label class="swatch-check"><input type="checkbox" id="f-elective" checked onchange="applyFilters()"><span class="swatch" style="background:var(--elective-bg);border:1.5px solid var(--elective-border);"></span> Elective</label>
-    <label class="swatch-check"><input type="checkbox" id="f-rested" checked onchange="applyFilters()"><span class="swatch" style="background:var(--rested-bg);border:1.5px dashed var(--rested-border);"></span> Rested</label>
+    <div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);">Collection</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <label class="swatch-check"><input type="checkbox" id="f-core" checked onchange="applyFilters()"><span class="swatch" style="background:var(--core-bg);border:1.5px solid var(--core-border);"></span> Core</label>
+        <label class="swatch-check"><input type="checkbox" id="f-elective" checked onchange="applyFilters()"><span class="swatch" style="background:var(--elective-bg);border:1.5px solid var(--elective-border);"></span> Elective</label>
+      </div>
+    </div>
     <div class="ctrl-sep"></div>
-    <label class="fcheck"><input type="checkbox" id="f-s1" checked onchange="applyFilters()"> S1</label>
-    <label class="fcheck"><input type="checkbox" id="f-s2" checked onchange="applyFilters()"> S2</label>
+    <div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);">Availability</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <label class="fcheck"><input type="checkbox" id="f-s1" checked onchange="applyFilters()"> S1</label>
+        <label class="fcheck"><input type="checkbox" id="f-s2" checked onchange="applyFilters()"> S2</label>
+        <label class="swatch-check"><input type="checkbox" id="f-rested" checked onchange="applyFilters()"><span class="swatch" style="background:var(--rested-bg);border:1.5px dashed var(--rested-border);"></span> Rested</label>
+      </div>
+    </div>
     <div class="ctrl-sep"></div>
-    <label class="fcheck"><input type="checkbox" id="f-l1000" checked onchange="applyFilters()"> 1000</label>
-    <label class="fcheck"><input type="checkbox" id="f-l2000" checked onchange="applyFilters()"> 2000</label>
-    <label class="fcheck"><input type="checkbox" id="f-l3000" checked onchange="applyFilters()"> 3000</label>
+    <div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);">Unit Level</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <label class="fcheck"><input type="checkbox" id="f-l1000" checked onchange="applyFilters()"> 1000</label>
+        <label class="fcheck"><input type="checkbox" id="f-l2000" checked onchange="applyFilters()"> 2000</label>
+        <label class="fcheck"><input type="checkbox" id="f-l3000" checked onchange="applyFilters()"> 3000</label>
+      </div>
+    </div>
     <div class="ctrl-sep"></div>
-    <span class="ctrl-label">PLO:</span>
-    <div style="display:flex;gap:4px;flex-wrap:wrap;" id="plo-filter-checkboxes"></div>
+    <div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);">Assessment Types</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <label class="swatch-check"><input type="checkbox" id="f-open" checked onchange="applyFilters()"><div class="plo-pip hit" style="width:15px;height:15px;font-size:7px;flex-shrink:0;">●</div> Open</label>
+        <label class="swatch-check"><input type="checkbox" id="f-secured" checked onchange="applyFilters()"><div class="plo-pip secured" style="width:15px;height:15px;font-size:7px;flex-shrink:0;">●</div> Secured</label>
+      </div>
+    </div>
     <div class="ctrl-sep"></div>
-    <span class="ctrl-label">Assessment / PLO pips:</span>
-    <label class="swatch-check"><input type="checkbox" id="f-open" checked onchange="applyFilters()"><div class="plo-pip hit" style="width:15px;height:15px;font-size:7px;flex-shrink:0;">●</div> Open</label>
-    <label class="swatch-check"><input type="checkbox" id="f-secured" checked onchange="applyFilters()"><div class="plo-pip secured" style="width:15px;height:15px;font-size:7px;flex-shrink:0;">●</div> Secured</label>
+    <div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);">Program Learning Outcomes</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;" id="plo-filter-checkboxes"></div>
+    </div>
     <div class="ctrl-sep"></div>
-    <div class="plo-legend-item"><div style="width:13px;height:13px;border-radius:3px;background:gold;border:2px solid goldenrod;"></div> Hub move proposed</div>
-    <div style="margin-left:auto;display:flex;gap:6px;align-items:center;">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <div class="plo-legend-item"><div style="width:13px;height:13px;border-radius:3px;background:gold;border:2px solid goldenrod;"></div> Hub move proposed</div>
       <button class="btn btn-ghost" onclick="clearFilters()" style="font-size:10px;padding:3px 7px;">✕ Clear</button>
     </div>
   </div>
@@ -378,7 +457,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
     <span style="font-size:16px;">✏️</span>
     <div>
       <div class="drag-mode-hint">Proposal mode active — drag any unit card into a different bucket</div>
-      <div style="font-size:10px;color:#7a5500;margin-top:2px;">Select your name, then drag a unit card into a new bucket. Click "Done" when finished.</div>
+      <div style="font-size:12px;color:#7a5500;margin-top:2px;">Select your name, then drag a unit card into a new bucket. Click "Done" when finished.</div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
       <label style="font-size:11px;font-weight:600;">Your name:</label>
@@ -440,10 +519,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
   <div class="section-sub">Propose curriculum changes and see their impact on PLO coverage</div>
   <div class="scenario-layout">
     <div class="scenario-sidebar">
-      <h3>🔧 Propose Changes</h3>
-      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Uncheck units to simulate removal. Highlighted in yellow = removed from scenario.</div>
-      <div class="scenario-unit-list" id="scenario-checklist"></div>
-      <div style="margin-top:10px;">
+      <h3 style="font-weight:400;font-size:16px;">🔧 Propose Changes</h3>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Click units to select/deselect. Click multiple to build a selection.</div>
+
+      <!-- Add unit form — always at top -->
+      <div style="margin-bottom:10px;">
         <button class="btn btn-secondary btn-full" onclick="toggleAddForm()" style="font-size:11px;">+ Add a hypothetical unit</button>
         <div class="add-unit-form" id="add-unit-form">
           <div style="font-size:11px;font-weight:700;margin-bottom:7px;color:#1E8449;">New / Proposed Unit</div>
@@ -462,6 +542,18 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
           </div>
         </div>
       </div>
+
+      <!-- Action bar — always visible -->
+      <div style="background:#f7f8fa;border:1px solid var(--border);border-radius:6px;padding:7px 10px;margin-bottom:8px;">
+        <div id="scenario-selection-label" style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;">No units selected</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn btn-secondary" id="btn-remove-selected" style="font-size:11px;color:#c0392b;border-color:#f1948a;" onclick="removeSelected()">🗑 Delete unit(s)</button>
+          <button class="btn btn-secondary" id="btn-merge-selected" style="font-size:11px;display:none;" onclick="mergeSelected()">⊕ Merge selected</button>
+        </div>
+      </div>
+
+      <div class="scenario-unit-list" id="scenario-checklist"></div>
+
       <div class="scenario-actions">
         <button class="btn btn-secondary btn-full" onclick="resetScenario()">↺ Reset to current state</button>
         <button class="btn btn-primary btn-full" onclick="exportSnapshot()">📷 Save snapshot as image</button>
@@ -469,7 +561,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
     </div>
     <div class="scenario-main">
       <div class="scenario-summary">
-        <h3>Impact Summary</h3>
+        <h3 style="font-weight:400;font-size:16px;">Impact Summary</h3>
         <div class="impact-grid">
           <div class="impact-stat"><div class="impact-num" id="stat-total">—</div><div class="impact-label">Units in scenario</div></div>
           <div class="impact-stat"><div class="impact-num" id="stat-core">—</div><div class="impact-label">Core units</div></div>
@@ -478,7 +570,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
         </div>
       </div>
       <div class="scenario-summary" id="scenario-plo-section">
-        <h3>PLO Coverage Comparison</h3>
+        <h3 style="font-weight:400;font-size:16px;">PLO Coverage Comparison</h3>
         <div style="display:flex;gap:14px;margin-bottom:12px;font-size:11px;flex-wrap:wrap;">
           <div style="display:flex;align-items:center;gap:5px;"><div style="width:40px;height:10px;border-radius:3px;background:linear-gradient(to right,#ef4444,#fb923c,#fde68a,#86efac,#22c55e);"></div> Current (heat gradient)</div>
           <div style="display:flex;align-items:center;gap:5px;"><div style="width:40px;height:10px;border-radius:3px;background:linear-gradient(to right,#ef4444,#fb923c,#fde68a,#86efac,#22c55e);opacity:.5;border:1px dashed #999;"></div> Proposed (same scale, dashed if worse)</div>
@@ -490,11 +582,131 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
         <img id="snapshot-img" style="max-width:100%;border-radius:5px;border:1px solid var(--border);" />
         <div style="margin-top:9px;"><a id="snapshot-link" download="BPM_Curriculum_Scenario.png" class="btn btn-primary">⬇ Download image</a></div>
       </div>
+
+      <!-- Degree Planner -->
+      <div class="scenario-summary" id="degree-planner-section">
+        <h3 style="font-weight:400;font-size:16px;">Degree Planner</h3>
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">
+          Shows how proposed changes affect the degree layout and progression. Removed units are greyed out; merged units show a link indicator.
+        </div>
+        <!-- Legend + major selector -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+          <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;align-items:center;">
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:var(--core-bg);border:2px solid var(--core-border);"></div> Core</div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:var(--elective-bg);border:2px solid var(--elective-border);"></div> Elective</div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:#fff4e6;border:2px solid #f58509;"></div> Construction Major</div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:var(--core-bg);border:2.5px solid #f58509;"></div> Construction Major + Core</div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:#c8b6fe;border:2px solid #6739b3;"></div> Built Environment Major</div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:var(--core-bg);border:2.5px solid #6739b3;"></div> Built Environment Major + Core</div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:#fffc19;border:2px solid #b8b800;"></div> Table S Major</div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:#f0f0f0;border:2px dashed #aaa;"></div> Removed</div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:14px;border-radius:3px;background:#e8f4ff;border:2px solid #0875a8;border-style:dashed;"></div> Merged</div>
+          </div>
+          <!-- Major selector -->
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <label style="font-size:11px;font-weight:600;color:var(--text-muted);white-space:nowrap;">Major stream:</label>
+            <select id="major-selector" onchange="renderDegreePlanner()" style="padding:4px 8px;border:1px solid var(--border);border-radius:5px;font-size:11px;background:white;cursor:pointer;">
+              <option value="construction">Construction</option>
+              <option value="built-env">Built Environment</option>
+              <option value="tables">Table S</option>
+            </select>
+          </div>
+        </div>
+        <div id="degree-planner-grid" style="overflow-x:auto;">
+          <!-- rendered by JS -->
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 </div><!-- .main -->
+<!-- MERGE MODAL -->
+<div class="modal-overlay" id="merge-modal">
+  <div class="modal" style="width:620px;max-width:96vw;">
+    <h3>⊕ Merge Two Units</h3>
+    <div class="modal-sub">Select two units to merge. The combined PLOs will be pre-filled — you can edit them before creating the merged unit.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+      <div class="modal-field" style="margin-bottom:0;">
+        <label>Unit A</label>
+        <select id="merge-unit-a" onchange="updateMergePreview()">
+          <option value="">— Select unit —</option>
+        </select>
+      </div>
+      <div class="modal-field" style="margin-bottom:0;">
+        <label>Unit B</label>
+        <select id="merge-unit-b" onchange="updateMergePreview()">
+          <option value="">— Select unit —</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PLO comparison -->
+    <div id="merge-plo-preview" style="display:none;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:8px;">PLO Coverage Preview</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+        <div>
+          <div style="font-size:10px;font-weight:600;color:var(--text-muted);margin-bottom:5px;" id="merge-label-a">Unit A PLOs</div>
+          <div id="merge-plos-a" style="display:flex;gap:2px;flex-wrap:wrap;"></div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:600;color:var(--text-muted);margin-bottom:5px;" id="merge-label-b">Unit B PLOs</div>
+          <div id="merge-plos-b" style="display:flex;gap:2px;flex-wrap:wrap;"></div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:600;color:#1E8449;margin-bottom:5px;">Combined PLOs (editable)</div>
+          <div id="merge-plos-combined" style="display:flex;gap:2px;flex-wrap:wrap;"></div>
+        </div>
+      </div>
+
+      <!-- Edit combined PLOs -->
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:6px;">Edit Combined PLOs</div>
+      <div id="merge-plo-checkboxes" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;"></div>
+
+      <!-- New unit details -->
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:8px;">Merged Unit Details</div>
+      <div class="form-grid">
+        <div class="form-field form-full">
+          <label>New Unit Name</label>
+          <input type="text" id="merge-new-name" placeholder="e.g. Project Planning and Controls">
+        </div>
+        <div class="form-field">
+          <label>New Unit Code</label>
+          <input type="text" id="merge-new-code" placeholder="e.g. PMGT2860">
+        </div>
+        <div class="form-field">
+          <label>Type</label>
+          <select id="merge-new-type"><option value="core">Core</option><option value="elective">Elective</option></select>
+        </div>
+        <div class="form-field">
+          <label>Level</label>
+          <select id="merge-new-level"><option value="1000">1000</option><option value="2000">2000</option><option value="3000" selected>3000</option></select>
+        </div>
+        <div class="form-field">
+          <label>Semester</label>
+          <select id="merge-new-sem"><option value="S1">S1</option><option value="S2">S2</option><option value="S1&S2">S1 &amp; S2</option></select>
+        </div>
+        <div class="form-field form-full">
+          <label>Hub</label>
+          <select id="merge-new-hub">
+            <option value="0">Project Foundations, Planning &amp; Controls</option>
+            <option value="1">Leadership, Stakeholders &amp; Governance</option>
+            <option value="2">Finance, Procurement, Risk &amp; Analytics</option>
+            <option value="3">Innovation &amp; Sustainability</option>
+            <option value="4">Professional Practice &amp; Capstone</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="confirmMerge()">⊕ Create merged unit</button>
+      <button class="btn btn-secondary" onclick="closeMergeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div class="banner" id="banner"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -553,8 +765,8 @@ const HUBS = [
 const ACADEMICS = [
   "Ken","Xinyue","Nader","Shahadat","Hoonyong",
   "Jin","Sujuan","Oliver","Jeffrey","Petr",
-  "Carolina","Louis","Stewart","Selina","Gerard",
-  "Natalie","Karyne","Carla","Stephanie","Steven","Dean","Courtney"
+  "Carolina","Louis","Stewart","Selina",
+  "Carla","Stephanie","Steven","Dean","Courtney"
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -569,90 +781,64 @@ const ACADEMICS = [
 // ═══════════════════════════════════════════════════════════════════════════
 
 // ── ADMINISTRATOR: fill these three values in before hosting ──────────────
-const GH_OWNER  = 'usydsopm';
-const GH_REPO   = 'knowledge-hubs';
-const GH_TOKEN  = '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';
-const GH_PATH   = 'proposals.json';
+const GH_OWNER  = '';          // e.g. 'usyd-pm'
+const GH_REPO   = '';          // e.g. 'bpm-curriculum'
+// ═══════════════════════════════════════════════════════════════════════════
+//  CLOUDFLARE WORKER PROXY SYNC
+//  The token never lives in this file — it's stored as a secret in the Worker.
+//  ── ADMINISTRATOR: paste your Worker URL below after deploying ────────────
+const WORKER_URL = '';  // e.g. 'https://bpm-proposals.YOUR-SUBDOMAIN.workers.dev'
 // ─────────────────────────────────────────────────────────────────────────
 
-let ghOwner  = localStorage.getItem('bpm_gh_owner')  || GH_OWNER;
-let ghRepo   = localStorage.getItem('bpm_gh_repo')   || GH_REPO;
-let ghToken  = localStorage.getItem('bpm_gh_token')  || GH_TOKEN;
-let ghFileSha = '';           // SHA of the current proposals.json (needed for PUT)
+let ghFileSha = '';
 let serverConnected = false;
 
-function ghHeaders() {
-  return {
-    'Accept':        'application/vnd.github+json',
-    'Authorization': 'Bearer ' + ghToken,
-    'X-GitHub-Api-Version': '2022-11-28'
-  };
-}
-function ghUrl() {
-  return `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${GH_PATH}`;
-}
-
 function setServerStatus(state, msg) {
-  // UI panel removed — log to console only
-  if (msg) console.log('[GitHub sync]', state, msg);
-  document.getElementById('server-sync-btn') && (document.getElementById('server-sync-btn').style.display = serverConnected ? 'block' : 'none');
-}
-
-async function connectGitHub() {
-  // UI form removed — credentials are baked in via GH_OWNER/GH_REPO/GH_TOKEN constants
-  await syncFromServer();
+  if (msg) console.log('[Worker sync]', state, msg);
 }
 
 async function syncFromServer() {
-  if (!ghOwner || !ghRepo || !ghToken) return;
+  if (!WORKER_URL) return;
   try {
-    const r = await fetch(ghUrl(), { headers: ghHeaders() });
-    if (r.status === 404) {
-      // File doesn't exist yet — treat as empty, will create on first save
-      proposals = [];
-      ghFileSha = '';
-      serverConnected = true;
-      setServerStatus('ok', 'Connected — no proposals yet (file will be created on first save).');
-      renderHubMap();
-      return;
-    }
+    const r = await fetch(WORKER_URL, { method: 'GET' });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
-    ghFileSha = data.sha;
-    const decoded = atob(data.content.replace(/\n/g, ''));
+    ghFileSha = data.sha || '';
+    const decoded = atob((data.content || btoa('[]')).replace(/\n/g, ''));
     proposals = JSON.parse(decoded) || [];
     serverConnected = true;
-    setServerStatus('ok', `Connected — ${proposals.length} proposal(s) loaded.`);
+    setServerStatus('ok', `Loaded ${proposals.length} proposal(s).`);
     renderHubMap();
-    showBanner('Synced from GitHub.');
+    if (proposals.length) showBanner(`Loaded ${proposals.length} proposal(s) from server.`);
   } catch(e) {
     serverConnected = false;
-    setServerStatus('err', 'Could not connect: ' + e.message);
+    setServerStatus('err', 'Could not sync: ' + e.message);
+    console.warn('Worker sync failed — running from local storage only.', e);
   }
 }
 
 async function pushToServer() {
   saveLocal();
-  if (!serverConnected || !ghOwner || !ghRepo || !ghToken) return;
+  if (!WORKER_URL || !serverConnected) return;
   try {
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(proposals, null, 2))));
-    const body = {
-      message: `Update proposals [${new Date().toISOString()}]`,
-      content,
-      ...(ghFileSha ? { sha: ghFileSha } : {})
-    };
-    const r = await fetch(ghUrl(), {
+    const r = await fetch(WORKER_URL, {
       method: 'PUT',
-      headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content, sha: ghFileSha })
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
-    ghFileSha = data.content.sha;   // update SHA for next write
-    setServerStatus('ok', `Saved — ${proposals.length} proposal(s).`);
+    ghFileSha = data.sha || ghFileSha;
+    setServerStatus('ok', `Saved ${proposals.length} proposal(s).`);
   } catch(e) {
-    showBanner('GitHub save failed — saved locally. Error: ' + e.message);
+    showBanner('Server save failed — saved locally only.');
+    console.warn('Worker push failed:', e);
   }
+}
+
+async function connectGitHub() {
+  await syncFromServer();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -668,8 +854,8 @@ function loadLocal() {
 }
 loadLocal();
 
-// Auto-connect on load if credentials are baked in
-if (ghOwner && ghRepo && ghToken) {
+// Auto-connect on load if Worker URL is configured
+if (WORKER_URL) {
   syncFromServer();
 }
 
@@ -815,11 +1001,13 @@ let filterL1000=true, filterL2000=true, filterL3000=true;
 let filterPLOs = new Set();
 
 function unitPassesFilter(unit) {
+  // Rested units: show if filterRested is on, regardless of core/elective filter
+  if (unit.rested) return filterRested;
+  if (!filterCore && unit.type==='core') return false;
+  if (!filterElective && unit.type==='elective') return false;
   if (!filterL1000 && unit.level===1000) return false;
   if (!filterL2000 && unit.level===2000) return false;
   if (!filterL3000 && unit.level===3000) return false;
-  if (!filterElective && unit.type==='elective') return false;
-  if (!filterRested && unit.rested) return false;
   const inS1 = unit.sem==='S1'||unit.sem==='S1&S2';
   const inS2 = unit.sem==='S2'||unit.sem==='S1&S2';
   if (!filterS1 && inS1 && !inS2) return false;
@@ -1212,27 +1400,131 @@ function renderPLOCoverage() {
 //  SCENARIO
 // ═══════════════════════════════════════════════════════════════════════════
 
-let scenarioRemovedCodes=new Set(), proposedUnits=[];
+let scenarioRemovedCodes=new Set(), proposedUnits=[], mergedUnits=[];
 
-function getActiveUnits(){return [...UNITS.filter(u=>!scenarioRemovedCodes.has(u.code)),...proposedUnits];}
+function getActiveUnits(){
+  // Exclude units that were consumed by a merge
+  const mergedSources=new Set(mergedUnits.flatMap(m=>[m.sourceA,m.sourceB]));
+  const base=UNITS.filter(u=>!scenarioRemovedCodes.has(u.code)&&!mergedSources.has(u.code));
+  return [...base,...proposedUnits,...mergedUnits.map(m=>m.merged)];
+}
 
-function renderScenario(){renderChecklist();updateScenarioStats();renderScenarioPLOCompare();}
+function renderScenario(){renderChecklist();updateScenarioStats();renderScenarioPLOCompare();renderDegreePlanner();}
+
+let selectedCodes = new Set();
 
 function renderChecklist(){
-  document.getElementById('scenario-checklist').innerHTML=[...UNITS,...proposedUnits].map(u=>{
-    const checked=!scenarioRemovedCodes.has(u.code);
-    return `<label class="scenario-unit-item ${!checked?'removed-item':''}">
-      <input type="checkbox" ${checked?'checked':''} onchange="toggleUnit('${u.code}')">
-      <span class="scenario-unit-code">${u.code}</span>
-      <span class="scenario-unit-name">${u.name}${u.proposed?' <em style="color:#27AE60;font-size:9px;">(proposed)</em>':''}</span>
-    </label>`;
+  const allUnits=[...UNITS,...proposedUnits];
+  document.getElementById('scenario-checklist').innerHTML = allUnits.map(u=>{
+    const isRemoved = scenarioRemovedCodes.has(u.code);
+    const isSelected = selectedCodes.has(u.code);
+    const isMerged = mergedUnits.some(m=>m.sourceA===u.code||m.sourceB===u.code);
+
+    const typeStyle = u.type==='core'
+      ? 'background:var(--core-bg);border-color:var(--core-border);'
+      : 'background:var(--elective-bg);border-color:var(--elective-border);';
+    const removedStyle = isRemoved ? 'background:#f0f0f0 !important;border-color:#bbb !important;opacity:.5;' : '';
+    const mergedStyle = isMerged ? 'opacity:.4;' : '';
+    const selectedClass = isSelected ? 'selected' : '';
+
+    const typeBadge = u.type==='core'
+      ? '<span class="badge badge-core" style="font-size:8px;">Core</span>'
+      : '<span class="badge badge-elective" style="font-size:8px;">Elective</span>';
+    const lvlBadge = `<span class="badge badge-level" style="font-size:8px;">${u.level}</span>`;
+    const semBadge = u.sem==='S1' ? '<span class="badge badge-s1" style="font-size:8px;">S1</span>'
+      : u.sem==='S2' ? '<span class="badge badge-s2" style="font-size:8px;">S2</span>'
+      : '<span class="badge badge-both" style="font-size:8px;">S1&S2</span>';
+    const proposedTag = u.proposed ? ' <em style="color:#27AE60;font-size:9px;">(new)</em>' : '';
+    const mergedTag = isMerged ? ' <em style="color:#999;font-size:9px;">(merged)</em>' : '';
+
+    return `<div class="scenario-unit-item ${selectedClass}"
+      style="${removedStyle || typeStyle}${mergedStyle}"
+      onclick="selectUnit(event,'${u.code}','${u.proposed?'proposed':'existing'}')"
+      title="${isRemoved?'Removed from scenario — click to restore':'Click to select, Ctrl+click to multi-select'}">
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:var(--font-mono);font-size:9px;color:var(--unit-code-color);margin-bottom:1px;">${u.code}</div>
+        <div style="font-size:11px;font-weight:500;line-height:1.3;">${u.name}${proposedTag}${mergedTag}</div>
+      </div>
+      <div style="display:flex;gap:2px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">${typeBadge}${lvlBadge}${semBadge}</div>
+    </div>`;
   }).join('');
+  updateActionBar();
 }
 
-function toggleUnit(code){
-  if(scenarioRemovedCodes.has(code))scenarioRemovedCodes.delete(code);else scenarioRemovedCodes.add(code);
-  renderChecklist();updateScenarioStats();renderScenarioPLOCompare();
+function selectUnit(event, code, kind) {
+  // Simple toggle — click adds/removes from selection, no Ctrl needed
+  if (selectedCodes.has(code)) {
+    selectedCodes.delete(code);
+  } else {
+    selectedCodes.add(code);
+  }
+  renderChecklist();
 }
+
+function updateActionBar() {
+  const label = document.getElementById('scenario-selection-label');
+  const deleteBtn = document.getElementById('btn-remove-selected');
+  const mergeBtn = document.getElementById('btn-merge-selected');
+  const n = selectedCodes.size;
+
+  if (n === 0) {
+    label.textContent = 'No units selected';
+    deleteBtn.textContent = '🗑 Delete unit(s)';
+    deleteBtn.style.color = '#c0392b';
+    deleteBtn.style.borderColor = '#f1948a';
+    mergeBtn.style.display = 'none';
+    return;
+  }
+
+  // Check if ALL selected are already removed → show Restore
+  const allRemoved = [...selectedCodes].every(c => scenarioRemovedCodes.has(c));
+  const anyRemoved = [...selectedCodes].some(c => scenarioRemovedCodes.has(c));
+
+  label.textContent = `${n} unit${n>1?'s':''} selected`;
+  mergeBtn.style.display = n === 2 && !anyRemoved ? 'inline-flex' : 'none';
+
+  if (allRemoved) {
+    deleteBtn.textContent = '↩ Restore unit(s)';
+    deleteBtn.style.color = '#1E8449';
+    deleteBtn.style.borderColor = '#adf3ab';
+  } else {
+    deleteBtn.textContent = '🗑 Delete unit(s)';
+    deleteBtn.style.color = '#c0392b';
+    deleteBtn.style.borderColor = '#f1948a';
+  }
+}
+
+function removeSelected() {
+  if (selectedCodes.size === 0) { showBanner('Select units first.'); return; }
+  const allRemoved = [...selectedCodes].every(c => scenarioRemovedCodes.has(c));
+  if (allRemoved) {
+    // Restore
+    selectedCodes.forEach(code => scenarioRemovedCodes.delete(code));
+    selectedCodes.clear();
+    renderScenario();
+    showBanner('Unit(s) restored to scenario.');
+  } else {
+    // Delete
+    selectedCodes.forEach(code => scenarioRemovedCodes.add(code));
+    selectedCodes.clear();
+    renderScenario();
+    showBanner('Unit(s) deleted from scenario.');
+  }
+}
+
+function mergeSelected() {
+  const codes = [...selectedCodes];
+  if (codes.length !== 2) { showBanner('Select exactly 2 units to merge.'); return; }
+  // Pre-populate merge modal with the two selected units
+  openMergeModal();
+  setTimeout(()=>{
+    document.getElementById('merge-unit-a').value = codes[0];
+    document.getElementById('merge-unit-b').value = codes[1];
+    updateMergePreview();
+  }, 50);
+  selectedCodes.clear();
+}
+
 
 function updateScenarioStats(){
   const active=getActiveUnits();
@@ -1281,7 +1573,7 @@ function renderScenarioPLOCompare(){
   }).join('');
 }
 
-function resetScenario(){scenarioRemovedCodes.clear();proposedUnits=[];renderScenario();showBanner('Scenario reset.');}
+function resetScenario(){scenarioRemovedCodes.clear();proposedUnits=[];mergedUnits=[];selectedCodes.clear();renderScenario();showBanner('Scenario reset.');}
 
 function toggleAddForm(){
   const f=document.getElementById('add-unit-form');f.classList.toggle('open');
@@ -1330,6 +1622,283 @@ function exportSnapshot(){
 //  UTILS
 // ═══════════════════════════════════════════════════════════════════════════
 
+// ═══════════════════════════════════════════════════════════════════════════
+//  MERGE UNITS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function openMergeModal() {
+  const allUnits=[...UNITS,...proposedUnits];
+  const opts=allUnits.map(u=>`<option value="${u.code}">${u.code} — ${u.name}</option>`).join('');
+  document.getElementById('merge-unit-a').innerHTML='<option value="">— Select unit —</option>'+opts;
+  document.getElementById('merge-unit-b').innerHTML='<option value="">— Select unit —</option>'+opts;
+  document.getElementById('merge-plo-preview').style.display='none';
+  document.getElementById('merge-new-name').value='';
+  document.getElementById('merge-new-code').value='';
+  document.getElementById('merge-modal').classList.add('open');
+}
+
+function closeMergeModal() {
+  document.getElementById('merge-modal').classList.remove('open');
+}
+
+function ploMiniPips(plos, secured) {
+  return plos.map((hit,i)=>{
+    const sec=secured&&secured[i];
+    let cls=hit?(sec?'secured':'hit'):'miss';
+    return `<div class="plo-pip ${cls}" style="width:16px;height:16px;font-size:8px;">${i+1}</div>`;
+  }).join('');
+}
+
+function updateMergePreview() {
+  const codeA=document.getElementById('merge-unit-a').value;
+  const codeB=document.getElementById('merge-unit-b').value;
+  const preview=document.getElementById('merge-plo-preview');
+  if (!codeA||!codeB||codeA===codeB) { preview.style.display='none'; return; }
+
+  const allUnits=[...UNITS,...proposedUnits];
+  const unitA=allUnits.find(u=>u.code===codeA);
+  const unitB=allUnits.find(u=>u.code===codeB);
+  if (!unitA||!unitB) return;
+
+  // Combined = union of both PLOs; secured = union of both secured
+  const combined=unitA.plos.map((p,i)=>p===1||unitB.plos[i]===1?1:0);
+  const combinedSec=unitA.plos.map((_,i)=>(unitA.secured&&unitA.secured[i]===1)||(unitB.secured&&unitB.secured[i]===1)?1:0);
+
+  document.getElementById('merge-label-a').textContent=`${codeA} PLOs`;
+  document.getElementById('merge-label-b').textContent=`${codeB} PLOs`;
+  document.getElementById('merge-plos-a').innerHTML=ploMiniPips(unitA.plos,unitA.secured);
+  document.getElementById('merge-plos-b').innerHTML=ploMiniPips(unitB.plos,unitB.secured);
+  document.getElementById('merge-plos-combined').innerHTML=ploMiniPips(combined,combinedSec);
+
+  // Editable PLO checkboxes
+  document.getElementById('merge-plo-checkboxes').innerHTML=PLOS.map((p,i)=>`
+    <label style="display:flex;align-items:center;gap:4px;font-size:11px;cursor:pointer;">
+      <input type="checkbox" id="mplo-${p.id}" ${combined[i]===1?'checked':''} onchange="refreshMergePips()">
+      PLO${p.id}
+    </label>`).join('');
+
+  // Pre-fill new unit details
+  document.getElementById('merge-new-name').value=`${unitA.name} / ${unitB.name}`;
+  document.getElementById('merge-new-code').value='PMGT-MERGED';
+  document.getElementById('merge-new-level').value=Math.min(unitA.level,unitB.level).toString();
+  document.getElementById('merge-new-type').value=unitA.type==='core'||unitB.type==='core'?'core':'elective';
+
+  preview.style.display='block';
+}
+
+function refreshMergePips() {
+  const plos=PLOS.map(p=>document.getElementById('mplo-'+p.id)?.checked?1:0);
+  document.getElementById('merge-plos-combined').innerHTML=ploMiniPips(plos,plos.map(()=>0));
+}
+
+function confirmMerge() {
+  const codeA=document.getElementById('merge-unit-a').value;
+  const codeB=document.getElementById('merge-unit-b').value;
+  const newName=document.getElementById('merge-new-name').value.trim();
+  const newCode=document.getElementById('merge-new-code').value.trim()||'PMGT-MERGED';
+  if (!codeA||!codeB) { showBanner('Please select both units.'); return; }
+  if (!newName) { showBanner('Please enter a name for the merged unit.'); return; }
+
+  const plos=PLOS.map(p=>document.getElementById('mplo-'+p.id)?.checked?1:0);
+  const merged={
+    code: newCode, name: newName,
+    type: document.getElementById('merge-new-type').value,
+    level: parseInt(document.getElementById('merge-new-level').value),
+    sem: document.getElementById('merge-new-sem').value,
+    hubs: [parseInt(document.getElementById('merge-new-hub').value)],
+    plos, secured: plos.map(()=>0),
+    rested: false, proposed: true,
+    mergedFrom: [codeA, codeB]
+  };
+
+  mergedUnits.push({sourceA:codeA, sourceB:codeB, merged});
+  closeMergeModal();
+  renderScenario();
+  showBanner(`"${newName}" created from merging ${codeA} + ${codeB}.`);
+}
+
+document.getElementById('merge-modal').addEventListener('click',function(e){if(e.target===this)closeMergeModal();});
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  DEGREE PLANNER
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── Degree structures per major (real data) ──
+// Slot types: unit code | 'ELECTIVE' | 'MAJOR_C' | 'MAJOR_BE_<code>' | 'MAJOR_TS_<code>'
+// External major units encoded as MAJOR_BE_DAAE1001 etc so they render with correct colour + name
+const DEGREE_STRUCTURES = {
+  'construction': [
+    { year:1, s1:['PMGT1850','PMGT1860','PMGT1863','MAJOR_C_CIVL1900'], s2:['PMGT1711','PMGT1852','PMGT1865','MAJOR_C_CIVL1810'] },
+    { year:2, s1:['PMGT2711','PMGT2851','ELECTIVE','PMGT2855_C'],        s2:['PMGT2821','PMGT2854','PMGT2822','MAJOR_C_CIVL2812'] },
+    { year:3, s1:['PMGT3858','PMGT3854','ELECTIVE','PMGT3850'],          s2:['ELECTIVE','MAJOR_C_PMGT3623','PMGT3851','MAJOR_C_CIVL3811'] },
+  ],
+  'built-env': [
+    { year:1, s1:['PMGT1850','PMGT1860','PMGT1863','ELECTIVE'],          s2:['PMGT1711','PMGT1852','PMGT1865','MAJOR_BE_DAAE1001'] },
+    { year:2, s1:['PMGT2711','PMGT2851','PMGT2855','MAJOR_BE_BADP2002'], s2:['PMGT2821','PMGT2854','MAJOR_BE_BAEN1001','MAJOR_BE_BADP2005'] },
+    { year:3, s1:['PMGT3858','PMGT3854','ELECTIVE','PMGT3850'],           s2:['PMGT2822','MAJOR_BE_BADP3002','PMGT3851','MAJOR_BE_DESA2011'] },
+  ],
+  'tables': [
+    { year:1, s1:['PMGT1850','PMGT1860','PMGT1863','MAJOR_TS'], s2:['PMGT1711','PMGT1852','PMGT1865','MAJOR_TS'] },
+    { year:2, s1:['PMGT2711','PMGT2851','ELECTIVE','MAJOR_TS'], s2:['PMGT2821','PMGT2854','PMGT2822','MAJOR_TS'] },
+    { year:3, s1:['PMGT3858','PMGT3854','MAJOR_TS','MAJOR_TS'], s2:['ELECTIVE','ELECTIVE','MAJOR_TS','MAJOR_TS'] },
+  ],
+};
+
+// External unit names for major slots (not in BPM UNITS array)
+const EXTERNAL_UNIT_NAMES = {
+  'DAAE1001': 'Living Cities',
+  'BADP2002': 'City Form and Development',
+  'BAEN1001': 'Design in the Built Environment',
+  'BADP2005': 'City Design and Urban Ecology',
+  'BADP3002': 'Property and the Built Environment',
+  'DESA2011': 'Introduction to Building Construction',
+};
+
+function renderDegreePlanner() {
+  const container = document.getElementById('degree-planner-grid');
+  if (!container) return;
+
+  // Read selected major
+  const majorSel = document.getElementById('major-selector');
+  const selectedMajor = majorSel ? majorSel.value : 'construction';
+  const DEGREE_STRUCTURE = DEGREE_STRUCTURES[selectedMajor] || DEGREE_STRUCTURES['construction'];
+
+  const removedSet = scenarioRemovedCodes;
+  const mergedSourceSet = new Set(mergedUnits.flatMap(m=>[m.sourceA, m.sourceB]));
+  const mergedResultCodes = new Set(mergedUnits.map(m=>m.merged.code));
+  const allUnits = [...UNITS, ...proposedUnits, ...mergedUnits.map(m=>m.merged)];
+  const unitMap = {};
+  allUnits.forEach(u => unitMap[u.code] = u);
+  const CORE_MAJOR_C  = new Set(['PMGT3850','PMGT3851']); // Construction capstone
+  const CORE_MAJOR_BE = new Set(['PMGT3850','PMGT3851']); // Built Environment capstone
+
+  // Major slot label/colour helpers
+  const MAJOR_META = {
+    'MAJOR_C':  { bg:'#fff4e6', border:'#f58509', label:'Construction Major', textColor:'#c06000' },
+    'MAJOR_BE': { bg:'#c8b6fe', border:'#6739b3', label:'Built Env. Major',   textColor:'#4a2080' },
+    'MAJOR_TS': { bg:'#fffc19', border:'#b8b800', label:'Table S Major',      textColor:'#6a6000' },
+  };
+
+  function renderSlot(slot) {
+    if (!slot) return `<div class="dp-empty"><div class="dp-empty-label">—</div></div>`;
+
+    // Named external major slots: MAJOR_BE_DAAE1001 etc
+    if (slot.startsWith('MAJOR_BE_') || slot.startsWith('MAJOR_C_') || slot.startsWith('MAJOR_TS_')) {
+      const parts = slot.split('_');
+      // Determine major type from prefix
+      let bg, border, textColor;
+      if (slot.startsWith('MAJOR_BE_')) { bg='#c8b6fe'; border='#6739b3'; textColor='#4a2080'; }
+      else if (slot.startsWith('MAJOR_C_')) { bg='#fff4e6'; border='#f58509'; textColor='#c06000'; }
+      else { bg='#fffc19'; border='#b8b800'; textColor='#6a6000'; }
+      // Extract unit code (everything after last _prefix)
+      const extCode = slot.replace(/^MAJOR_(BE|C|TS)_/, '');
+      const extName = EXTERNAL_UNIT_NAMES[extCode] || extCode;
+      return `<div class="dp-unit" style="background:${bg};border:2px solid ${border};height:72px;">
+        <div class="dp-unit-code" style="color:${textColor};">${extCode}</div>
+        <div class="dp-unit-name">${extName}</div>
+      </div>`;
+    }
+
+    // Generic major placeholder slots (no specific unit)
+    if (MAJOR_META[slot]) {
+      const m = MAJOR_META[slot];
+      return `<div class="dp-empty" style="background:${m.bg};border:2px solid ${m.border};height:72px;border-radius:6px;display:flex;align-items:center;justify-content:center;"><div style="font-size:8.5px;font-weight:700;color:${m.textColor};text-transform:uppercase;letter-spacing:.05em;text-align:center;padding:2px;">${m.label}</div></div>`;
+    }
+    if (slot === 'ELECTIVE') return `<div class="dp-empty" style="background:var(--elective-bg);border:2px dashed var(--elective-border);height:72px;border-radius:6px;display:flex;align-items:center;justify-content:center;"><div style="font-size:8.5px;font-weight:600;color:#0a4f6b;text-transform:uppercase;letter-spacing:.05em;">BPM Elective</div></div>`;
+
+    const u = unitMap[slot];
+    if (!u) return `<div class="dp-empty"><div class="dp-empty-label">${slot}</div></div>`;
+
+    const isRemoved = removedSet.has(u.code) && u.type === 'core';
+    const isMergedSource = mergedSourceSet.has(u.code);
+    const isMergedResult = mergedResultCodes.has(u.code);
+
+    const isCoreMajorC  = CORE_MAJOR_C.has(u.code)  && selectedMajor === 'construction';
+    const isCoreMajorBE = CORE_MAJOR_BE.has(u.code) && selectedMajor === 'built-env';
+
+    let cls = u.type === 'core' ? 'core' : 'elective';
+    if (isCoreMajorC)  cls = 'major-construction-core';
+    if (isCoreMajorBE) cls = 'major-built-env-core';
+    if (isRemoved) cls += ' removed';
+    if (isMergedSource) cls += ' merged-source';
+    if (isMergedResult) cls += ' merged-result';
+
+    const mergeDot = isMergedResult ? `<div class="dp-merge-dot">⊕</div>` : '';
+    const removedLabel = isRemoved ? `<div style="font-size:7px;color:#bbb;font-style:italic;">deleted</div>` : '';
+    const sourceLabel = isMergedSource ? `<div style="font-size:7px;color:#888;font-style:italic;">→ merged</div>` : '';
+
+    return `<div class="dp-unit ${cls}">
+      ${mergeDot}
+      <div class="dp-unit-code">${u.code}</div>
+      <div class="dp-unit-name">${u.name}</div>
+      ${removedLabel}${sourceLabel}
+    </div>`;
+  }
+
+  // ── Degree table ──
+  let tableHtml = `<div style="overflow-x:auto;">
+    <table class="dp-table">
+      <colgroup>
+        <col style="width:44px">
+        <col><col><col><col>
+        <col style="width:14px">
+        <col><col><col><col>
+      </colgroup>
+      <thead>
+        <tr>
+          <td></td>
+          <td colspan="4" class="dp-sem-header">Semester 1</td>
+          <td style="width:14px;"></td>
+          <td colspan="4" class="dp-sem-header">Semester 2</td>
+        </tr>
+      </thead>
+      <tbody>`;
+
+  DEGREE_STRUCTURE.forEach(row => {
+    tableHtml += `<tr>
+      <td class="dp-year-label">Year ${row.year}</td>
+      ${row.s1.map(slot => `<td class="dp-cell">${renderSlot(slot)}</td>`).join('')}
+      <td style="width:14px;"></td>
+      ${row.s2.map(slot => `<td class="dp-cell">${renderSlot(slot)}</td>`).join('')}
+    </tr>`;
+  });
+  tableHtml += `</tbody></table></div>`;
+
+  // ── Elective bank ──
+  const electiveUnits = UNITS.filter(u => u.type === 'elective');
+  const extraElectives = [...proposedUnits, ...mergedUnits.map(m=>m.merged)].filter(u => u.type === 'elective');
+  const allElectives = [...electiveUnits, ...extraElectives];
+
+  const ebItems = allElectives.map(u => {
+    const isRemoved = removedSet.has(u.code);
+    const isMergedSource = mergedSourceSet.has(u.code);
+    const isMergedResult = mergedResultCodes.has(u.code);
+    let cls = 'eb-unit';
+    if (isRemoved) cls += ' removed';
+    if (isMergedSource) cls += ' merged-source';
+    if (isMergedResult) cls += ' merged-result';
+    const mergeDot = isMergedResult ? `<div class="eb-merge-dot">⊕</div>` : '';
+    const semLabel = u.sem === 'S1' ? 'Semester 1' : u.sem === 'S2' ? 'Semester 2' : 'S1 & S2';
+    const deletedTag = isRemoved ? `<div style="font-size:7px;color:#bbb;font-style:italic;">deleted</div>` : '';
+    const mergedTag = isMergedSource ? `<div style="font-size:7px;color:#888;font-style:italic;">→ merged</div>` : '';
+    return `<div class="${cls}">${mergeDot}
+      <div class="eb-unit-code">${u.code}</div>
+      <div class="eb-unit-name">${u.name}</div>
+      <div class="eb-unit-sem">${semLabel}</div>
+      ${deletedTag}${mergedTag}
+    </div>`;
+  }).join('');
+
+  const ebHtml = `<div class="eb-panel">
+    <div class="eb-header"><div class="eb-title">Elective Bank</div></div>
+    <div class="eb-list">${ebItems}</div>
+  </div>`;
+
+  container.innerHTML = `<div class="dp-layout">${tableHtml}${ebHtml}</div>`;
+}
+
+
 function showBanner(msg){
   const b=document.getElementById('banner');b.textContent=msg;b.classList.add('show');
   clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),3200);
@@ -1343,6 +1912,11 @@ buildPLODrawer();
 buildPLOFilterCheckboxes();
 renderHubMap();
 renderPLOCoverage();
+
+// ── Last updated timestamp — update this each time you push to GitHub ──────
+const LAST_UPDATED = '26 Jun 2026, 13:30';
+// ─────────────────────────────────────────────────────────────────────────
+document.getElementById('live-clock').textContent = `Last updated: ${LAST_UPDATED}`;
 </script>
 </body>
 </html>
