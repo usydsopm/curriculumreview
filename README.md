@@ -12,7 +12,7 @@ A self-contained interactive HTML tool for mapping Bachelor of Project Managemen
 The tool is available at:
 
 ```
-https://usydsopm.github.io/knowledge-hubs/BPM_Curriculum_Review_Tool.html
+https://usydsopm.github.io/curriculumreview
 ```
 
 ---
