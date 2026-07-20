@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPM Curriculum Review — Workshop</title>
+<style>
+  :root{
+    --ochre:#e64626;
+    --ochre-soft:#f3dccf;
+    --ochre-tint:#fbe3d8;
+    --charcoal:#414042;
+    --cream:#fcede2;
+
+    --ink:#414042;
+    --ink-soft:#5f5d5e;
+    --muted:#8c8587;
+    --line:#ecd7c8;
+    --line-soft:#f4e4d8;
+    --paper:#fcede2;
+    --panel:#ffffff;
+    --panel-2:#fdf5ef;
+
+    /* decision semantics */
+    --keep:#2f7d5b;
+    --remove:#a02c2c;
+    --modify:#bf8a2c;
+    --discuss:#6c6a6b;
+
+    /* collection dot colours — green=technical, blue=leadership, orange=strategic; pastel = elective */
+    --d-core-tech:#adf3ab;
+    --d-elec-tech:#dafdcc;
+    --d-core-lead:#72d3fa;
+    --d-elec-lead:#d4f6ff;
+    --d-core-strat:#fa8b39;
+    --d-elec-strat:#fbca10;
+    --d-thesis:#a2d9c7;
+
+    --radius:11px;
+    --shadow:0 1px 2px rgba(65,64,66,.05), 0 10px 26px rgba(65,64,66,.07);
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.5}
+  button{font-family:inherit}
+
+  .app{display:grid;grid-template-columns:272px 1fr;min-height:100vh}
+
+  /* ---------- rail ---------- */
+  .rail{background:var(--charcoal);color:#cfc8c2;padding:24px 18px 28px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand{margin-bottom:24px}
+  .brand .kicker{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ochre);font-weight:700}
+  .brand .title{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1.18;margin-top:3px}
+  .brand .sub{font-size:12px;color:#9b938d;margin-top:5px}
+  nav{display:flex;flex-direction:column;gap:2px}
+  .nav-item{display:grid;grid-template-columns:24px 1fr;align-items:center;gap:9px;width:100%;text-align:left;border:0;background:transparent;color:#b6aea8;padding:11px 10px;border-radius:8px;cursor:pointer;transition:background .12s,color .12s}
+  .nav-item .n{font-family:var(--mono);font-size:11px;color:#857c76;font-weight:600}
+  .nav-item .t{font-weight:600;font-size:13.5px;line-height:1.25}
+  .nav-item .d{font-size:11.5px;color:#897f79;margin-top:4px}
+  .nav-item:hover{background:#4d4c4e;color:#efe9e4}
+  .nav-item.active{background:var(--ochre);color:#fff}
+  .nav-item.active .n,.nav-item.active .d{color:#ffd9cd}
+  .rail-foot{margin-top:24px;padding-top:18px;border-top:1px solid #545254}
+  .tally{background:#4a4849;border-radius:9px;padding:12px 14px;margin-bottom:12px}
+  .tally .lab{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#a39a94;font-weight:700}
+  .tally .num{font-size:24px;font-weight:700;color:#fff;font-family:var(--mono)}
+  .tally .num small{font-size:13px;color:#a39a94;font-weight:500}
+  .btn-export{width:100%;border:0;background:var(--ochre);color:#fff;font-weight:700;font-size:13px;padding:11px;border-radius:8px;cursor:pointer;transition:filter .12s}
+  .btn-export:hover{filter:brightness(1.07)}
+  .btn-home{display:block;width:100%;box-sizing:border-box;text-align:center;margin-top:8px;border:1px solid #fff;background:#fff;color:var(--charcoal);font-weight:600;font-size:13px;padding:10px;border-radius:8px;cursor:pointer;text-decoration:none;transition:background .12s,color .12s}
+  .btn-home:hover{background:#ece7e3;color:var(--charcoal);border-color:#ece7e3}
+
+  /* ---------- main ---------- */
+  .topbar{position:sticky;top:0;z-index:5;background:rgba(252,237,226,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .crumb{font-size:12px;color:var(--muted);font-family:var(--mono)}
+  .progress{display:flex;gap:5px}
+  .progress .seg{width:26px;height:5px;border-radius:3px;background:var(--line)}
+  .progress .seg.done{background:var(--charcoal)}
+  .progress .seg.cur{background:var(--ochre)}
+
+  .view{padding:34px 40px 90px;max-width:1120px}
+  .view[hidden]{display:none}
+  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ochre);font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:9px}
+  .eyebrow .seq{font-family:var(--mono);color:var(--muted)}
+  h1.page{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;line-height:1.12}
+  .lede{font-size:15.5px;color:var(--ink-soft);max-width:700px;margin:0 0 26px}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px}
+
+  .code{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink-soft)}
+  .hcode{font-family:var(--mono);font-weight:700;color:var(--ink)}
+  .multidisc{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:var(--ink);background:var(--ochre-tint);border:1px solid var(--ochre-soft);border-radius:999px;padding:4px 11px}
+  .multidisc .dots{display:inline-flex;gap:3px}
+  .commentbox{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:18px}
+  .commentbox label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);margin-bottom:8px}
+  .commentbox textarea{min-height:62px}
+  .mxnote{font-size:12px;color:var(--muted);margin-top:10px;font-style:italic}
+
+  /* dot + chip */
+  .dot{display:inline-block;width:11px;height:11px;border-radius:50%;border:1px solid rgba(65,64,66,.28);flex:none}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap;background:var(--panel-2);border:1px solid var(--line);color:var(--ink)}
+  .chip.elective{border-style:dashed;color:var(--ink-soft)}
+
+  /* ---------- overview ---------- */
+  .obj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+  .obj{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 20px;position:relative;overflow:hidden}
+  .obj::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--ochre)}
+  .obj .t{font-weight:700;font-size:15px;margin:0 0 6px}
+  .obj p{margin:0;font-size:13.5px;color:var(--muted)}
+  .agenda-list{list-style:none;margin:0;padding:0}
+  .agenda-list li{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:14px;padding:14px 4px;border-bottom:1px solid var(--line-soft)}
+  .agenda-list li:last-child{border-bottom:0}
+  .agenda-list .ix{font-family:var(--mono);font-size:13px;color:var(--ochre);font-weight:700}
+  .agenda-list .nm{font-weight:600;font-size:14.5px;display:block}
+  .agenda-list .ds{font-size:12.5px;color:var(--muted);margin-top:4px;display:block}
+  .agenda-list .go{border:1px solid var(--line);background:var(--panel);border-radius:7px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--ink-soft);font-weight:600}
+  .agenda-list .go:hover{border-color:var(--ochre);color:var(--ochre)}
+
+  .factbar{display:flex;gap:24px;flex-wrap:wrap;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px;margin-bottom:22px}
+  .factbar .f{display:flex;flex-direction:column}
+  .factbar .v{font-size:21px;font-weight:700;font-family:var(--mono);color:var(--ochre)}
+  .factbar .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:2px}
+
+  /* ---------- legend ---------- */
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:14px 18px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;margin-bottom:18px}
+  .legend .li{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--ink-soft)}
+
+  /* ---------- structure / pathways ---------- */
+  .pathways{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+  .pathway{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .pathway h4{margin:0;padding:13px 18px;font-size:14px;background:var(--charcoal);color:#fff;display:flex;align-items:center;gap:9px}
+  .pathway h4 .badge{font-size:10.5px;font-weight:700;background:var(--ochre);color:#fff;padding:2px 8px;border-radius:999px;letter-spacing:.04em}
+  .sem{padding:13px 16px;border-top:1px solid var(--line-soft)}
+  .sem .sl{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:9px}
+  .sem .units{display:flex;flex-wrap:wrap;gap:7px}
+  .pchip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;border:1px solid var(--line);background:var(--panel-2)}
+  .pchip.elec{border-style:dashed;color:var(--muted);font-family:var(--sans);font-weight:600}
+
+  /* available electives (structure §c) */
+  .elec-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .elec-col .ec-head{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:7px;padding-bottom:9px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+  .ec-n{margin-left:auto;font-family:var(--mono);color:var(--muted);font-weight:600}
+  .aunit{font-size:13px;padding:5px 0;color:var(--ink-soft);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+  .aunit .dot{align-self:center}
+  .aunit .hcode{flex:none}
+  .aunit .ast{color:var(--ochre);font-weight:700}
+  .aunit .flagnote{font-size:9px;padding:1px 6px;white-space:nowrap;font-weight:700}
+  .ag-cell .aunit{flex-wrap:nowrap}
+  .elec-thesis{margin-top:16px;padding-top:13px;border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--muted);display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+  .elec-thesis .dot{flex:none}
+
+  /* unit availability */
+  .avail-core-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 26px}
+  .acore{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--ink-soft);padding:7px 0;border-bottom:1px solid var(--line-soft)}
+  .acore .acore-n{flex:1}
+  .availctrl{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px}
+  .ac-q{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:11px}
+  .avtog{max-width:400px;margin-bottom:11px}
+  .avtog button.on.keep{background:var(--keep);border-color:var(--keep);color:#fff}
+  .avtog button.on.change{background:var(--modify);border-color:var(--modify);color:#fff}
+  .avail-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+  .ag-head{background:var(--charcoal);color:#fff;font-weight:700;font-size:13px;padding:11px 16px}
+  .ag-head.col2{border-left:1px solid #54525a}
+  .ag-cell{padding:12px 16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+  .ag-cell.col2{border-left:1px solid var(--line)}
+  .ag-both{grid-column:1 / -1;border-top:1px solid var(--line);padding:13px 16px;background:var(--panel-2)}
+  .agb-head{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:9px}
+  .agb-units{display:grid;grid-template-columns:1fr 1fr;gap:4px 26px}
+
+  .svgwrap{width:100%;overflow-x:auto}
+  .svgwrap svg{width:100%;min-width:760px;height:auto;display:block}
+  .degmap-card{padding:6px;margin-left:-16px;margin-right:-16px}
+  .degmap{overflow-x:auto;background:#fff;border-radius:8px}
+  .degmap svg{display:block;width:100%;height:auto;min-width:1040px}
+
+  /* award requirements */
+  .award-h{font-size:14px;font-weight:700;color:var(--ochre);margin-bottom:9px}
+  .award p{font-size:13.5px;color:var(--ink-soft);margin:0 0 8px}
+  .award ul{margin:0;padding-left:20px}
+  .award li{font-size:13px;color:var(--ink-soft);margin:3px 0}
+  .award-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:12px;padding-top:13px;border-top:1px solid var(--line-soft)}
+  .award-sub{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:5px}
+
+  /* elective semester circle + tight rows */
+  .semcirc{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:11px;padding:0 6px;font-size:8.5px;font-weight:700;color:var(--keep);background:#e6f1ec;border:1px solid #cfe5db;white-space:nowrap;flex:none;margin-left:auto}
+  .elec-col .aunit{flex-wrap:nowrap;align-items:center}
+  .elec-col .aunit .anm{flex:1;min-width:0}
+  .aunit.tight,.aunit.tight .hcode{font-size:9.5px}
+  .aunit.tight .anm{white-space:nowrap}
+  .aunit.tight .semcirc{font-size:7px;min-width:17px;height:17px;padding:0 4px}
+
+  /* ---------- unit cards (prereq) ---------- */
+  .group{margin-bottom:30px}
+  .group-head{display:flex;align-items:center;gap:12px;margin:0 0 13px;flex-wrap:wrap}
+  .group-head .gt{font-size:13px;font-weight:700}
+  .group-head .req{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);background:var(--ochre-tint);border:1px solid var(--ochre-soft);border-radius:6px;padding:4px 9px;max-width:620px}
+  .group-head .rule{flex:1;height:1px;background:var(--line);min-width:20px}
+  .group-head .cnt{font-size:12px;color:var(--muted)}
+
+  .ucard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+  .ucard.decided-keep{border-left:4px solid var(--keep)}
+  .ucard.decided-remove{border-left:4px solid var(--remove)}
+  .ucard.decided-modify{border-left:4px solid var(--modify)}
+  .ucard.decided-discuss{border-left:4px solid var(--discuss)}
+  .ucard-top{padding:18px 22px 8px}
+  .ucard h3{margin:0 0 4px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:9px}
+  .ucard .ucode{margin-bottom:9px}
+  .ucard .tags{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .flagnote{font-size:12px;color:var(--remove);background:#f7e7e3;border:1px solid #eccac2;border-radius:6px;padding:3px 9px;font-weight:600}
+
+  /* prereq group cards */
+  .group-tag{display:inline-block;background:var(--ochre);color:#fff;font-size:13px;font-weight:700;padding:3px 13px;border-radius:7px;letter-spacing:.02em}
+  .group-reqline{margin-top:10px}
+  .group-reqline .req{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);background:var(--ochre-tint);border:1px solid var(--ochre-soft);border-radius:6px;padding:5px 10px;display:inline-block;line-height:1.5}
+  .gunits{border-top:1px solid var(--line-soft);margin-top:14px}
+  .gunit{padding:14px 22px;border-bottom:1px solid var(--line-soft)}
+  .gunit-h{font-size:15px;font-weight:600;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .gunit-meta{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:7px 0 10px}
+  .gunit-meta b{color:var(--ink-soft);font-weight:700}
+  .gunit .dep{margin:0;border-radius:8px;border:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+
+  .meta{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);margin-top:12px}
+  .meta .m{padding:11px 22px;border-right:1px solid var(--line-soft)}
+  .meta .m:nth-child(2n){border-right:0}
+  .meta .ml{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:4px}
+  .meta .mv{font-size:13.5px;font-weight:600}
+  .track{display:flex;gap:5px;margin-top:7px}
+  .track .slot{flex:1;text-align:center;font-family:var(--mono);font-size:10px;font-weight:600;padding:5px 0;border-radius:5px;background:var(--panel-2);color:#b3a9a2;border:1px solid var(--line-soft)}
+  .track .slot.taken{background:var(--ochre-tint);color:var(--ochre);border-color:var(--ochre-soft)}
+  .track .slot.open{background:#fff;color:var(--ink-soft);border:1px dashed var(--ochre-soft)}
+  .flexnote{font-size:11.5px;color:var(--muted);margin-top:7px;font-style:italic}
+  .offered-pills{display:flex;gap:5px;margin-top:6px}
+  .offered-pills .op{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--keep);background:#e6f1ec;border:1px solid #cfe5db;border-radius:5px;padding:2px 8px}
+  .offered-pills .op.none{color:var(--muted);background:var(--panel-2);border-color:var(--line)}
+
+  .dep{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:14px 22px;background:var(--panel-2);border-bottom:1px solid var(--line-soft)}
+  .dep .node{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:#fff;border:1px solid var(--line)}
+  .dep .node.pre{border-style:dashed;color:var(--ink-soft)}
+  .dep .node.self{border-color:var(--ochre);background:var(--ochre-tint);color:var(--ochre)}
+  .dep .gate{font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--ink-soft);background:#fff;border:1px dashed var(--line);border-radius:7px;padding:5px 11px}
+  .dep .arrow{color:var(--ochre);font-size:15px;font-weight:700}
+
+  .decide{padding:18px 22px 20px}
+  .lenses{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+  .lens label{display:block;font-size:11px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);margin-bottom:5px}
+  .lens .hint{font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0}
+  textarea,input[type=text],select{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13px;font-family:inherit;color:var(--ink);background:var(--panel-2);resize:vertical;line-height:1.45}
+  textarea:focus,input[type=text]:focus,select:focus{outline:2px solid var(--ochre);outline-offset:-1px;background:#fff}
+  .lens textarea{min-height:72px}
+  .verdict{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .verdict .vlab{font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-right:4px}
+  .vbtn{border:1.5px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 15px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-soft);transition:all .12s}
+  .vbtn:hover{border-color:var(--ink-soft)}
+  .vbtn[data-v=keep].on{background:var(--keep);border-color:var(--keep);color:#fff}
+  .vbtn[data-v=remove].on{background:var(--remove);border-color:var(--remove);color:#fff}
+  .vbtn[data-v=modify].on{background:var(--modify);border-color:var(--modify);color:#fff}
+  .vbtn[data-v=discuss].on{background:var(--discuss);border-color:var(--discuss);color:#fff}
+
+  /* ---------- no-prereq grid ---------- */
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .npc{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+  .npc.flagged{border-left:4px solid var(--modify)}
+  .npc.confirmed{border-left:4px solid var(--keep)}
+  .npc h4{margin:0 0 3px;font-size:15px;display:flex;align-items:center;gap:8px}
+  .npc .row{display:flex;gap:7px;margin:8px 0 12px;flex-wrap:wrap;align-items:center}
+  .npc-meta{display:flex;gap:22px;flex-wrap:wrap;margin:2px 0 14px}
+  .npc-meta .nmi{flex:1;min-width:150px}
+  .npc-meta .nm-l{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:5px}
+  .toggle2{display:flex;gap:7px;margin-bottom:10px}
+  .toggle2 button{flex:1;border:1.5px solid var(--line);background:var(--panel);border-radius:8px;padding:8px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink-soft)}
+  .toggle2 button.on.ok{background:var(--keep);border-color:var(--keep);color:#fff}
+  .toggle2 button.on.flag{background:var(--modify);border-color:var(--modify);color:#fff}
+
+  /* ---------- matrix ---------- */
+  .matrix{display:grid;grid-template-columns:130px 1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+  .matrix .mh{background:var(--charcoal);color:#fff;font-weight:700;font-size:13px;padding:13px 16px}
+  .matrix .mh.corner{background:#54525a;font-size:11.5px;font-weight:600}
+  .matrix .rl{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;padding:14px;border-top:1px solid var(--line);background:var(--panel-2)}
+  .matrix .cell{border-top:1px solid var(--line);border-left:1px solid var(--line);padding:13px;min-height:92px;display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start}
+  .uchip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:transform .08s,box-shadow .08s}
+  .uchip:hover{transform:translateY(-1px);box-shadow:0 3px 9px rgba(65,64,66,.14)}
+  .uchip.moving{border-style:dashed;opacity:.5}
+  .ghost{border:1px dashed var(--ochre);background:var(--ochre-tint);color:var(--ochre);font-family:var(--mono);font-size:11px;font-weight:600;padding:5px 9px;border-radius:7px;display:inline-flex;align-items:center;gap:6px}
+  .thesis-strip{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+  .thesis-strip .units{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+
+  /* ---------- rationalise ---------- */
+  .counter{display:flex;align-items:center;gap:22px}
+  .counter .stat{display:flex;flex-direction:column}
+  .counter .stat .v{font-size:34px;font-weight:700;font-family:var(--mono);line-height:1}
+  .counter .stat .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:5px}
+  .counter .arrow{font-size:24px;color:var(--ochre)}
+  .counter .delta{font-weight:700;font-size:14px;color:var(--keep)}
+  .prompts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .prompts li{display:flex;gap:9px;font-size:13px;color:var(--ink-soft);padding:9px 12px;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:8px}
+  .prompts li::before{content:"›";color:var(--ochre);font-weight:700}
+  .merge-pick{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 16px}
+  .pick{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:6px 10px;border-radius:7px;border:1.5px solid var(--line);background:var(--panel);cursor:pointer;color:var(--ink-soft);display:inline-flex;gap:7px;align-items:center}
+  .pick.sel{border-color:var(--ochre);background:var(--ochre-tint);color:var(--ochre)}
+  .merge-list{margin-top:8px}
+  .mitem{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--line);border-radius:8px;margin-bottom:9px;background:var(--panel-2)}
+  .mitem .body{flex:1}
+  .mitem .src{font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin-bottom:4px}
+  .mitem .into{font-weight:700;font-size:14px}
+  .mitem .rat{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .mitem .del{border:0;background:transparent;color:var(--remove);cursor:pointer;font-size:18px;line-height:1;padding:2px 6px}
+
+  .btn{border:1px solid var(--charcoal);background:var(--charcoal);color:#fff;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:filter .12s}
+  .btn:hover{filter:brightness(1.25)}
+  .btn.ghost{background:transparent;color:var(--charcoal);border-color:var(--line)}
+  .btn.ghost:hover{filter:none;border-color:var(--charcoal)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .field-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+  .field-row .f{flex:1;min-width:180px}
+  .field-row label{display:block;font-size:11px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);margin-bottom:5px}
+
+  .empty{color:var(--muted);font-size:13px;font-style:italic;padding:8px 0}
+
+  /* ---------- workshop record & correction callouts ---------- */
+  .wrec{background:#fff6f0;border:1px solid var(--ochre-soft);border-left:4px solid var(--ochre);border-radius:8px;padding:14px 18px;margin:12px 0 18px}
+  .wrec-lab{display:flex;align-items:center;gap:7px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--ochre);margin-bottom:8px}
+  .wrec-lab .ic{font-size:12px}
+  .wrec p{margin:0 0 8px;font-size:13px;color:var(--ink-soft);line-height:1.55}
+  .wrec p:last-child{margin-bottom:0}
+  .wrec ul{margin:0 0 8px;padding-left:18px}
+  .wrec ul:last-child{margin-bottom:0}
+  .wrec li{font-size:13px;color:var(--ink-soft);margin:2px 0;line-height:1.5}
+  .decision-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+  .decision-row .dlab{font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+
+  .correction{background:#f4f2f1;border:1px dashed #b3a9a2;border-radius:8px;padding:11px 16px;margin:10px 0;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+  .correction .cor-lab{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#6b6560;margin-bottom:5px}
+  .correction .cor-lab .ic{font-size:12px}
+  .correction b{color:var(--ink)}
+
+  /* ---------- proposal banner & tracker ---------- */
+  .promo-banner{background:linear-gradient(120deg,#e64626,#ff8a4c);border-radius:14px;padding:22px 26px;margin-bottom:24px;box-shadow:0 8px 24px rgba(230,70,38,.28);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .promo-banner .pb-text .pb-h{font-size:19px;font-weight:700;margin:0 0 5px;display:flex;align-items:center;gap:9px}
+  .promo-banner .pb-text p{margin:0;font-size:13.5px;color:#ffe8dc;max-width:520px}
+  .promo-banner .pb-btn{flex:none;background:#fff;color:var(--ochre);border:0;font-weight:700;font-size:14px;padding:12px 20px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.15);transition:transform .12s}
+  .promo-banner .pb-btn:hover{transform:translateY(-2px) scale(1.02)}
+
+  .prop-tracker{list-style:none;margin:0;padding:0}
+  .prop-tracker li{display:flex;align-items:flex-start;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line-soft)}
+  .prop-tracker li:last-child{border-bottom:0}
+  .prop-body{flex:1}
+  .prop-title{font-weight:700;font-size:13.5px;color:var(--ink)}
+  .prop-title .num{color:var(--ochre);font-family:var(--mono);margin-right:6px}
+  .prop-desc{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .prop-lock{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#8a6d1f;background:#fbf0d6;border:1px solid #ecd79a;border-radius:999px;padding:2px 9px;margin-left:8px}
+
+  .explore-btn{display:inline-flex;align-items:center;gap:7px;background:var(--ochre);color:#fff;font-weight:700;font-size:12.5px;padding:9px 16px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;margin-top:12px;transition:transform .1s,filter .1s}
+  .explore-btn:hover{transform:translateY(-1px);filter:brightness(1.15)}
+  .explore-btn .emo{font-size:15px}
+  .locked-note{display:flex;align-items:center;gap:8px;background:#fbf0d6;border:1px solid #ecd79a;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:12.5px;color:#6b5518}
+  .locked-note b{color:#4a3a10}
+
+  /* ---------- redesigned summary ---------- */
+  .sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+  .sum-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px}
+  .sum-card.wide{grid-column:1 / -1}
+  .sc-head{display:flex;align-items:center;gap:9px;font-weight:700;font-size:14.5px;color:var(--ink);margin-bottom:11px;padding-bottom:9px;border-bottom:2px solid var(--ochre-tint)}
+  .sc-head .sc-ic{font-size:18px}
+  .sum-card ul{margin:0;padding-left:0;list-style:none}
+  .sum-card li{font-size:12.8px;color:var(--ink-soft);margin:7px 0;line-height:1.5;padding-left:0}
+  .sum-card li b{color:var(--ink)}
+  .sum-card .verdict-tag{margin-right:7px;vertical-align:1px}
+  .dash-cta{margin-top:6px;background:linear-gradient(120deg,#e64626,#ff8a4c);border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#fff;box-shadow:0 8px 24px rgba(230,70,38,.25)}
+  .dash-cta .dc-h{font-size:17px;font-weight:700;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .dash-cta p{margin:0;font-size:13px;color:#ffe8dc;max-width:480px}
+  .dash-cta a{flex:none;background:#fff;color:var(--ochre);font-weight:700;font-size:13.5px;padding:11px 18px;border-radius:999px;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+
+  /* summary */
+  .sum-sec{margin-bottom:26px}
+  .sum-sec h3{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+  .sum-row{display:grid;grid-template-columns:150px 110px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-soft);align-items:start}
+  .sum-row .u{font-family:var(--mono);font-size:13px;font-weight:600}
+  .sum-row .n{font-size:13px;color:var(--ink-soft);font-weight:600}
+  .verdict-tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;text-align:center;white-space:nowrap}
+  .verdict-tag.keep{background:#e6f1ec;color:var(--keep)}
+  .verdict-tag.remove{background:#f7e7e3;color:var(--remove)}
+  .verdict-tag.modify{background:#f7eed8;color:var(--modify)}
+  .verdict-tag.discuss{background:#edebec;color:var(--discuss)}
+  .verdict-tag.none{background:#f1efef;color:#a39a94}
+  .sum-row .notes{font-size:12.5px;color:var(--muted)}
+
+  @media (max-width:900px){
+    .app{grid-template-columns:1fr}
+    .rail{position:static;height:auto}
+    .obj-grid,.lenses,.grid2,.prompts,.pathways,.elec-cols,.avail-core-grid,.agb-units,.award-cols,.sum-grid{grid-template-columns:1fr}
+    .matrix{grid-template-columns:96px 1fr 1fr}
+    .view,.topbar{padding-left:20px;padding-right:20px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <div class="brand">
+      <div class="kicker">Curriculum Review</div>
+      <div class="title">Master of Project Management</div>
+      <div class="sub">Prerequisites · Core/Elective · Rationalisation</div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="rail-foot">
+      <div class="tally">
+        <div class="lab">Workshop held</div>
+        <div class="num" style="font-size:16px">Wed 24 Jun 2026</div>
+      </div>
+      <a class="btn-home" href="https://usydsopm.github.io/curriculumreview/" target="_blank" rel="noopener">🏠 Back to home</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <span class="crumb" id="crumb">00 · Overview</span>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- 0 OVERVIEW -->
+    <section class="view" data-view="0">
+      <div class="eyebrow"><span class="seq">00</span> Workshop record</div>
+      <h1 class="page">Curriculum review workshop — 24 June 2026</h1>
+      <p class="lede">This is a record of the Master of Project Management curriculum review workshop held on Wednesday 24 June 2026. The session worked through unit availability, prerequisite requirements, core and elective placement, unit naming, and opportunities to rationalise the program. This document captures the discussion points and decisions reached.</p>
+
+      <div class="promo-banner">
+        <div class="pb-text">
+          <div class="pb-h">🪏 Dig into the details</div>
+          <p>Every proposal from this workshop is being built out in the Proposal Dashboard — before/after visuals, benefits, risks and recommendations for each one.</p>
+        </div>
+        <a class="pb-btn" href="https://usydsopm.github.io/curriculumreview/" target="_blank" rel="noopener">🔍 Explore the proposals</a>
+      </div>
+
+      <div class="factbar">
+        <div class="f"><span class="v">72</span><span class="k">Credit points</span></div>
+        <div class="f"><span class="v">3</span><span class="k">Semesters · 24cp each</span></div>
+        <div class="f"><span class="v">22</span><span class="k">Units in scope</span></div>
+        <div class="f"><span class="v">8</span><span class="k">With prerequisites</span></div>
+        <div class="f"><span class="v">2</span><span class="k">Pathways</span></div>
+      </div>
+      <div class="wrec">
+        <div class="wrec-lab"><span class="ic">🗣</span> Workshop discussion — overall curriculum structure</div>
+        <p>The workshop identified several structural issues in the current MPM curriculum, particularly around repeated unit offerings, staff capacity, unit sequencing, and student enrolment pathways.</p>
+        <p>A key theme was the need to streamline the degree structure so that students can more easily enrol in the correct units, while also ensuring any changes continue to support Graduate Certificate and Graduate Diploma pathways.</p>
+        <p>There was general support for reducing repeated offerings where possible. Apart from Professional Project Practice (PMGT5205) and Capstone (PMGT5850), the proposal discussed was to offer most other core units once per year. This would help address staff capacity issues and improve curriculum planning.</p>
+        <p>The group also noted that the current content does not appear to be strongly scaffolded. Further work is needed to determine whether the content should be delivered in a more intentional sequence, and how this would compare with one-year and two-year programs at other universities.</p>
+      </div>
+      <div class="obj-grid">
+        <div class="obj"><p class="t">Assessment of prerequisites</p><p>Should/can any prerequisites be removed or changed without harming progression or academic rigour?</p></div>
+        <div class="obj"><p class="t">Allocation of core vs elective</p><p>Is each unit in the correct collection — technical, leadership or strategic?</p></div>
+        <div class="obj"><p class="t">Rationalise units</p><p>Where can we condense overlapping units into one?</p></div>
+      </div>
+      <div class="card"><ul class="agenda-list" id="agendaList"></ul></div>
+    </section>
+
+
+    <!-- 1 STRUCTURE -->
+    <section class="view" data-view="1" hidden>
+      <div class="eyebrow"><span class="seq">01</span> Where we are</div>
+      <h1 class="page">Current course structure</h1>
+      <p class="lede">A high-level overview of the current MPM structure, including the sequence of units, credit point requirements, core units, elective options and pathway considerations, as discussed at the workshop.</p>
+
+      <div class="card award">
+        <div class="award-h">Award requirements — 72 credit points</div>
+        <p>To qualify for the award of the Master of Project Management, a candidate must complete <b>72 credit points</b>, including:</p>
+        <ul>
+          <li>24 cp of Project Management <b>Technical Core</b> units (PMGT5205, PMGT5871, PMGT5820, PMGT5850)</li>
+          <li>12 cp of Project Management <b>Leadership Core</b> units (PMGT5811, PMGT5872)</li>
+          <li>6 cp of Project Management <b>Strategic Core</b> units (PMGT5858)</li>
+          <li>30 cp from either the research pathway or the coursework pathway.</li>
+        </ul>
+        <div class="award-cols">
+          <div>
+            <div class="award-sub">Coursework pathway — 30 cp electives</div>
+            <ul>
+              <li>Min 6 / max 18 cp of <b>Technical</b> electives</li>
+              <li>Min 6 / max 18 cp of <b>Strategic</b> electives</li>
+              <li>Min 6 / max 18 cp of <b>Leadership</b> electives</li>
+            </ul>
+          </div>
+          <div>
+            <div class="award-sub">Research pathway — 18 cp thesis + 12 cp electives</div>
+            <ul>
+              <li>18 cp of <b>Thesis</b> units</li>
+              <li>6 cp of <b>Strategic</b> elective units</li>
+              <li>6 cp of <b>Leadership</b> elective units</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="legendStruct"></div>
+      <div class="eyebrow" style="margin:6px 0 12px"><span class="seq">a</span> Degree map · two pathways</div>
+      <div class="card degmap-card" id="degreeMapSlot"><div class="degmap"><svg viewBox="0 0 1980 980" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Master of Project Management — Programme Structure</title>
+<desc>Programme structure map across three semesters for the Coursework Pathway, Research Pathway and Electives, with prerequisite arrows.</desc>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M1 1L8.6 5L1 9" fill="none" stroke="#243446" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.4" flood-color="#000" flood-opacity="0.16"/></filter>
+</defs>
+<rect x="30" y="64" width="748" height="836" rx="6" fill="#d4ecf7"/>
+<rect x="800" y="64" width="748" height="836" rx="6" fill="#d4ecf7"/>
+<rect x="1562" y="64" width="392" height="836" rx="6" fill="#cfe8c8"/>
+<rect x="30" y="318" width="748" height="20" fill="#ffffff"/>
+<rect x="30" y="594" width="748" height="20" fill="#ffffff"/>
+<rect x="800" y="318" width="748" height="20" fill="#ffffff"/>
+<rect x="800" y="594" width="748" height="20" fill="#ffffff"/>
+<rect x="40" y="10" width="728" height="36" rx="8" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="404.0" y="34" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="#1a1a1a">Coursework Pathway</text>
+<rect x="810" y="10" width="728" height="36" rx="8" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="1174.0" y="34" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="#1a1a1a">Research Pathway</text>
+<rect x="1572" y="10" width="372" height="36" rx="8" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="1758.0" y="34" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="#1a1a1a">Electives</text>
+<text x="20" y="330" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#333" transform="rotate(-90 20 330)">YEAR 1</text>
+<text x="20" y="700" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#333" transform="rotate(-90 20 700)">YEAR 2</text>
+<path d="M 208.0,220 L 208.0,300" fill="none" stroke="#243446" stroke-width="1.4"/>
+<path d="M 372.0,220 L 372.0,300" fill="none" stroke="#243446" stroke-width="1.4"/>
+<path d="M 536.0,220 L 536.0,300" fill="none" stroke="#243446" stroke-width="1.4"/>
+<path d="M 208.0,300 L 536.0,300" fill="none" stroke="#243446" stroke-width="1.4"/>
+<path d="M 290,300 L 290,358 C 290,382 208.0,380 208.0,392" fill="none" stroke="#243446" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M 372.0,300 L 372.0,392" fill="none" stroke="#243446" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M 208.0,220 C 208.0,232 130,232 100,246" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 372.0,220 C 372.0,232 130,244 100,258" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 536.0,220 C 536.0,232 130,256 100,270" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 208.0,532 C 208.0,548 130,542 100,556" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 372.0,532 C 372.0,548 130,554 100,568" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 536.0,532 C 536.0,548 130,566 100,580" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 100,246 L 100,699" fill="none" stroke="#243446" stroke-width="1.6"/>
+<path d="M 100,699 L 132,699" fill="none" stroke="#243446" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M 978.0,220 L 978.0,300" fill="none" stroke="#243446" stroke-width="1.4"/>
+<path d="M 1142.0,220 L 1142.0,300" fill="none" stroke="#243446" stroke-width="1.4"/>
+<path d="M 1306.0,220 L 1306.0,300" fill="none" stroke="#243446" stroke-width="1.4"/>
+<path d="M 978.0,300 L 1306.0,300" fill="none" stroke="#243446" stroke-width="1.4"/>
+<path d="M 1060,300 L 1060,358 C 1060,382 978.0,380 978.0,392" fill="none" stroke="#243446" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M 1142.0,300 L 1142.0,392" fill="none" stroke="#243446" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M 978.0,220 C 978.0,232 900,232 870,246" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 1142.0,220 C 1142.0,232 900,244 870,258" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 1306.0,220 C 1306.0,232 900,256 870,270" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 978.0,532 C 978.0,548 900,542 870,556" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 1142.0,532 C 1142.0,548 900,554 870,568" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 1306.0,532 C 1306.0,548 900,566 870,580" fill="none" stroke="#243446" stroke-width="1.2"/>
+<path d="M 870,246 L 870,699" fill="none" stroke="#243446" stroke-width="1.6"/>
+<path d="M 870,699 L 902,699" fill="none" stroke="#243446" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M 1470.0,220 L 1470.0,392" fill="none" stroke="#243446" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M 1470.0,532 L 1470.0,690" fill="none" stroke="#243446" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="134" y="70" width="140" height="30" rx="9" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="204.0" y="91" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="14.5" font-weight="700" fill="#1a1a1a">Semester 1</text>
+<rect x="134" y="318" width="140" height="30" rx="9" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="204.0" y="339" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="14.5" font-weight="700" fill="#1a1a1a">Semester 2</text>
+<rect x="134" y="612" width="140" height="30" rx="9" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="204.0" y="633" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="14.5" font-weight="700" fill="#1a1a1a">Semester 1</text>
+<rect x="904" y="70" width="140" height="30" rx="9" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="974.0" y="91" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="14.5" font-weight="700" fill="#1a1a1a">Semester 1</text>
+<rect x="904" y="318" width="140" height="30" rx="9" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="974.0" y="339" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="14.5" font-weight="700" fill="#1a1a1a">Semester 2</text>
+<rect x="904" y="612" width="140" height="30" rx="9" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="974.0" y="633" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="14.5" font-weight="700" fill="#1a1a1a">Semester 1</text>
+<rect x="134" y="392" width="148" height="24" rx="6" fill="#cdebcf" stroke="#2E7D32" stroke-width="0.9"/>
+<text x="208.0" y="403" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#ffffff">P PMGT5205</text>
+<text x="208.0" y="412" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#ffffff">+ PMGT5858 + PMGT5811</text>
+<rect x="298" y="392" width="148" height="24" rx="6" fill="#cdebcf" stroke="#2E7D32" stroke-width="0.9"/>
+<text x="372.0" y="403" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#ffffff">P PMGT5205</text>
+<text x="372.0" y="412" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#ffffff">+ PMGT5858 + PMGT5811</text>
+<rect x="904" y="392" width="148" height="24" rx="6" fill="#cdebcf" stroke="#2E7D32" stroke-width="0.9"/>
+<text x="978.0" y="403" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#ffffff">P PMGT5205</text>
+<text x="978.0" y="412" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#ffffff">+ PMGT5858 + PMGT5811</text>
+<rect x="1068" y="392" width="148" height="24" rx="6" fill="#cdebcf" stroke="#2E7D32" stroke-width="0.9"/>
+<text x="1142.0" y="403" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#ffffff">P PMGT5205</text>
+<text x="1142.0" y="412" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#ffffff">+ PMGT5858 + PMGT5811</text>
+<rect x="1396" y="390" width="148" height="24" rx="6" fill="#d6efe9" stroke="#26A69A" stroke-width="0.9"/>
+<text x="1470.0" y="401" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#00413b">A ≥80 in PMGT5862 &amp; WAM ≥75;</text>
+<text x="1470.0" y="410" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#00413b">P PMGT5862</text>
+<rect x="134" y="690" width="186" height="20" rx="6" fill="#cdebcf" stroke="#2E7D32" stroke-width="0.9"/>
+<text x="227" y="703" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.8" font-weight="700" fill="#ffffff">P 36 credit points of Core Units</text>
+<rect x="904" y="690" width="186" height="20" rx="6" fill="#cdebcf" stroke="#2E7D32" stroke-width="0.9"/>
+<text x="997" y="703" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.8" font-weight="700" fill="#ffffff">P 36 credit points of Core Units</text>
+<rect x="1396" y="688" width="148" height="24" rx="6" fill="#d6efe9" stroke="#26A69A" stroke-width="0.9"/>
+<text x="1470.0" y="699" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.4" font-weight="700" fill="#00413b">P PMGT5883 and PMGT5862</text>
+<g filter="url(#sh)"><rect x="134" y="132" width="148" height="88" rx="10" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.3"/></g>
+<text x="208.0" y="159" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">PMGT5205</text>
+<text x="208.0" y="176" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Professional</text>
+<text x="208.0" y="189" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Project Practice</text>
+<rect x="129" y="121" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="154.0" y="134" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="298" y="132" width="148" height="88" rx="10" fill="#90CAF9" stroke="#1565C0" stroke-width="1.3"/></g>
+<text x="372.0" y="159" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#0D2137">PMGT5811</text>
+<text x="372.0" y="176" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#0D2137">Critical and</text>
+<text x="372.0" y="189" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#0D2137">Systems Thinking</text>
+<rect x="293" y="121" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="318.0" y="134" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="462" y="132" width="148" height="88" rx="10" fill="#FFC107" stroke="#F57F17" stroke-width="1.3"/></g>
+<text x="536.0" y="159" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#3d2600">PMGT5858</text>
+<text x="536.0" y="176" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#3d2600">Project Initiation</text>
+<rect x="457" y="121" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="482.0" y="134" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><path d="M 626,132 H 758 L 774,148 V 220 H 626 Z" fill="#fff" stroke="#9aa3ad" stroke-width="1.3"/></g>
+<text x="700.0" y="162" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" fill="#2a3340">ELECTIVE</text>
+<text x="700.0" y="178" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Technical,</text>
+<text x="700.0" y="191" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Leadership OR</text>
+<text x="700.0" y="204" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Strategic</text>
+<g filter="url(#sh)"><rect x="134" y="444" width="148" height="88" rx="10" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.3"/></g>
+<text x="208.0" y="471" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">PMGT5820</text>
+<text x="208.0" y="488" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Execution and</text>
+<text x="208.0" y="501" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Acceptance</text>
+<rect x="129" y="433" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="154.0" y="446" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="298" y="444" width="148" height="88" rx="10" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.3"/></g>
+<text x="372.0" y="471" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">PMGT5871</text>
+<text x="372.0" y="488" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Project Planning</text>
+<rect x="293" y="433" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="318.0" y="446" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="462" y="444" width="148" height="88" rx="10" fill="#90CAF9" stroke="#1565C0" stroke-width="1.3"/></g>
+<text x="536.0" y="471" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#0D2137">PMGT5872</text>
+<text x="536.0" y="488" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#0D2137">People and</text>
+<text x="536.0" y="501" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#0D2137">Communications</text>
+<rect x="457" y="433" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="482.0" y="446" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><path d="M 626,444 H 758 L 774,460 V 532 H 626 Z" fill="#fff" stroke="#9aa3ad" stroke-width="1.3"/></g>
+<text x="700.0" y="474" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" fill="#2a3340">ELECTIVE</text>
+<text x="700.0" y="490" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Technical,</text>
+<text x="700.0" y="503" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Leadership OR</text>
+<text x="700.0" y="516" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Strategic</text>
+<g filter="url(#sh)"><rect x="134" y="728" width="148" height="88" rx="10" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.3"/></g>
+<text x="208.0" y="755" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">PMGT5850</text>
+<text x="208.0" y="772" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Project Management</text>
+<text x="208.0" y="785" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Capstone Project</text>
+<rect x="129" y="717" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="154.0" y="730" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><path d="M 298,728 H 430 L 446,744 V 816 H 298 Z" fill="#fff" stroke="#9aa3ad" stroke-width="1.3"/></g>
+<text x="372.0" y="758" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" fill="#2a3340">ELECTIVE</text>
+<text x="372.0" y="774" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Technical,</text>
+<text x="372.0" y="787" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Leadership OR</text>
+<text x="372.0" y="800" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Strategic</text>
+<g filter="url(#sh)"><path d="M 462,728 H 594 L 610,744 V 816 H 462 Z" fill="#fff" stroke="#9aa3ad" stroke-width="1.3"/></g>
+<text x="536.0" y="758" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" fill="#2a3340">ELECTIVE</text>
+<text x="536.0" y="774" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Technical,</text>
+<text x="536.0" y="787" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Leadership OR</text>
+<text x="536.0" y="800" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Strategic</text>
+<g filter="url(#sh)"><path d="M 626,728 H 758 L 774,744 V 816 H 626 Z" fill="#fff" stroke="#9aa3ad" stroke-width="1.3"/></g>
+<text x="700.0" y="758" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" fill="#2a3340">ELECTIVE</text>
+<text x="700.0" y="774" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Technical,</text>
+<text x="700.0" y="787" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Leadership OR</text>
+<text x="700.0" y="800" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Strategic</text>
+<g filter="url(#sh)"><rect x="904" y="132" width="148" height="88" rx="10" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.3"/></g>
+<text x="978.0" y="159" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">PMGT5205</text>
+<text x="978.0" y="176" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Professional</text>
+<text x="978.0" y="189" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Project Practice</text>
+<rect x="899" y="121" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="924.0" y="134" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="1068" y="132" width="148" height="88" rx="10" fill="#90CAF9" stroke="#1565C0" stroke-width="1.3"/></g>
+<text x="1142.0" y="159" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#0D2137">PMGT5811</text>
+<text x="1142.0" y="176" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#0D2137">Critical and</text>
+<text x="1142.0" y="189" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#0D2137">Systems Thinking</text>
+<rect x="1063" y="121" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1088.0" y="134" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="1232" y="132" width="148" height="88" rx="10" fill="#FFC107" stroke="#F57F17" stroke-width="1.3"/></g>
+<text x="1306.0" y="159" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#3d2600">PMGT5858</text>
+<text x="1306.0" y="176" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#3d2600">Project Initiation</text>
+<rect x="1227" y="121" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1252.0" y="134" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<clipPath id="cl1396_132"><rect x="1396" y="132" width="148" height="88" rx="10"/></clipPath>
+<g filter="url(#sh)"><rect x="1396" y="132" width="148" height="88" rx="10" fill="#B2DFDB" stroke="#26A69A" stroke-width="1.3"/></g>
+<g clip-path="url(#cl1396_132)"><polygon points="1396,132 1544,132 1396,220" fill="#FFD9A6"/></g>
+<line x1="1396" y1="220" x2="1544" y2="132" stroke="#fff" stroke-width="1.6"/>
+<rect x="1396" y="132" width="148" height="88" rx="10" fill="none" stroke="#26A69A" stroke-width="1.3"/>
+<text x="1470.0" y="159" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#23311e">PMGT5862</text>
+<text x="1470.0" y="176" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#1b332e">Introduction to</text>
+<text x="1470.0" y="189" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#1b332e">Research in</text>
+<text x="1470.0" y="202" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#1b332e">Project Studies</text>
+<rect x="1391" y="121" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1416.0" y="134" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="904" y="444" width="148" height="88" rx="10" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.3"/></g>
+<text x="978.0" y="471" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">PMGT5820</text>
+<text x="978.0" y="488" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Execution and</text>
+<text x="978.0" y="501" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Acceptance</text>
+<rect x="899" y="433" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="924.0" y="446" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="1068" y="444" width="148" height="88" rx="10" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.3"/></g>
+<text x="1142.0" y="471" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">PMGT5871</text>
+<text x="1142.0" y="488" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Project Planning</text>
+<rect x="1063" y="433" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1088.0" y="446" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="1232" y="444" width="148" height="88" rx="10" fill="#90CAF9" stroke="#1565C0" stroke-width="1.3"/></g>
+<text x="1306.0" y="471" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#0D2137">PMGT5872</text>
+<text x="1306.0" y="488" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#0D2137">People and</text>
+<text x="1306.0" y="501" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#0D2137">Communications</text>
+<rect x="1227" y="433" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1252.0" y="446" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="1396" y="444" width="148" height="88" rx="10" fill="#B2DFDB" stroke="#26A69A" stroke-width="1.3"/></g>
+<text x="1470.0" y="471" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#00413b">PMGT5883</text>
+<text x="1470.0" y="488" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#00413b">Project Studies</text>
+<text x="1470.0" y="501" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#00413b">Thesis A</text>
+<rect x="1391" y="433" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1416.0" y="446" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><rect x="904" y="728" width="148" height="88" rx="10" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.3"/></g>
+<text x="978.0" y="755" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">PMGT5850</text>
+<text x="978.0" y="772" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Project Management</text>
+<text x="978.0" y="785" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#ffffff">Capstone Project</text>
+<rect x="899" y="717" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="924.0" y="730" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><path d="M 1068,728 H 1200 L 1216,744 V 816 H 1068 Z" fill="#fff" stroke="#9aa3ad" stroke-width="1.3"/></g>
+<text x="1142.0" y="758" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" fill="#2a3340">ELECTIVE</text>
+<text x="1142.0" y="774" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Technical,</text>
+<text x="1142.0" y="787" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Leadership OR</text>
+<text x="1142.0" y="800" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Strategic</text>
+<g filter="url(#sh)"><path d="M 1232,728 H 1364 L 1380,744 V 816 H 1232 Z" fill="#fff" stroke="#9aa3ad" stroke-width="1.3"/></g>
+<text x="1306.0" y="758" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" fill="#2a3340">ELECTIVE</text>
+<text x="1306.0" y="774" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Technical,</text>
+<text x="1306.0" y="787" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Leadership OR</text>
+<text x="1306.0" y="800" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-style="italic" fill="#2a3340">Strategic</text>
+<g filter="url(#sh)"><rect x="1396" y="728" width="148" height="88" rx="10" fill="#B2DFDB" stroke="#26A69A" stroke-width="1.3"/></g>
+<text x="1470.0" y="755" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="700" fill="#00413b">PMGT5884</text>
+<text x="1470.0" y="772" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#00413b">Project Studies</text>
+<text x="1470.0" y="785" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" fill="#00413b">Thesis B</text>
+<rect x="1391" y="717" width="50" height="19" rx="9" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1416.0" y="730" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><path d="M 1576,92 H 1676 L 1688,104 V 180 H 1576 Z" fill="#C8E6C9" stroke="#4CAF50" stroke-width="1.1"/></g>
+<text x="1632.0" y="118" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1b4d1c">PMGT5873</text>
+<text x="1632.0" y="132" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Project</text>
+<text x="1632.0" y="143" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Economics and</text>
+<text x="1632.0" y="154" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Procurement</text>
+<rect x="1571" y="82" width="28" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1585.0" y="94" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S1</text>
+<g filter="url(#sh)"><path d="M 1700,92 H 1800 L 1812,104 V 180 H 1700 Z" fill="#DDEEFF" stroke="#5B9BD5" stroke-width="1.1"/></g>
+<text x="1756.0" y="118" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1a3a5c">COMP9208</text>
+<text x="1756.0" y="132" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Artificial</text>
+<text x="1756.0" y="143" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Intelligence</text>
+<text x="1756.0" y="154" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">and Society</text>
+<rect x="1695" y="82" width="28" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1709.0" y="94" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S1</text>
+<clipPath id="es2_92"><path d="M 1824,92 H 1924 L 1936,104 V 180 H 1824 Z"/></clipPath>
+<g filter="url(#sh)"><path d="M 1824,92 H 1924 L 1936,104 V 180 H 1824 Z" fill="#B2DFDB" stroke="#26A69A" stroke-width="1.1"/></g>
+<g clip-path="url(#es2_92)"><polygon points="1824,92 1936,92 1824,180" fill="#FFD9A6"/></g>
+<g clip-path="url(#es2_92)"><line x1="1824" y1="180" x2="1936" y2="92" stroke="#fff" stroke-width="1.5"/></g>
+<path d="M 1824,92 H 1924 L 1936,104 V 180 H 1824 Z" fill="none" stroke="#26A69A" stroke-width="1.1"/>
+<text x="1880.0" y="118" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#23311e">PMGT5862</text>
+<text x="1880.0" y="132" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b332e">Introduction to</text>
+<text x="1880.0" y="143" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b332e">Research Studies</text>
+<rect x="1819" y="82" width="44" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1841.0" y="94" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><path d="M 1576,212 H 1676 L 1688,224 V 300 H 1576 Z" fill="#C8E6C9" stroke="#4CAF50" stroke-width="1.1"/></g>
+<text x="1632.0" y="238" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1b4d1c">PMGT5895</text>
+<text x="1632.0" y="252" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Contracts</text>
+<text x="1632.0" y="263" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Management</text>
+<rect x="1571" y="202" width="28" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1585.0" y="214" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S1</text>
+<g filter="url(#sh)"><path d="M 1700,212 H 1800 L 1812,224 V 300 H 1700 Z" fill="#DDEEFF" stroke="#5B9BD5" stroke-width="1.1"/></g>
+<text x="1756.0" y="238" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1a3a5c">PMGT5876</text>
+<text x="1756.0" y="252" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Change</text>
+<text x="1756.0" y="263" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Implementation</text>
+<rect x="1695" y="202" width="28" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1709.0" y="214" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S1</text>
+<g filter="url(#sh)"><path d="M 1824,212 H 1924 L 1936,224 V 300 H 1824 Z" fill="#FFD9A6" stroke="#E8834A" stroke-width="1.1"/></g>
+<text x="1880.0" y="238" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#6b2d0a">PMGT5891</text>
+<text x="1880.0" y="252" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#6b2d0a">Strategic Risk</text>
+<text x="1880.0" y="263" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#6b2d0a">Management</text>
+<rect x="1819" y="202" width="44" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1841.0" y="214" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><path d="M 1576,332 H 1676 L 1688,344 V 420 H 1576 Z" fill="#C8E6C9" stroke="#4CAF50" stroke-width="1.1"/></g>
+<text x="1632.0" y="358" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1b4d1c">PMGT5887</text>
+<text x="1632.0" y="372" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Computer</text>
+<text x="1632.0" y="383" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Applications</text>
+<rect x="1571" y="322" width="44" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1593.0" y="334" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<g filter="url(#sh)"><path d="M 1700,332 H 1800 L 1812,344 V 420 H 1700 Z" fill="#DDEEFF" stroke="#5B9BD5" stroke-width="1.1"/></g>
+<text x="1756.0" y="358" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1a3a5c">PMGT5875</text>
+<text x="1756.0" y="372" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Project</text>
+<text x="1756.0" y="383" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Innovation</text>
+<text x="1756.0" y="394" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Management</text>
+<rect x="1695" y="322" width="28" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1709.0" y="334" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S2</text>
+<g filter="url(#sh)"><path d="M 1824,332 H 1924 L 1936,344 V 420 H 1824 Z" fill="#FFD9A6" stroke="#E8834A" stroke-width="1.1"/></g>
+<text x="1880.0" y="358" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#6b2d0a">PMGT5896</text>
+<text x="1880.0" y="372" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#6b2d0a">Sustainable</text>
+<text x="1880.0" y="383" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#6b2d0a">Project Practice</text>
+<rect x="1819" y="322" width="28" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1833.0" y="334" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S2</text>
+<g filter="url(#sh)"><path d="M 1576,452 H 1676 L 1688,464 V 540 H 1576 Z" fill="#C8E6C9" stroke="#4CAF50" stroke-width="1.1"/></g>
+<text x="1632.0" y="478" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1b4d1c">PMGT5889</text>
+<text x="1632.0" y="492" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Project</text>
+<text x="1632.0" y="503" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Controls</text>
+<rect x="1571" y="442" width="28" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1585.0" y="454" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S2</text>
+<rect x="1700" y="426" width="112" height="17" rx="5" fill="#eaf5e6" stroke="#8bbf7a" stroke-width="0.8"/>
+<text x="1756.0" y="433" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="6" font-weight="700" fill="#3a5a2a">P 48cp, WAM ≥75 &amp;</text>
+<text x="1756.0" y="439" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="6" font-weight="700" fill="#3a5a2a">Director Approval</text>
+<g filter="url(#sh)"><path d="M 1700,452 H 1800 L 1812,464 V 540 H 1700 Z" fill="#C8E6C9" stroke="#4CAF50" stroke-width="1.1"/></g>
+<text x="1756.0" y="478" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1b4d1c">PMGT6885</text>
+<text x="1756.0" y="492" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Project</text>
+<text x="1756.0" y="503" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Placement</text>
+<text x="1756.0" y="514" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Special Topic</text>
+<rect x="1695" y="442" width="44" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.8"/>
+<text x="1717.0" y="454" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.5" font-weight="700" fill="#3a3000">S1 + S2</text>
+<rect x="1576" y="566" width="220" height="32" rx="8" fill="#fff" stroke="#222" stroke-width="1.2"/>
+<text x="1686" y="587" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="14" font-weight="700" fill="#1a1a1a">Not offered in 2026</text>
+<g filter="url(#sh)"><path d="M 1576,624 H 1676 L 1688,636 V 720 H 1576 Z" fill="#C8E6C9" stroke="#4CAF50" stroke-width="1.1"/></g>
+<text x="1632.0" y="654" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1b4d1c">PMGT5866</text>
+<text x="1632.0" y="668" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Quantitative</text>
+<text x="1632.0" y="679" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Methods: Project</text>
+<text x="1632.0" y="690" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1b4d1c">Management</text>
+<rect x="1574" y="613" width="116" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1632.0" y="625" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" font-weight="700" fill="#5a3000">LAST OFFERED 2023</text>
+<g filter="url(#sh)"><path d="M 1700,624 H 1800 L 1812,636 V 720 H 1700 Z" fill="#DDEEFF" stroke="#5B9BD5" stroke-width="1.1"/></g>
+<text x="1756.0" y="654" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#1a3a5c">PMGT6888</text>
+<text x="1756.0" y="668" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">International</text>
+<text x="1756.0" y="679" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Project Study</text>
+<text x="1756.0" y="690" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#1a3a5c">Tour</text>
+<rect x="1698" y="613" width="116" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1756.0" y="625" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" font-weight="700" fill="#5a3000">LAST OFFERED 2024</text>
+<g filter="url(#sh)"><path d="M 1824,624 H 1924 L 1936,636 V 720 H 1824 Z" fill="#FFD9A6" stroke="#E8834A" stroke-width="1.1"/></g>
+<text x="1880.0" y="654" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#6b2d0a">PMGT5886</text>
+<text x="1880.0" y="668" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#6b2d0a">System Dynamics</text>
+<text x="1880.0" y="679" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" fill="#6b2d0a">Modelling for PM</text>
+<rect x="1822" y="613" width="116" height="17" rx="8" fill="#FBF3B0" stroke="#C9A93A" stroke-width="0.9"/>
+<text x="1880.0" y="625" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="8.2" font-weight="700" fill="#5a3000">LAST OFFERED 2024</text>
+<rect x="40" y="908" width="158" height="32" rx="7" fill="#4CAF50" stroke="#2E7D32" stroke-width="1"/>
+<text x="119.0" y="929" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="700" fill="#ffffff">CORE – Technical</text>
+<rect x="208" y="908" width="168" height="32" rx="7" fill="#90CAF9" stroke="#1565C0" stroke-width="1"/>
+<text x="292.0" y="929" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="700" fill="#0D2137">CORE – Leadership</text>
+<rect x="386" y="908" width="158" height="32" rx="7" fill="#FFC107" stroke="#F57F17" stroke-width="1"/>
+<text x="465.0" y="929" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="700" fill="#3d2600">CORE – Strategic</text>
+<rect x="554" y="908" width="168" height="32" rx="7" fill="#B2DFDB" stroke="#26A69A" stroke-width="1"/>
+<text x="638.0" y="929" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="700" fill="#00413b">Research Pathway</text>
+<rect x="732" y="908" width="128" height="32" rx="7" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="796.0" y="929" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="700" fill="#2a3340">Elective – ALL</text>
+<rect x="870" y="908" width="178" height="32" rx="7" fill="#C8E6C9" stroke="#4CAF50" stroke-width="1"/>
+<text x="959.0" y="929" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="700" fill="#1b4d1c">ELECTIVE – Technical</text>
+<rect x="1058" y="908" width="192" height="32" rx="7" fill="#DDEEFF" stroke="#5B9BD5" stroke-width="1"/>
+<text x="1154.0" y="929" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="700" fill="#1a3a5c">ELECTIVE – Leadership</text>
+<rect x="1260" y="908" width="186" height="32" rx="7" fill="#FFD9A6" stroke="#E8834A" stroke-width="1"/>
+<text x="1353.0" y="929" text-anchor="middle" font-family="'Apercu Pro','Apercu',ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="700" fill="#6b2d0a">ELECTIVE – Strategic</text>
+</svg></div></div>
+      <div class="pathways" id="pathways"></div>
+      <p class="flexnote" style="margin:6px 0 16px">Each semester is 24cp (4 units). Both pathways take all 7 core units; coursework adds 5 electives, research adds the 3 thesis units (5862 → 5883 → 5884) plus 2 electives.</p>
+
+      <div class="eyebrow" style="margin:18px 0 12px"><span class="seq">b</span> Prerequisite dependency map</div>
+      <div class="card"><div class="svgwrap" id="depMap"></div></div>
+
+      <div class="eyebrow" style="margin:18px 0 12px"><span class="seq">c</span> Available electives</div>
+      <p class="flexnote" style="margin:0 0 12px">The elective slots above are filled from this pool, grouped by discipline. Thesis units (research pathway) are listed separately.</p>
+      <div class="card" id="availElectives"></div>
+    </section>
+
+    <!-- 2 UNIT AVAILABILITY -->
+    <section class="view" data-view="2" hidden>
+      <div class="eyebrow"><span class="seq">02</span> When units run</div>
+      <h1 class="page">Unit availability</h1>
+      <p class="lede">A record of when units are currently offered across the academic year, and the changes to core and elective availability proposed at the workshop.</p>
+
+      <div class="eyebrow" style="margin:6px 0 12px"><span class="seq">a</span> Core units · expected every semester</div>
+      <div class="card" id="availCore"></div>
+      <div class="wrec">
+        <div class="wrec-lab"><span class="ic">🗣</span> Workshop discussion — core unit availability</div>
+        <p>The group proposed changing several core units to one semester of availability per year:</p>
+        <ul>
+          <li>PMGT5858 — Project Initiation</li>
+          <li>PMGT5811 — Critical and Systems Thinking</li>
+          <li>PMGT5820 — Execution and Acceptance</li>
+          <li>PMGT5871 — Project Planning</li>
+          <li>PMGT5872 — People and Communications</li>
+        </ul>
+        <p>This change could support more efficient staffing and unit delivery. However, the group noted that timetabling constraints may arise, as fewer offerings would result in larger class sizes. Venue availability may therefore need to be reviewed before progressing this change.</p>
+        <p>There was also discussion about keeping PMGT5872 available in both semesters rather than moving it to a single semester, given its potential role as an alternative to PMGT5811 in the first-semester sequence (see Prerequisite Units — Group A).</p>
+        <a class="explore-btn" href="https://usydsopm.github.io/curriculumreview/" target="_blank" rel="noopener"><span class="emo">🔍</span> Explore proposal 1 in further detail</a>
+      </div>
+
+      <div class="eyebrow" style="margin:22px 0 12px"><span class="seq">b</span> Elective units · by semester offered</div>
+      <div id="availElecBySem"></div>
+      <div class="wrec">
+        <div class="wrec-lab"><span class="ic">🗣</span> Workshop discussion — elective availability</div>
+        <p>The group also proposed reducing availability for selected electives:</p>
+        <ul>
+          <li>PMGT5891 — Strategic Risk Management — one semester only</li>
+          <li>PMGT5887 — Computer Applications — one semester only</li>
+        </ul>
+        <p>It was noted that, apart from PMGT6885 (Project Placement Special Topic), PMGT5891 and PMGT5887 are the only electives currently offered in both semesters.</p>
+        <a class="explore-btn" href="https://usydsopm.github.io/curriculumreview/" target="_blank" rel="noopener"><span class="emo">🔍</span> Explore proposal 2 in further detail</a>
+      </div>
+    </section>
+
+    <!-- 3 PREREQ -->
+    <section class="view" data-view="3" hidden>
+      <div class="eyebrow"><span class="seq">03</span> Grouped by shared prerequisite</div>
+      <h1 class="page">Units with prerequisites</h1>
+      <p class="lede">Units grouped below by shared prerequisite, with the decision reached at the workshop for each group. There are currently three core units with prerequisites, two thesis units with prerequisites, and two electives with prerequisites.</p>
+      <div id="prereqGroups"></div>
+    </section>
+
+    <!-- 4 NO PREREQ -->
+    <section class="view" data-view="4" hidden>
+      <div class="eyebrow"><span class="seq">04</span> Confirm the open doors</div>
+      <h1 class="page">Units with no prerequisites</h1>
+      <p class="lede">Units that currently have no prerequisites, and the workshop's review of whether each should remain open-entry or be flagged for prerequisite consideration.</p>
+      <div class="grid2" id="noPrereqGrid"></div>
+    </section>
+
+    <!-- 5 MATRIX -->
+    <section class="view" data-view="5" hidden>
+      <div class="eyebrow"><span class="seq">05</span> Collection &amp; status</div>
+      <h1 class="page">Core vs elective split</h1>
+      <p class="lede">The current balance between core and elective units, split across technical, leadership and strategic disciplines, and the reclassification changes proposed at the workshop.</p>
+      <div id="legendMatrix"></div>
+      <div id="matrixWrap"></div>
+      <div class="thesis-strip">
+        <div class="eyebrow" style="margin-bottom:4px"><span class="seq">+</span> Research / Thesis pathway</div>
+        <p style="font-size:13px;color:var(--muted);margin:0">Sits outside the core/elective grid. PMGT5862 doubles as a strategic elective in the coursework pathway.</p>
+        <div class="units" id="thesisUnits"></div>
+      </div>
+      <div class="card" id="movesCard" style="margin-top:18px">
+        <div class="eyebrow" style="margin-bottom:12px"><span class="seq">proposed</span> Proposed core / elective changes</div>
+        <div id="movesList"></div>
+      </div>
+      <div class="wrec">
+        <div class="wrec-lab"><span class="ic">🗣</span> Workshop discussion — core &amp; elective changes</div>
+        <p>Further review is required to ensure that any replacement for PMGT5811 as a core unit appropriately addresses the required program learning outcomes and unit learning outcomes.</p>
+        <div class="locked-note">🔒 Proposal 8 has been locked as part of “Major Curriculum Changes” — owned by <b>Oliver Young</b> and the Curriculum team, with changes to be implemented in <b>2028</b>.</div>
+        <a class="explore-btn" href="https://usydsopm.github.io/curriculumreview/" target="_blank" rel="noopener"><span class="emo">🔍</span> Explore proposal 8 in further detail</a>
+      </div>
+    </section>
+
+    <!-- 6 RATIONALISE -->
+    <section class="view" data-view="6" hidden>
+      <div class="eyebrow"><span class="seq">06</span> Condense &amp; simplify</div>
+      <h1 class="page">Rationalise units of study</h1>
+      <p class="lede">Opportunities to simplify or rationalise the course structure identified at the workshop, including a proposed unit merge and unit naming/content changes.</p>
+      <div class="card">
+        <div class="counter">
+          <div class="stat"><span class="v" id="cntBefore">0</span><span class="k">Units now</span></div>
+          <span class="arrow">→</span>
+          <div class="stat"><span class="v" id="cntAfter" style="color:var(--keep)">0</span><span class="k">After merges</span></div>
+          <span class="delta" id="cntDelta"></span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px"><span class="seq">a</span> Proposed unit merge</div>
+        <div class="merge-list" id="mergeList"></div>
+        <div class="wrec" style="margin-top:14px">
+          <div class="wrec-lab"><span class="ic">🗣</span> Workshop discussion — proposed merge</div>
+          <p>The group identified a potential merge involving PMGT5858, PMGT5820 and PMGT5871. The proposed merged unit name is still to be confirmed.</p>
+          <p>The rationale for the merge is to check what is covered across these units and remove overlap. If progressed, the catalogue size would reduce from 22 units to 20 units.</p>
+          <div class="locked-note">🔒 Proposal 9 has been locked as part of “Major Curriculum Changes” — owned by <b>Oliver Young</b> and the Curriculum team, with changes to be implemented in <b>2028</b>.</div>
+          <a class="explore-btn" href="https://usydsopm.github.io/curriculumreview/" target="_blank" rel="noopener"><span class="emo">🔍</span> Explore proposal 9 in further detail</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px"><span class="seq">b</span> Unit naming &amp; content changes</div>
+        <div class="wrec">
+          <div class="wrec-lab"><span class="ic">🗣</span> Workshop discussion — unit naming &amp; content</div>
+          <p><b>PMGT5205</b> — does not currently cover Professional Project Practice in the way the title may suggest. A name change should be explored: possible names discussed were <i>Introduction to Professional Project Practice</i> or <i>Introduction to Project Management</i>. The group also noted several professional practice concepts — including dilemmas and ethics — do not currently receive enough attention.</p>
+          <p><b>PMGT5811</b> — identified as a difficult unit for first-semester students, particularly students from ESL backgrounds. There was discussion about whether it should move from core to elective status (see Core vs elective split), and whether the replacement core unit would still cover the necessary program and unit learning outcomes.</p>
+          <p><b>PMGT5886</b> — discussed changing the name from <i>System Dynamics Modelling for PM</i> to <i>Systems Thinking in Projects</i>, and moving it from elective to core status (see Core vs elective split).</p>
+          <p><b>PMGT5887</b> — discussed revamping the unit to incorporate AI and project technologies, alongside a possible name change.</p>
+          <p><b>PMGT5895</b> — discussed whether <i>Contracts Management</i> should be renamed to incorporate Project Procurement.</p>
+          <a class="explore-btn" href="https://usydsopm.github.io/curriculumreview/" target="_blank" rel="noopener"><span class="emo">🔍</span> Explore proposal 7 in further detail</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 SUMMARY -->
+    <section class="view" data-view="7" hidden>
+      <div class="eyebrow"><span class="seq">07</span> Take it away</div>
+      <h1 class="page">Summary &amp; key risks</h1>
+      <p class="lede">A concise summary of the key decisions reached at the workshop, area by area, plus the key risks and considerations flagged for follow-up.</p>
+      <div id="summary"></div>
+      <div class="wrec">
+        <div class="wrec-lab"><span class="ic">⚑</span> Key risks and considerations</div>
+        <ul>
+          <li>Reduced unit availability may create larger classes.</li>
+          <li>Larger classes may create venue and timetabling constraints.</li>
+          <li>Any structural change must still support Graduate Certificate and Graduate Diploma pathways.</li>
+          <li>Curriculum sequencing needs further review to determine whether content should be delivered in a more scaffolded order.</li>
+          <li>Continuing academic ownership of units is important for curriculum quality and consistency.</li>
+          <li>Units taught without continuing academic ownership may be harder to manage.</li>
+          <li>Changes to PMGT5811 must preserve essential program learning outcomes and unit learning outcomes.</li>
+          <li>Changes to prerequisites must support student progression without allowing students to enrol in advanced units too early.</li>
+        </ul>
+      </div>
+      <div class="dash-cta">
+        <div class="dc-text">
+          <div class="dc-h">🔍 Want the full picture?</div>
+          <p>Every proposal here — benefits, risks and recommendations — is being built out in the Proposal Dashboard.</p>
+        </div>
+        <a href="https://usydsopm.github.io/curriculumreview/" target="_blank" rel="noopener">Explore the proposal dashboard</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   COLLECTIONS — dot colours matched to your UoS table
+   ============================================================ */
+const COLLECTIONS = {
+  'core-technical'   : {label:'Core · Technical',      dot:'var(--d-core-tech)',  status:'core',     disc:'technical'},
+  'core-leadership'  : {label:'Core · Leadership',     dot:'var(--d-core-lead)',  status:'core',     disc:'leadership'},
+  'core-strategic'   : {label:'Core · Strategic',      dot:'var(--d-core-strat)', status:'core',     disc:'strategic'},
+  'elective-technical':{label:'Elective · Technical',  dot:'var(--d-elec-tech)',  status:'elective', disc:'technical'},
+  'elective-strategic':{label:'Elective · Strategic',  dot:'var(--d-elec-strat)', status:'elective', disc:'strategic'},
+  'elective-leadership':{label:'Elective · Leadership',dot:'var(--d-elec-lead)',  status:'elective', disc:'leadership'},
+  'thesis'           : {label:'Thesis / Research',     dot:'var(--d-thesis)',     status:'thesis',   disc:'research'},
+};
+const SEMS=[{key:'Y1S1',label:'Y1 · S1'},{key:'Y1S2',label:'Y1 · S2'},{key:'Y2S1',label:'Y2 · S1'}];
+
+/* ============================================================
+   PROPOSALS — status tracker + links into the proposal dashboard
+   (usydsopm.github.io/curriculumreview/) which is under separate
+   construction; anchors below are placeholders to be updated once
+   those pages exist.
+   ============================================================ */
+const DASHBOARD_BASE='https://usydsopm.github.io/curriculumreview/';
+const PROPOSALS=[
+  {n:'1', title:'Core unit availability', checked:true, desc:'Overview, Unit Enrolment Figures, Class Size, Progression Planner (MPM + mirrored Grad Cert/Grad Dip), Transition Plan, Recommendations & Concerns'},
+  {n:'2', title:'Elective availability', checked:true, desc:'Before/after visual, scenario toggle, rested-unit striping'},
+  {n:'3', title:'Prerequisite removal (core)', checked:false, desc:'Group A — PMGT5871, PMGT5820'},
+  {n:'4', title:'PMGT6885 prerequisite reduction', checked:false, desc:'Group C — PMGT6885'},
+  {n:'5', title:'Research pathway sequencing', checked:true, desc:'Before/after visual, discussion & recommendation (not recommended, prerequisite retained)'},
+  {n:'6', title:'New elective prerequisites', checked:false, desc:'PMGT5889, PMGT5887, PMGT5886 — flagged for prerequisite review'},
+  {n:'7', title:'Unit naming & content', checked:false, desc:'PMGT5205, PMGT5811, PMGT5886, PMGT5887, PMGT5895'},
+  {n:'8-9', title:'Core/elective reclassification &amp; unit consolidation', checked:true, desc:'Locked as “Major Curriculum Changes” — owned by Oliver Young and the Curriculum team, with changes to be implemented in 2028', locked:true},
+];
+function exploreBtn(anchor,label){return `<a class="explore-btn" href="${DASHBOARD_BASE}" target="_blank" rel="noopener"><span class="emo">🔍</span> Explore proposal ${label} in further detail</a>`;}
+
+/* ============================================================
+   UNITS — University of Sydney MPM (from your UoS table + screenshots)
+   semester = typical place in degree (cores fixed; electives flexible/null)
+   offered  = recurring availability (S1 / S2)
+   prereqText = human-readable requirement; prereqUnits = codes for the map
+   ============================================================ */
+const PRQ_AB = '(PMGT5205 or ENGG5205) and PMGT5858 and (PMGT5811 or ENGG5811)';
+const UNITS=[
+  // ---- Core ----
+  {code:'PMGT5205', name:'Professional Project Practice', coll:'core-technical', offered:['S1','S2'], semester:'Y1S1', prereqText:'', prereqUnits:[], note:'Prohibition: N ENGG5205'},
+  {code:'PMGT5871', name:'Project Planning', coll:'core-technical', offered:['S1','S2'], semester:'Y1S2', prereqText:PRQ_AB, prereqUnits:['PMGT5205','PMGT5858','PMGT5811'], note:'Prohibition: N PMGT6871'},
+  {code:'PMGT5820', name:'Execution and Acceptance', coll:'core-technical', offered:['S1','S2'], semester:'Y1S2', prereqText:PRQ_AB, prereqUnits:['PMGT5205','PMGT5858','PMGT5811'], note:'Prohibition: N ENGG5820'},
+  {code:'PMGT5850', name:'Project Management Capstone Project', coll:'core-technical', offered:['S1','S2'], semester:'Y2S1', prereqText:'36 credit points of Core units of study', prereqUnits:[], gate:'36 cp of Core units', note:'Capstone — final semester'},
+  {code:'PMGT5811', name:'Critical and Systems Thinking', coll:'core-leadership', offered:['S1','S2'], semester:'Y1S1', prereqText:'', prereqUnits:[], note:'Prohibition: N ENGG5811'},
+  {code:'PMGT5872', name:'People and Communications', coll:'core-leadership', offered:['S1','S2'], semester:'Y1S2', prereqText:'', prereqUnits:[], note:'Prohibition: N PMGT6872'},
+  {code:'PMGT5858', name:'Project Initiation', coll:'core-strategic', offered:['S1','S2'], semester:'Y1S1', prereqText:'', prereqUnits:[], note:''},
+
+  // ---- Technical electives ----
+  {code:'PMGT5895', name:'Contracts Management', coll:'elective-technical', offered:['S1'], semester:null, prereqText:'', prereqUnits:[], note:''},
+  {code:'PMGT5873', name:'Project Economics and Procurement', coll:'elective-technical', offered:['S1'], semester:null, prereqText:'', prereqUnits:[], note:'Prohibition: N PMGT6873'},
+  {code:'PMGT5889', name:'Project Controls', coll:'elective-technical', offered:['S2'], semester:null, prereqText:'', prereqUnits:[], note:''},
+  {code:'PMGT5887', name:'Computer Applications', coll:'elective-technical', offered:['S1','S2'], semester:null, prereqText:'', prereqUnits:[], note:''},
+  {code:'PMGT5866', name:'Quantitative Methods in Project Management', coll:'elective-technical', offered:['S2'], semester:null, prereqText:'', prereqUnits:[], note:'', flag:'Not offered since 2023'},
+  {code:'PMGT6885', name:'Project Placement Special Topic', coll:'elective-technical', multiDisc:true, offered:['S1','S2'], semester:'Y2S1', prereqText:'48 cp of 5000/6000-level units, WAM ≥75, and Director approval', prereqUnits:[], gate:'48 cp (5000/6000) · WAM ≥75 · Director approval', note:'Discipline varies by topic'},
+
+  // ---- Strategic electives ----
+  {code:'PMGT5896', name:'Sustainable Project Practice', coll:'elective-strategic', offered:['S2'], semester:null, prereqText:'', prereqUnits:[], note:'Prohibition: N PMGT5888'},
+  {code:'PMGT5891', name:'Strategic Risk Management', coll:'elective-strategic', offered:['S1','S2'], semester:null, prereqText:'', prereqUnits:[], note:'Prohibition: N PMGT6891'},
+  {code:'PMGT5886', name:'System Dynamics Modelling for PM', coll:'elective-strategic', offered:['S2'], semester:null, prereqText:'', prereqUnits:[], note:'', flag:'Last offered in 2024'},
+  {code:'PMGT5862', name:'Introduction to Research in Project Studies', coll:'elective-strategic', offered:['S1','S2'], semester:null, prereqText:'', prereqUnits:[], dual:'research', note:'Prohibition: N PMGT5882 · Strategic elective (coursework) / research-pathway entry, S1'},
+
+  // ---- Leadership electives ----
+  {code:'PMGT5875', name:'Project Innovation Management', coll:'elective-leadership', offered:['S2'], semester:null, prereqText:'', prereqUnits:[], note:''},
+  {code:'PMGT5876', name:'Change Implementation', coll:'elective-leadership', offered:['S1'], semester:null, prereqText:'', prereqUnits:[], note:'Prohibition: N WORK6026'},
+  {code:'PMGT6888', name:'International Project Study Tour', coll:'elective-leadership', offered:['S2'], semester:null, takenLabel:'Y1 · S2 or Y2 · S1', prereqText:'24 credit points completed with WAM ≥65', prereqUnits:[], gate:'24 cp · WAM ≥65', note:'', flag:'Not offered since 2024'},
+
+  // ---- Thesis / Research ----
+  {code:'PMGT5883', name:'Project Studies Thesis A', coll:'thesis', offered:['S1','S2'], semester:'Y1S2', prereqText:'PMGT5862', prereqUnits:['PMGT5862'], note:'Assumed: ≥80 in PMGT5862 and WAM ≥75'},
+  {code:'PMGT5884', name:'Project Studies Thesis B', coll:'thesis', offered:['S1','S2'], semester:'Y2S1', prereqText:'PMGT5883 and PMGT5862', prereqUnits:['PMGT5883','PMGT5862'], note:''},
+];
+const byCode=Object.fromEntries(UNITS.map(u=>[u.code,u]));
+
+/* prerequisite groups — explicit so Thesis A & B sit together in Group E
+   decision/discussion/correction reflect the workshop record (24 Jun 2026) */
+const PREREQ_GROUPS=[
+  {id:'A', label:'Group A', req:'(PMGT5205 or ENGG5205) and PMGT5858 and (PMGT5811 or ENGG5811)', units:['PMGT5871','PMGT5820'],
+    proposal:'3',
+    decision:'remove',
+    correction:'The workshop record for Group A originally listed PMGT5872 alongside PMGT5871 and PMGT5820 as sharing this prerequisite. PMGT5872 has no prerequisite and was not part of this group — it has been removed from Group A here. The discussion below about replacing PMGT5811 with PMGT5872 in the semester 1 sequence is unrelated to Group A\'s prerequisite and has been kept as recorded.',
+    discussion:[
+      'The group supported removing the current prerequisite requirements for this group of units, alongside a broader change to unit availability. This could help open up the offering of new courses and reduce barriers to student progression.',
+      'However, PMGT5205 should remain as a corequisite to ensure students complete it in their first semester.',
+      'The group also discussed whether PMGT5820 Execution and Acceptance should be pushed to Year 2, Semester 1. PMGT5858 Project Initiation was seen as logically preceding PMGT5820, as Project Initiation should be completed before Project Execution and Acceptance.',
+      'PMGT5811 was identified as a high barrier for many first-semester students, particularly students from ESL backgrounds. The group discussed whether it could be replaced in the first semester sequence with an easier, high-communication unit such as PMGT5872.',
+      'One possible sequence discussed was — Semester 1: PMGT5205, PMGT5858, and either PMGT5872 or PMGT5811. Semester 2: PMGT5820, PMGT5871, and either PMGT5872 or PMGT5811.',
+      'Related to this, the group discussed keeping PMGT5872 available in both semesters (see Unit Availability), rather than moving it to a single semester like the other core units.'
+    ]},
+  {id:'B', label:'Group B', req:'36 credit points of Core units of study', units:['PMGT5850'],
+    decision:'keep',
+    discussion:['The group agreed to keep the current prerequisite structure for PMGT5850.']},
+  {id:'C', label:'Group C', req:'48 cp of 5000/6000-level units · WAM ≥75 · Director approval', units:['PMGT6885'],
+    proposal:'4',
+    decision:'modify',
+    discussion:[
+      'The group discussed whether the distinction-level WAM requirement is necessary. There was support for reducing the prerequisite from 48 credit points to 24 credit points, and for considering whether the WAM threshold could be reduced from distinction level to credit level.'
+    ]},
+  {id:'D', label:'Group D', req:'24 credit points completed with WAM ≥65', units:['PMGT6888'],
+    decision:'keep',
+    discussion:[
+      'The group agreed to keep the current prerequisite structure.',
+      'There was interest in recommencing this unit next year, subject to capacity. The learning outcomes require further development.',
+      'The group noted that a similar unit at RMIT has approximately 20–30 students, while USyd previously capped enrolment at 6 students. The unit was previously managed by Lynn.',
+      'For the postgraduate version, the group discussed whether the international focus should be changed to an Australia/Sydney focus.'
+    ]},
+  {id:'E', label:'Group E', req:'Thesis A requires PMGT5862; Thesis B requires PMGT5883 and PMGT5862', units:['PMGT5883','PMGT5884'],
+    proposal:'5',
+    decision:'keep',
+    decisionNote:'(or potentially modify)',
+    discussion:[
+      'The group discussed whether the prerequisite for PMGT5862 should be changed to allow students to take PMGT5862 and PMGT5883 at the same time.',
+      'Further consideration is needed for this, as PMGT5883 currently requires a 75 WAM and 80+ in PMGT5862, which would not be possible to assess if taking the subjects together.'
+    ]},
+];
+
+/* No-prerequisite units — workshop review outcome (24 Jun 2026) */
+const NO_PREREQ_REVIEW={
+  PMGT5205:{status:'confirmed'}, PMGT5811:{status:'confirmed'}, PMGT5858:{status:'confirmed'},
+  PMGT5895:{status:'confirmed'}, PMGT5873:{status:'confirmed'}, PMGT5866:{status:'confirmed'},
+  PMGT5896:{status:'confirmed'}, PMGT5891:{status:'confirmed'}, PMGT5862:{status:'confirmed'},
+  PMGT5875:{status:'confirmed'}, PMGT5876:{status:'confirmed'},
+  PMGT5872:{status:'confirmed', correction:'PMGT5872 was not reviewed in this list at the workshop, as it was mistakenly recorded elsewhere as sharing Group A\'s prerequisite (see Prerequisite Units). It has always had no prerequisite, so it has been added here as confirmed open-entry.'},
+  PMGT5889:{status:'flagged', note:'This unit is detailed and may be difficult for students to complete in their first semester. The group discussed adding PMGT5205 as a prerequisite so it cannot be taken in the first semester.'},
+  PMGT5887:{status:'flagged', note:'The group discussed adding PMGT5205 as a prerequisite.'},
+  PMGT5886:{status:'flagged', note:'The group discussed changing the unit name to Systems Thinking in Projects.'},
+};
+
+/* Proposed core/elective reclassifications — workshop record (24 Jun 2026) */
+const PROPOSED_MOVES=[
+  {code:'PMGT5811', toDisc:'leadership', toStatus:'elective'},
+  {code:'PMGT5886', toDisc:'strategic', toStatus:'core'},
+];
+
+/* Proposed unit merge — workshop record (24 Jun 2026) */
+const PROPOSED_MERGES=[
+  {codes:['PMGT5858','PMGT5820','PMGT5871'], name:'(merged unit name to be confirmed)', rationale:'To check what is covered across these units and remove overlap.'}
+];
+
+/* pathway specimen plans (3 semesters) */
+const PATHWAYS=[
+  {name:'Coursework pathway', badge:'30cp electives', sems:[
+    {label:'Year 1 · Semester 1', units:['PMGT5205','PMGT5811','PMGT5858','ELEC']},
+    {label:'Year 1 · Semester 2', units:['PMGT5820','PMGT5871','PMGT5872','ELEC']},
+    {label:'Year 2 · Semester 1', units:['PMGT5850','ELEC','ELEC','ELEC']},
+  ]},
+  {name:'Research pathway', badge:'18cp thesis + 12cp electives', sems:[
+    {label:'Year 1 · Semester 1', units:['PMGT5205','PMGT5811','PMGT5858','PMGT5862']},
+    {label:'Year 1 · Semester 2', units:['PMGT5820','PMGT5871','PMGT5872','PMGT5883']},
+    {label:'Year 2 · Semester 1', units:['PMGT5850','PMGT5884','ELEC','ELEC']},
+  ]},
+];
+
+/* ============================================================
+   STATE (in-memory; Export saves a file)
+   ============================================================ */
+/* This tool is now a static record of the workshop held 24 Jun 2026 —
+   no in-browser state capture is needed. */
+
+/* ============================================================
+   helpers
+   ============================================================ */
+function dot(coll){return `<span class="dot" style="background:${COLLECTIONS[coll].dot}"></span>`;}
+function chipColl(u){return `<span class="chip">${dot(u.coll)}${COLLECTIONS[u.coll].label}</span>`;}
+function multiDiscBadge(){return `<span class="multidisc"><span class="dots">${dot('core-technical')}${dot('core-strategic')}${dot('core-leadership')}</span> May be Technical / Strategic / Leadership</span>`;}
+function trackHTML(u){
+  if(!u.semester) return `<div class="flexnote">Flexible — student-chosen elective slot</div>`;
+  return `<div class="track">${SEMS.map(s=>`<div class="slot ${s.key===u.semester?'taken':''}">${s.label}</div>`).join('')}</div>`;
+}
+function offeredHTML(u){
+  if(!u.offered.length) return `<div class="offered-pills"><span class="op none">not shown</span></div>`;
+  return `<div class="offered-pills">${u.offered.map(o=>`<span class="op">${o}</span>`).join('')}</div>`;
+}
+function takenTrack(u){
+  if(u.semester) return `<div class="track">${SEMS.map(s=>`<div class="slot ${s.key===u.semester?'taken':''}">${s.label}</div>`).join('')}</div>`;
+  return `<div class="track">${SEMS.map(s=>`<div class="slot open">${s.label}</div>`).join('')}</div><div class="flexnote" style="margin-top:5px">Elective — can be taken in semester 1, 2 or 3</div>`;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+const SECTIONS=[
+  {t:'Overview', d:'Objectives & agenda'},
+  {t:'Current structure', d:'Pathways & dependency map'},
+  {t:'Unit availability', d:'When units run'},
+  {t:'Prerequisite units', d:'Grouped A–E'},
+  {t:'No-prerequisite units', d:'Confirm open entry'},
+  {t:'Core vs elective', d:'Placement matrix'},
+  {t:'Rationalise', d:'Condense overlaps'},
+  {t:'Summary', d:'Decisions & export'},
+];
+let current=0;
+const nav=document.getElementById('nav');
+SECTIONS.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.className='nav-item';
+  b.innerHTML=`<span class="n">${String(i).padStart(2,'0')}</span><span class="t">${s.t}</span>`;
+  b.onclick=()=>go(i);
+  nav.appendChild(b);
+});
+const prog=document.getElementById('progress');
+SECTIONS.forEach(()=>{const s=document.createElement('span');s.className='seg';prog.appendChild(s);});
+function go(i){
+  current=i;
+  document.querySelectorAll('.view').forEach(v=>v.hidden=+v.dataset.view!==i);
+  document.querySelectorAll('.nav-item').forEach((n,k)=>n.classList.toggle('active',k===i));
+  document.querySelectorAll('.progress .seg').forEach((s,k)=>{s.classList.toggle('done',k<i);s.classList.toggle('cur',k===i);});
+  document.getElementById('crumb').textContent=`${String(i).padStart(2,'0')} · ${SECTIONS[i].t}`;
+  if(i===7)renderSummary(); if(i===5)renderMatrix();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* agenda list */
+const agenda=document.getElementById('agendaList');
+SECTIONS.slice(1).forEach((s,i)=>{
+  const li=document.createElement('li');
+  li.innerHTML=`<span class="ix">${String(i+1).padStart(2,'0')}</span><span><span class="nm">${s.t}</span><span class="ds">${s.d}</span></span><button class="go">Open →</button>`;
+  li.querySelector('.go').onclick=()=>go(i+1);
+  agenda.appendChild(li);
+});
+
+/* ============================================================
+   LEGEND
+   ============================================================ */
+function legendHTML(){
+  return `<div class="legend">${Object.keys(COLLECTIONS).map(k=>`<span class="li">${dot(k)}${COLLECTIONS[k].label}</span>`).join('')}</div>`;
+}
+document.getElementById('legendStruct').innerHTML=legendHTML();
+document.getElementById('legendMatrix').innerHTML=legendHTML();
+
+/* ============================================================
+   STRUCTURE — pathways
+   ============================================================ */
+function renderPathways(){
+  const wrap=document.getElementById('pathways');
+  wrap.innerHTML=PATHWAYS.map(p=>`
+    <div class="pathway">
+      <h4>${p.name}<span class="badge">${p.badge}</span></h4>
+      ${p.sems.map(s=>`<div class="sem"><div class="sl">${s.label}</div><div class="units">${
+        s.units.map(c=>{
+          if(c==='ELEC') return `<span class="pchip elec">Elective</span>`;
+          const u=byCode[c];
+          return `<span class="pchip" title="${u.name}">${dot(u.coll)}${u.code}</span>`;
+        }).join('')
+      }</div></div>`).join('')}
+    </div>`).join('');
+}
+
+/* available electives (structure page §c) */
+function semCirc(u){const t=u.offered.length===2?'S1 + S2':(u.offered[0]||'—');return `<span class="semcirc" title="Typically offered">${t}</span>`;}
+function renderAvailElectives(){
+  const box=document.getElementById('availElectives');
+  const discs=[['technical','Technical','elective-technical'],['leadership','Leadership','elective-leadership'],['strategic','Strategic','elective-strategic']];
+  let h='<div class="elec-cols">';
+  discs.forEach(([d,lab,ck])=>{
+    const us=UNITS.filter(u=>COLLECTIONS[u.coll].status==='elective'&&COLLECTIONS[u.coll].disc===d);
+    h+=`<div class="elec-col"><div class="ec-head">${dot(ck)} ${lab} electives <span class="ec-n">${us.length}</span></div>`;
+    h+=us.map(u=>{const tight=(u.code==='PMGT5866'||u.code==='PMGT5862')?' tight':'';return `<div class="aunit${tight}"><span class="hcode">${u.code}</span> <span class="anm">${u.name}${u.multiDisc?' <span class="ast">*</span>':''}</span>${semCirc(u)}</div>`;}).join('');
+    h+='</div>';
+  });
+  h+='</div>';
+  const th=UNITS.filter(u=>u.coll==='thesis');
+  h+=`<div class="elec-thesis"><span class="dot" style="background:var(--d-thesis)"></span> Thesis / research pathway: ${th.map(u=>`<span class="hcode">${u.code}</span> ${u.name}`).join(' · ')}</div>`;
+  h+=`<div class="mxnote">* PMGT6885 may be classed Technical, Strategic or Leadership depending on topic.</div>`;
+  box.innerHTML=h;
+}
+
+/* unit availability chapter */
+function availPills(u){return `<span class="offered-pills" style="margin:0 0 0 auto">${['S1','S2'].map(s=>`<span class="op ${u.offered.includes(s)?'':'none'}">${s}</span>`).join('')}</span>`;}
+function aunitRow(u){return `<div class="aunit">${dot(u.coll)} <span class="hcode">${u.code}</span> <span>${u.name}${u.multiDisc?' <span class="ast">*</span>':''}</span>${u.flag?`<span class="flagnote">⚑ ${u.flag}</span>`:''}</div>`;}
+function renderAvailability(){
+  const cores=UNITS.filter(u=>COLLECTIONS[u.coll].status==='core');
+  document.getElementById('availCore').innerHTML='<div class="avail-core-grid">'+cores.map(u=>`<div class="acore">${dot(u.coll)} <span class="hcode">${u.code}</span> <span class="acore-n">${u.name}</span>${availPills(u)}</div>`).join('')+'</div>';
+  const elecs=UNITS.filter(u=>COLLECTIONS[u.coll].status==='elective');
+  const s1=elecs.filter(u=>u.offered.length===1&&u.offered[0]==='S1');
+  const s2=elecs.filter(u=>u.offered.length===1&&u.offered[0]==='S2');
+  const both=elecs.filter(u=>u.offered.includes('S1')&&u.offered.includes('S2'));
+  const empty='<div class="empty">None</div>';
+  document.getElementById('availElecBySem').innerHTML=`<div class="avail-grid">
+    <div class="ag-head">Semester 1</div>
+    <div class="ag-head col2">Semester 2</div>
+    <div class="ag-cell">${s1.map(aunitRow).join('')||empty}</div>
+    <div class="ag-cell col2">${s2.map(aunitRow).join('')||empty}</div>
+    <div class="ag-both"><div class="agb-head">Offered in both semesters · S1 &amp; S2</div><div class="agb-units">${both.map(aunitRow).join('')||empty}</div></div>
+  </div><div class="mxnote">⚑ flags mark units not scheduled this year, with the year last offered.</div>`;
+}
+
+/* ============================================================
+   STRUCTURE — dependency map (SVG)
+   ============================================================ */
+function renderDepMap(){
+  const W=1080,H=740,bw=300,bh=58;
+  const nodes={
+    PMGT5205:{x:50,y:60,sub:'or ENGG5205'},
+    PMGT5858:{x:50,y:148},
+    PMGT5811:{x:50,y:236,sub:'or ENGG5811'},
+    PMGT5871:{x:480,y:60},
+    PMGT5820:{x:480,y:148},
+    PMGT5872:{x:480,y:236},
+    PMGT5862:{x:50,y:360},
+    PMGT5883:{x:415,y:360},
+    PMGT5884:{x:760,y:360},
+    PMGT5850:{x:480,y:510},
+    PMGT6885:{x:480,y:585},
+    PMGT6888:{x:480,y:660},
+  };
+  const gates={
+    g36:{x:50,y:519,w:330,label:'36 cp of Core units',to:'PMGT5850',restrict:'Final semester only (Y2 · S1)'},
+    g48:{x:50,y:594,w:330,label:'48 cp · WAM ≥75 · Director approval',to:'PMGT6885',restrict:'Final semester only (Y2 · S1)'},
+    g24:{x:50,y:669,w:330,label:'24 cp · WAM ≥65',to:'PMGT6888',restrict:'Semester 2 or 3 only'},
+  };
+  const edges=[
+    ['PMGT5205','PMGT5871'],['PMGT5205','PMGT5820'],
+    ['PMGT5858','PMGT5871'],['PMGT5858','PMGT5820'],
+    ['PMGT5811','PMGT5871'],['PMGT5811','PMGT5820'],
+    ['PMGT5862','PMGT5883'],['PMGT5883','PMGT5884'],
+  ];
+  function nodeSVG(code){
+    const n=nodes[code],u=byCode[code];
+    const col=getComputedStyle(document.documentElement).getPropertyValue(COLLECTIONS[u.coll].dot.replace('var(','').replace(')',''))||'#ccc';
+    return `<g>
+      <rect x="${n.x}" y="${n.y}" width="${bw}" height="${bh}" rx="10" fill="#fff" stroke="#ecd7c8"/>
+      <circle cx="${n.x+18}" cy="${n.y+bh/2}" r="6" fill="${col.trim()}" stroke="rgba(65,64,66,.3)"/>
+      <text x="${n.x+34}" y="${n.y+23}" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#414042">${u.code}</text>
+      <text x="${n.x+34}" y="${n.y+41}" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#8c8587">${u.name.length>34?u.name.slice(0,33)+'…':u.name}</text>
+      ${n.sub?`<text x="${n.x+bw-10}" y="${n.y+bh-9}" text-anchor="end" font-family="ui-monospace,monospace" font-size="9.5" fill="#b3a9a2">${n.sub}</text>`:''}
+    </g>`;
+  }
+  function gateSVG(g){
+    return `<g>
+      <rect x="${g.x}" y="${g.y}" width="${g.w}" height="40" rx="20" fill="#fdf5ef" stroke="#ecd7c8" stroke-dasharray="5 4"/>
+      <text x="${g.x+g.w/2}" y="${g.y+25}" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="600" fill="#5f5d5e">${g.label}</text>
+    </g>`;
+  }
+  function restrictSVG(g){
+    const b=nodes[g.to],cy=b.y+bh/2;
+    return `<g>
+      <text x="${b.x+bw+18}" y="${cy-3}" font-family="Inter,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#e64626">⤺ Enrolment restriction</text>
+      <text x="${b.x+bw+18}" y="${cy+14}" font-family="Inter,Arial,sans-serif" font-size="12" fill="#5f5d5e">${g.restrict}</text>
+    </g>`;
+  }
+  function edgeSVG(from,to){
+    const a=nodes[from],b=nodes[to];
+    const x1=a.x+bw,y1=a.y+bh/2,x2=b.x,y2=b.y+bh/2,mx=(x1+x2)/2;
+    return `<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" fill="none" stroke="#d8b3a3" stroke-width="1.5" marker-end="url(#arr)"/>`;
+  }
+  function gateEdge(g){
+    const a={x:g.x+g.w,y:g.y+20},b=nodes[g.to];
+    const x2=b.x,y2=b.y+bh/2,mx=(a.x+x2)/2;
+    return `<path d="M${a.x},${a.y} C${mx},${a.y} ${mx},${y2} ${x2},${y2}" fill="none" stroke="#d8b3a3" stroke-width="1.6" marker-end="url(#arr)"/>`;
+  }
+  // 5862 -> 5884 : exits the same point as 5862 -> 5883, solid, dips below the row
+  const skip=(()=>{const a=nodes.PMGT5862,b=nodes.PMGT5884;
+    const x1=a.x+bw,y1=a.y+bh/2, x2=b.x+bw/2,y2=b.y+bh;
+    return `<path d="M${x1},${y1} C${(x1+x2)/2},${y1+62} ${x2},${y2+44} ${x2},${y2}" fill="none" stroke="#d8b3a3" stroke-width="1.5" marker-end="url(#arr)"/>`;
+  })();
+  // assumed knowledge note above PMGT5883
+  const a5883=`<text x="${nodes.PMGT5883.x+2}" y="${nodes.PMGT5883.y-9}" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#8c8587">A: ≥80 in PMGT5862 · WAM ≥75 in MPM</text>`;
+
+  const svg=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#c9794f"/></marker></defs>
+    <text x="50" y="30" font-family="Inter,Arial" font-size="12" font-weight="700" letter-spacing="1.5" fill="#e64626">NAMED-UNIT PREREQUISITES</text>
+    <line x1="50" y1="465" x2="${W-40}" y2="465" stroke="#ecd7c8"/>
+    <text x="50" y="494" font-family="Inter,Arial" font-size="12" font-weight="700" letter-spacing="1.5" fill="#e64626">THRESHOLD GATES · CREDIT POINTS / WAM / PERMISSION</text>
+    ${edges.map(e=>edgeSVG(e[0],e[1])).join('')}
+    ${skip}
+    ${Object.values(gates).map(gateEdge).join('')}
+    ${a5883}
+    ${Object.keys(nodes).map(nodeSVG).join('')}
+    ${Object.values(gates).map(gateSVG).join('')}
+    ${Object.values(gates).map(restrictSVG).join('')}
+  </svg>`;
+  document.getElementById('depMap').innerHTML=svg;
+}
+
+/* ============================================================
+   PREREQ cards
+   ============================================================ */
+function depStrip(u){
+  const pre = u.prereqUnits.length
+    ? u.prereqUnits.map(p=>`<span class="node pre">${p} · ${byCode[p]?byCode[p].name:''}</span>`).join('<span class="arrow">+</span>')
+    : `<span class="gate">${u.gate||u.prereqText}</span>`;
+  return `<div class="dep">${pre}<span class="arrow">→</span><span class="node self">${u.code}</span></div>`;
+}
+function renderPrereq(){
+  const wrap=document.getElementById('prereqGroups');
+  wrap.innerHTML='';
+  PREREQ_GROUPS.forEach(g=>wrap.appendChild(groupCard(g)));
+}
+function groupCard(g){
+  const card=document.createElement('div');
+  card.className='ucard decided-'+g.decision;
+  const VLABEL2={keep:'Keep',remove:'Remove',modify:'Modify',discuss:'Discuss'};
+  card.innerHTML=`
+    <div class="ucard-top">
+      <h3><span class="group-tag">${g.label}</span></h3>
+      <div class="group-reqline"><span class="req">P: ${g.req}</span></div>
+    </div>
+    <div class="gunits">
+      ${g.units.map(code=>{const u=byCode[code];return `
+        <div class="gunit">
+          <div class="gunit-h">${dot(u.coll)} <span class="hcode">${u.code}</span> — ${u.name} ${chipColl(u)}${u.multiDisc?multiDiscBadge():''}${u.flag?`<span class="flagnote">⚑ ${u.flag}</span>`:''}</div>
+          <div class="gunit-meta"><span>Offered: <b>${u.offered.length?u.offered.join(' & '):'—'}</b></span><span>Typically taken: <b>${u.takenLabel||(u.semester?SEMS.find(s=>s.key===u.semester).label:'Flexible')}</b></span>${u.note?`<span>${u.note}</span>`:''}</div>
+          ${depStrip(u)}
+        </div>`;}).join('')}
+    </div>
+    <div class="decide">
+      ${g.correction?`<div class="correction"><div class="cor-lab"><span class="ic">✎</span> Correction</div>${g.correction}</div>`:''}
+      <div class="wrec">
+        <div class="wrec-lab"><span class="ic">🗣</span> Workshop discussion</div>
+        ${g.discussion.map(p=>`<p>${p}</p>`).join('')}
+      </div>
+      <div class="decision-row"><span class="dlab">Decision</span><span class="verdict-tag ${g.decision}">${VLABEL2[g.decision]}</span>${g.decisionNote?`<span style="font-size:12px;color:var(--muted);font-style:italic">${g.decisionNote}</span>`:''}</div>
+      ${g.proposal?exploreBtn(g.proposal,g.proposal):''}
+    </div>`;
+  return card;
+}
+
+/* ============================================================
+   NO-PREREQ
+   ============================================================ */
+function renderNoPrereq(){
+  const grid=document.getElementById('noPrereqGrid');
+  const none=UNITS.filter(u=>!u.prereqText);
+  grid.innerHTML='';
+  none.forEach(u=>{
+    const st=NO_PREREQ_REVIEW[u.code]||{status:''};
+    const c=document.createElement('div');
+    c.className='npc'+(st.status==='confirmed'?' confirmed':st.status==='flagged'?' flagged':'');
+    c.innerHTML=`
+      <h4>${dot(u.coll)} <span class="hcode">${u.code}</span> — ${u.name}</h4>
+      <div class="row">${chipColl(u)}${u.multiDisc?multiDiscBadge():''}${u.flag?`<span class="flagnote">⚑ ${u.flag}</span>`:''}${u.note?`<span style="font-size:11.5px;color:var(--muted)">${u.note}</span>`:''}</div>
+      <div class="npc-meta">
+        <div class="nmi"><div class="nm-l">When offered</div>${offeredHTML(u)}</div>
+        <div class="nmi"><div class="nm-l">When taken</div>${takenTrack(u)}</div>
+      </div>
+      <div class="decision-row"><span class="dlab">Workshop review</span><span class="verdict-tag ${st.status==='confirmed'?'keep':st.status==='flagged'?'modify':'none'}">${st.status==='confirmed'?'Confirmed — no prereq':st.status==='flagged'?'Flagged for prereq':'Not reviewed'}</span></div>
+      ${st.correction?`<div class="correction"><div class="cor-lab"><span class="ic">✎</span> Correction</div>${st.correction}</div>`:''}
+      ${st.note?`<div class="wrec"><div class="wrec-lab"><span class="ic">🗣</span> Workshop discussion</div><p>${st.note}</p></div>`:''}
+      ${st.status==='flagged'?exploreBtn('6','6'):''}`;
+    grid.appendChild(c);
+  });
+}
+
+/* ============================================================
+   MATRIX
+   ============================================================ */
+function renderMatrix(){
+  const wrap=document.getElementById('matrixWrap');
+  const rows=['technical','leadership','strategic'];
+  const discDot={technical:'core-technical',leadership:'core-leadership',strategic:'core-strategic'};
+  const moveByCode=Object.fromEntries(PROPOSED_MOVES.map(m=>[m.code,m]));
+  let html=`<div class="matrix"><div class="mh corner">Discipline ╲ Status</div><div class="mh">Core</div><div class="mh">Elective</div>`;
+  rows.forEach(r=>{
+    html+=`<div class="rl">${dot(discDot[r])}${r.charAt(0).toUpperCase()+r.slice(1)}</div>`;
+    ['core','elective'].forEach(stt=>{
+      const cell=UNITS.filter(u=>COLLECTIONS[u.coll].disc===r&&COLLECTIONS[u.coll].status===stt);
+      html+=`<div class="cell" data-disc="${r}" data-status="${stt}">`;
+      cell.forEach(u=>{const mv=moveByCode[u.code];html+=`<span class="uchip ${mv?'moving':''}" title="${u.name}${u.multiDisc?' — may be classed Technical, Strategic or Leadership':''}${mv?' — proposed to move':''}">${dot(u.coll)}${u.code}${u.multiDisc?'*':''}${mv?' ⤳':''}</span>`;});
+      PROPOSED_MOVES.forEach(m=>{if(m.toDisc===r&&m.toStatus===stt){const u=byCode[m.code];html+=`<span class="ghost" title="proposed: ${u.name}">⤳ ${u.code}</span>`;}});
+      html+=`</div>`;
+    });
+  });
+  html+=`</div><div class="mxnote">* PMGT6885 (Project Placement Special Topic) may be classed Technical, Strategic or Leadership depending on the nature of the topic.</div>`;
+  wrap.innerHTML=html;
+  // thesis strip
+  document.getElementById('thesisUnits').innerHTML=UNITS.filter(u=>u.coll==='thesis'||u.dual==='research')
+    .map(u=>`<span class="uchip" title="${u.name}">${dot(u.coll)}${u.code}</span>`).join('');
+  renderMoves();
+}
+function renderMoves(){
+  const box=document.getElementById('movesList');
+  if(!PROPOSED_MOVES.length){box.innerHTML='<div class="empty">No changes proposed.</div>';return;}
+  box.innerHTML=PROPOSED_MOVES.map(m=>{const u=byCode[m.code];
+    return `<div class="mitem"><div class="body"><div class="src">${u.code} · ${u.name}</div>
+      <div class="into">${cap(COLLECTIONS[u.coll].disc)}/${COLLECTIONS[u.coll].status} → ${cap(m.toDisc)}/${m.toStatus}</div></div></div>`;}).join('');
+}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+
+/* ============================================================
+   RATIONALISE
+   ============================================================ */
+function renderRationalise(){
+  renderMergeList();
+  updateCounter();
+}
+function renderMergeList(){
+  const box=document.getElementById('mergeList');
+  if(!PROPOSED_MERGES.length){box.innerHTML='<div class="empty">No merges proposed.</div>';return;}
+  box.innerHTML=PROPOSED_MERGES.map(m=>`<div class="mitem"><div class="body"><div class="src">${m.codes.join(' + ')}</div><div class="into">→ ${m.name}</div>${m.rationale?`<div class="rat">${m.rationale}</div>`:''}</div></div>`).join('');
+}
+function updateCounter(){
+  const before=UNITS.length;
+  const removed=PROPOSED_MERGES.reduce((a,m)=>a+(m.codes.length-1),0);
+  document.getElementById('cntBefore').textContent=before;
+  document.getElementById('cntAfter').textContent=before-removed;
+  document.getElementById('cntDelta').textContent=removed?`−${removed} units`:'';
+}
+
+/* ============================================================
+   SUMMARY
+   ============================================================ */
+const VLABEL={keep:'Keep',remove:'Remove',modify:'Modify',discuss:'Discuss'};
+function renderSummary(){
+  const box=document.getElementById('summary');
+  const tag=(v,label)=>`<span class="verdict-tag ${v}">${label}</span>`;
+
+  // Availability card
+  const availHTML=`
+    <li>${tag('modify','Proposed')} Core units (PMGT5858, 5811, 5820, 5871, 5872) move to <b>one semester/year</b> — pending a timetabling &amp; venue review.</li>
+    <li>${tag('keep','Keep')} <b>PMGT5872</b> stays available in <b>both semesters</b>, given its possible role as a PMGT5811 alternative in Sem 1.</li>
+    <li>${tag('modify','Proposed')} Electives <b>PMGT5891</b> &amp; <b>PMGT5887</b> reduce to one semester only.</li>`;
+
+  // Prerequisite groups card
+  const prereqHTML=PREREQ_GROUPS.map(g=>
+    `<li>${tag(g.decision,VLABEL[g.decision])}${g.decisionNote?` <span style="font-style:italic">${g.decisionNote}</span>`:''} <b>${g.label}</b> <span style="font-family:var(--mono);font-size:11.5px">(${g.units.join(', ')})</span> — ${g.req}</li>`
+  ).join('');
+
+  // No-prerequisite units card
+  const confirmed=UNITS.filter(u=>NO_PREREQ_REVIEW[u.code]?.status==='confirmed');
+  const flagged=UNITS.filter(u=>NO_PREREQ_REVIEW[u.code]?.status==='flagged');
+  const noPrereqHTML=`
+    <li>${tag('keep','Confirmed')} <b>${confirmed.length} units</b> confirmed as open-entry, including PMGT5872 (corrected — see Prerequisite Units).</li>
+    <li>${tag('modify','Flagged')} <b>${flagged.length} units</b> flagged for a possible prerequisite: ${flagged.map(u=>u.code).join(', ')}.</li>`;
+
+  // Reclassification card
+  const moveHTML=PROPOSED_MOVES.map(m=>{const u=byCode[m.code];
+    return `<li>${tag('modify','Proposed')} <b>${u.code}</b> ${cap(COLLECTIONS[u.coll].disc)}/${COLLECTIONS[u.coll].status} → <b>${cap(m.toDisc)}/${m.toStatus}</b></li>`;}).join('');
+
+  // Rationalise card
+  const mergeHTML=PROPOSED_MERGES.map(m=>`<li>${tag('modify','Proposed merge')} <b>${m.codes.join(' + ')}</b> → ${m.name}</li>`).join('')
+    +`<li>${tag('discuss','Naming review')} PMGT5205, PMGT5811, PMGT5886, PMGT5887, PMGT5895</li>`;
+
+  box.innerHTML=`<div class="sum-grid">
+    <div class="sum-card"><div class="sc-head"><span class="sc-ic">🗓️</span> Unit availability</div><ul>${availHTML}</ul></div>
+    <div class="sum-card"><div class="sc-head"><span class="sc-ic">🚪</span> No-prerequisite units</div><ul>${noPrereqHTML}</ul></div>
+    <div class="sum-card wide"><div class="sc-head"><span class="sc-ic">🔗</span> Prerequisite groups</div><ul>${prereqHTML}</ul></div>
+    <div class="sum-card"><div class="sc-head"><span class="sc-ic">🔀</span> Core / elective reclassification</div><ul>${moveHTML||'<li class="empty">None proposed.</li>'}</ul></div>
+    <div class="sum-card"><div class="sc-head"><span class="sc-ic">🧩</span> Rationalisation</div><ul>${mergeHTML}</ul></div>
+  </div>`;
+}
+
+/* ============================================================
+   init
+   ============================================================ */
+function renderAll(){renderPathways();renderAvailElectives();renderDepMap();renderAvailability();renderPrereq();renderNoPrereq();renderMatrix();renderRationalise();renderSummary();}
+renderAll();go(0);
+</script>
+</body>
+</html>
