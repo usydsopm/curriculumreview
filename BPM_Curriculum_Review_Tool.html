@@ -219,27 +219,31 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 .plo-controls{display:flex;flex-wrap:wrap;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 14px;margin-bottom:14px;align-items:center;}
 .toggle-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:20px;border:1.5px solid;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;background:var(--surface);font-family:inherit;}
 .toggle-btn.active-core{background:var(--core-bg);border-color:var(--core-border);color:#1a5c19;}
+.toggle-btn.active-l1000,.toggle-btn.active-l2000,.toggle-btn.active-l3000{background:#f0eafb;border-color:#9b6fdc;color:#4a1a8a;}
+.toggle-btn.active-s1plo{background:#e6f4ea;border-color:#5aaa70;color:#1a5c2a;}
+.toggle-btn.active-s2plo{background:#fff4e6;border-color:#f09030;color:#8a4a00;}
 .toggle-btn.active-elective{background:var(--elective-bg);border-color:var(--elective-border);color:#0a4f6b;}
 .toggle-btn.active-open{background:#ffb7c8;border-color:#e0607c;color:#7a0030;}
 .toggle-btn.active-secured{background:#fd689a;border-color:#c0205a;color:#fff;}
 .toggle-btn.inactive{background:#f2f5fa;border-color:#d0d7e0;color:#aab3c0;text-decoration:line-through;}
 .plo-two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.plo-row{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
-.plo-row-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;}
-.plo-row-title{display:flex;align-items:center;gap:9px;}
-.plo-num{width:34px;height:34px;border-radius:7px;background:var(--usyd-red);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;font-family:var(--font-mono);}
-.plo-text{font-size:11.5px;font-weight:500;line-height:1.4;}
+.plo-row{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;}
+.plo-row-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.plo-row-title{display:flex;align-items:center;gap:10px;}
+.plo-num{width:38px;height:38px;border-radius:7px;background:var(--usyd-red);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;font-family:var(--font-mono);}
+.plo-text{font-size:13px;font-weight:500;line-height:1.4;}
 .plo-coverage-bar-wrap{display:flex;align-items:center;gap:7px;flex-shrink:0;}
 .plo-coverage-bar{width:80px;height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
 .plo-coverage-fill{height:100%;border-radius:4px;transition:width .4s;}
-.plo-count{font-size:11px;font-weight:600;color:var(--text-muted);white-space:nowrap;}
-.plo-unit-chips{display:flex;flex-wrap:wrap;gap:4px;}
-.plo-chip{font-family:var(--font-mono);font-size:9px;font-weight:500;padding:2px 5px;border-radius:3px;border:1px solid;display:flex;flex-direction:column;align-items:center;gap:0;}
-.plo-chip-type{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;opacity:.75;}
+.plo-count{font-size:12px;font-weight:600;color:var(--text-muted);white-space:nowrap;}
+.plo-unit-chips{display:flex;flex-wrap:wrap;gap:5px;}
+.plo-chip{font-family:var(--font-mono);font-size:10px;font-weight:600;padding:3px 7px;border-radius:4px;border:1.5px solid;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;}
+.plo-chip-type{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;opacity:.75;}
 .plo-chip.open{background:#ffb7c8;border-color:#e0607c;color:#7a0030;}
 .plo-chip.secured{background:#fd689a;border-color:#c0205a;color:#fff;}
 .plo-chip.removed{opacity:.3;text-decoration:line-through;}
-.plo-legend-item{display:flex;align-items:center;gap:4px;font-size:11px;}
+.plo-chip .strength-dot{position:absolute;top:-5px;right:-5px;width:11px;height:11px;border-radius:50%;border:1.5px solid white;font-size:7px;display:flex;align-items:center;justify-content:center;}
+.plo-legend-item{display:flex;align-items:center;gap:4px;font-size:12px;}
 .plo-legend-pip{width:13px;height:13px;border-radius:3px;flex-shrink:0;}
 
 /* Scenario */
@@ -298,8 +302,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 
 /* ── Degree Planner ── */
 .dp-table{border-collapse:separate;border-spacing:5px;width:100%;table-layout:fixed;}
-.dp-sem-header{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--text);padding:4px 0 5px;text-align:center;}
-.dp-year-label{font-size:10px;font-weight:700;color:var(--text-muted);text-align:right;padding-right:8px;vertical-align:middle;white-space:nowrap;width:44px;}
+.dp-sem-header{font-size:14px;font-weight:700;letter-spacing:.04em;color:var(--text);padding:4px 0 5px;text-align:center;}
+.dp-year-label{font-size:13px;font-weight:700;color:var(--text-muted);text-align:right;padding-right:8px;vertical-align:middle;white-space:nowrap;width:52px;}
 .dp-cell{vertical-align:top;padding:2px;width:11%;}
 .dp-spacer-col{width:14px;}
 .dp-unit{
@@ -319,8 +323,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 .dp-unit.removed{background:#f0f0f0 !important;border:2px dashed #bbb !important;opacity:.45;}
 .dp-unit.merged-result{background:#e8f4ff !important;border-color:#0875a8 !important;border-style:dashed !important;border-width:2px !important;}
 .dp-unit.merged-source{background:#e8f4ff !important;border-color:#0875a8 !important;border-style:dashed !important;border-width:2px !important;opacity:.45;}
-.dp-unit-code{font-family:var(--font-mono);font-size:8px;font-weight:600;color:var(--unit-code-color);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.dp-unit-name{font-size:8.5px;font-weight:500;line-height:1.3;color:var(--text);overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;}
+.dp-unit-code{font-family:var(--font-mono);font-size:10.5px;font-weight:700;color:var(--unit-code-color);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dp-unit-name{font-size:10.5px;font-weight:500;line-height:1.3;color:var(--text);overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;}
 .dp-unit.removed .dp-unit-code,.dp-unit.removed .dp-unit-name{color:#bbb;}
 .dp-merge-dot{
   position:absolute;top:-5px;right:-5px;width:12px;height:12px;border-radius:50%;
@@ -335,7 +339,55 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 }
 .dp-empty-label{font-size:8px;color:#ccc;text-transform:uppercase;letter-spacing:.05em;text-align:center;padding:3px;}
 
-/* ── Elective Bank ── */
+/* ── Unit Profiles ── */
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden;}
+.profile-card.strength-strong{background:#f0fdf4;border-color:#86efac;}
+.profile-card.strength-medium{background:#fffbeb;border-color:#fde68a;}
+.profile-card.strength-weak{background:#fff1f2;border-color:#fecdd3;}
+.toggle-btn.active-str-strong{background:#dcfce7;border-color:#22c55e;color:#14532d;}
+.toggle-btn.active-str-medium{background:#fef9c3;border-color:#f59e0b;color:#713f12;}
+.toggle-btn.active-str-weak{background:#fee2e2;border-color:#ef4444;color:#7f1d1d;}
+.profile-header{padding:14px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;cursor:pointer;user-select:none;}
+.profile-header:hover{background:rgba(0,0,0,.02);}
+.profile-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.profile-unit-name{font-family:var(--font-heading);font-weight:500;font-size:16px;color:var(--text);}
+.profile-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border);}
+.profile-body.open{display:block;}
+.profile-chevron{font-size:12px;color:var(--text-muted);flex-shrink:0;transition:transform .2s;}
+.profile-chevron.open{transform:rotate(180deg);}
+
+/* Strength badges */
+.strength-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;white-space:nowrap;}
+.strength-badge.strong{background:#e4fae5;color:#1a7a1a;border:1px solid #adf3ab;}
+.strength-badge.medium{background:#fff8e1;color:#8a6000;border:1px solid #ffe082;}
+.strength-badge.weak{background:#ffeaea;color:#b00020;border:1px solid #ffb3b3;}
+
+/* Assessment table */
+.assessment-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px;}
+.assessment-table th{text-align:left;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);padding:4px 8px;border-bottom:2px solid var(--border);background:#fafafa;}
+.assessment-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;}
+.assessment-table tr:last-child td{border-bottom:none;}
+.assessment-table tr.secured-row{background:#fff8f8;}
+.assessment-table tr.open-row{background:#fafafa;}
+.sec-pill{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:600;padding:1px 6px;border-radius:8px;}
+.sec-pill.secured{background:#fd689a;color:white;}
+.sec-pill.open{background:#ffb7c8;color:#7a0030;}
+.eft-pill{display:inline-flex;align-items:center;font-size:8px;font-weight:600;padding:1px 5px;border-radius:8px;background:#fff4e6;color:#c06000;border:1px solid #f58509;margin-left:4px;}
+.ai-pill{font-size:8px;padding:1px 5px;border-radius:8px;border:1px solid var(--border);color:var(--text-muted);}
+
+/* ULO list */
+.ulo-list{list-style:none;padding:0;margin:0;}
+.ulo-item{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:11px;line-height:1.4;}
+.ulo-item:last-child{border-bottom:none;}
+.ulo-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--usyd-red);color:white;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--font-mono);}
+.ulo-secured-indicator{flex-shrink:0;font-size:9px;color:var(--text-muted);}
+
+/* PLO strength summary */
+.plo-strength-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.plo-strength-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;border-radius:12px;border:1px solid;font-family:var(--font-mono);}
+.plo-strength-pill.strong{background:#e4fae5;border-color:#adf3ab;color:#1a7a1a;}
+.plo-strength-pill.medium{background:#fff8e1;border-color:#ffe082;color:#8a6000;}
+.plo-strength-pill.weak{background:#ffeaea;border-color:#ffb3b3;color:#b00020;}
 .dp-layout{display:flex;flex-direction:column;gap:14px;}
 .eb-panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
 .eb-header{background:transparent;border-bottom:1px solid var(--border);padding:7px 10px;}
@@ -345,9 +397,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
 .eb-unit.removed{background:#f0f0f0 !important;border:1.5px dashed #bbb !important;opacity:.45;}
 .eb-unit.merged-source{opacity:.35;}
 .eb-unit.merged-result{background:#e8f4ff !important;border-color:#0875a8 !important;border-style:dashed !important;}
-.eb-unit-code{font-family:var(--font-mono);font-size:8px;font-weight:600;color:var(--unit-code-color);}
-.eb-unit-name{font-size:9px;font-weight:500;line-height:1.3;color:var(--text);margin-top:1px;}
-.eb-unit-sem{font-size:8px;color:var(--text-muted);margin-top:2px;}
+.eb-unit-code{font-family:var(--font-mono);font-size:10px;font-weight:600;color:var(--unit-code-color);}
+.eb-unit-name{font-size:11px;font-weight:500;line-height:1.3;color:var(--text);margin-top:1px;}
+.eb-unit-sem{font-size:10px;color:var(--text-muted);margin-top:2px;}
 .eb-unit.removed .eb-unit-name,.eb-unit.removed .eb-unit-code{color:#bbb;text-decoration:line-through;}
 .eb-merge-dot{position:absolute;top:-4px;right:-4px;width:11px;height:11px;border-radius:50%;background:#f58509;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:6px;color:white;font-weight:700;}
 </style>
@@ -370,15 +422,22 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
       <div class="header-subtitle">Bachelor of Project Management · Knowledge Hub Mapping</div>
     </div>
   </div>
-  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-    <div class="header-badge">2026 Review</div>
-    <div id="live-clock" style="font-size:9px;color:rgba(255,255,255,1);letter-spacing:.04em;white-space:nowrap;"></div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+    <a href="https://usydsopm.github.io/curriculumreview" title="Back to homepage" style="display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);color:white;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:3px;text-decoration:none;transition:background .15s ease;" onmouseover="this.style.background='rgba(255,255,255,.18)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+      Home
+    </a>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div class="header-badge">2026 Review</div>
+      <div id="live-clock" style="font-size:9px;color:rgba(255,255,255,1);letter-spacing:.04em;white-space:nowrap;"></div>
+    </div>
   </div>
 </div>
 
 <div class="tabs">
   <div class="tab active" onclick="switchTab('map')">🪣 Hub Map</div>
   <div class="tab" onclick="switchTab('plo')">🎯 PLO Coverage</div>
+  <div class="tab" onclick="switchTab('profiles')">📋 Unit Profiles <span style="background:#e64626;color:white;font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;letter-spacing:.05em;vertical-align:middle;margin-left:3px;">NEW</span></div>
   <div class="tab" onclick="switchTab('scenario')">⚗️ Scenario Planner</div>
 </div>
 
@@ -509,11 +568,106 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-si
     <div class="ctrl-sep"></div>
     <button class="toggle-btn active-open" id="toggle-open" onclick="togglePLOFilter('open')">✓ Open assessment only</button>
     <button class="toggle-btn active-secured" id="toggle-secured" onclick="togglePLOFilter('secured')">✓ Includes secured assessment</button>
+    <div class="ctrl-sep"></div>
+    <button class="toggle-btn active-l1000" id="toggle-l1000" onclick="togglePLOFilter('l1000')">✓ 1000</button>
+    <button class="toggle-btn active-l2000" id="toggle-l2000" onclick="togglePLOFilter('l2000')">✓ 2000</button>
+    <button class="toggle-btn active-l3000" id="toggle-l3000" onclick="togglePLOFilter('l3000')">✓ 3000</button>
+    <div class="ctrl-sep"></div>
+    <button class="toggle-btn active-s1plo" id="toggle-s1plo" onclick="togglePLOFilter('s1plo')">✓ S1</button>
+    <button class="toggle-btn active-s2plo" id="toggle-s2plo" onclick="togglePLOFilter('s2plo')">✓ S2</button>
+    <div class="ctrl-sep"></div>
+    <span class="ctrl-label">Strength:</span>
+    <button class="toggle-btn active-str-strong" id="toggle-plo-strong" onclick="togglePLOFilter('plo-strong')">✓ 🟢 Strong</button>
+    <button class="toggle-btn active-str-medium" id="toggle-plo-medium" onclick="togglePLOFilter('plo-medium')">✓ 🟡 Medium</button>
+    <button class="toggle-btn active-str-weak" id="toggle-plo-weak" onclick="togglePLOFilter('plo-weak')">✓ 🔴 Weak</button>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:6px 0 10px 0;font-size:11px;">
+    <span style="font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;">Assessment strength:</span>
+    <span class="strength-badge strong">🟢 Strong</span>
+    <span style="color:var(--text-muted);">≥1 PLO + all ULOs secured</span>
+    <span class="strength-badge medium" style="margin-left:6px;">🟡 Medium</span>
+    <span style="color:var(--text-muted);">≥1 PLO or all ULOs secured</span>
+    <span class="strength-badge weak" style="margin-left:6px;">🔴 Weak</span>
+    <span style="color:var(--text-muted);">neither secured</span>
+    <span style="margin-left:8px;color:var(--text-muted);">(dot on each unit chip)</span>
   </div>
   <div class="plo-two-col" id="plo-coverage-grid"></div>
 </div>
 
-<!-- ═══ SCENARIO ═══ -->
+<!-- ═══ UNIT PROFILES ═══ -->
+<div class="panel" id="profiles-panel">
+  <div class="section-title">Unit Profiles</div>
+  <div class="section-sub">Assessment structure, ULOs, and PLO alignment for each unit</div>
+
+  <!-- White filter/key box -->
+  <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:14px;">
+
+    <!-- Row 1: toggles -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+      <span class="ctrl-label">Collection:</span>
+      <button class="toggle-btn active-core" id="prof-toggle-core" onclick="toggleProfileFilter('core')">✓ Core</button>
+      <button class="toggle-btn active-elective" id="prof-toggle-elective" onclick="toggleProfileFilter('elective')">✓ Elective</button>
+      <div class="ctrl-sep"></div>
+      <span class="ctrl-label">Availability:</span>
+      <button class="toggle-btn" id="prof-toggle-s1" style="border:1px solid var(--border);background:white;" onclick="toggleProfileFilter('s1')">S1</button>
+      <button class="toggle-btn" id="prof-toggle-s2" style="border:1px solid var(--border);background:white;" onclick="toggleProfileFilter('s2')">S2</button>
+      <div class="ctrl-sep"></div>
+      <span class="ctrl-label">Level:</span>
+      <button class="toggle-btn active-l1000" id="prof-toggle-l1000" onclick="toggleProfileFilter('l1000')">✓ 1000</button>
+      <button class="toggle-btn active-l2000" id="prof-toggle-l2000" onclick="toggleProfileFilter('l2000')">✓ 2000</button>
+      <button class="toggle-btn active-l3000" id="prof-toggle-l3000" onclick="toggleProfileFilter('l3000')">✓ 3000</button>
+      <div class="ctrl-sep"></div>
+      <span class="ctrl-label">Strength:</span>
+      <button class="toggle-btn active-str-strong" id="prof-toggle-strong" onclick="toggleProfileFilter('strong')">✓ 🟢 Strong</button>
+      <button class="toggle-btn active-str-medium" id="prof-toggle-medium" onclick="toggleProfileFilter('medium')">✓ 🟡 Medium</button>
+      <button class="toggle-btn active-str-weak" id="prof-toggle-weak" onclick="toggleProfileFilter('weak')">✓ 🔴 Weak</button>
+    </div>
+
+    <!-- Row 2: sliders -->
+    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;margin-bottom:12px;">
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:220px;">
+        <label style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;">
+          PLO's securely assessed ≤ <span id="plo-slider-val" style="color:var(--usyd-red);font-size:11px;">100%</span>
+        </label>
+        <input type="range" id="prof-plo-slider" min="0" max="100" step="5" value="100"
+          oninput="document.getElementById('plo-slider-val').textContent=this.value+'%';renderProfiles()"
+          style="width:100%;accent-color:var(--usyd-red);cursor:pointer;">
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);">
+          <span>0%</span><span>50%</span><span>100%</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:220px;">
+        <label style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;">
+          ULO's securely assessed ≤ <span id="ulo-slider-val" style="color:var(--usyd-red);font-size:11px;">100%</span>
+        </label>
+        <input type="range" id="prof-ulo-slider" min="0" max="100" step="5" value="100"
+          oninput="document.getElementById('ulo-slider-val').textContent=this.value+'%';renderProfiles()"
+          style="width:100%;accent-color:var(--usyd-red);cursor:pointer;">
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);">
+          <span>0%</span><span>50%</span><span>100%</span>
+        </div>
+      </div>
+      <!-- Search -->
+      <div style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:200px;">
+        <label style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;">Search</label>
+        <input type="text" id="profiles-search" placeholder="Unit code or name…"
+          oninput="renderProfiles()"
+          style="padding:7px 11px;border:1px solid var(--border);border-radius:7px;font-size:12px;font-family:var(--font-body);background:var(--surface);color:var(--text);width:100%;">
+      </div>
+    </div>
+
+    <!-- Row 3: key -->
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:10px;color:var(--text-muted);padding-top:10px;border-top:1px solid var(--border);">
+      <span style="font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Key:</span>
+      <div style="display:flex;align-items:center;gap:4px;"><div style="width:13px;height:13px;border-radius:3px;background:#fd689a;border:1px solid #c0205a;"></div> PLO securely assessed</div>
+      <div style="display:flex;align-items:center;gap:4px;"><div style="width:13px;height:13px;border-radius:3px;background:#ffb7c8;border:1px solid #e0607c;"></div> PLO open only</div>
+      <div style="display:flex;align-items:center;gap:4px;"><div style="width:13px;height:13px;border-radius:3px;background:#f58509;border:1px solid #c06000;"></div> ULO securely assessed</div>
+      <div style="display:flex;align-items:center;gap:4px;"><div style="width:13px;height:13px;border-radius:3px;background:#ffd9a0;border:1px solid #e8a050;"></div> ULO open only</div>
+    </div>
+  </div>
+
+  <div id="profiles-grid"></div>
+</div>
 <div class="panel" id="scenario-panel">
   <div class="section-title">Scenario Planner</div>
   <div class="section-sub">Propose curriculum changes and see their impact on PLO coverage</div>
@@ -1059,11 +1213,12 @@ function buildPLOFilterCheckboxes() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function switchTab(t) {
-  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['map','plo','scenario'][i]===t));
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['map','plo','profiles','scenario'][i]===t));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById(t+'-panel').classList.add('active');
   if(t==='scenario') renderScenario();
   if(t==='plo') renderPLOCoverage();
+  if(t==='profiles') renderProfiles();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1304,6 +1459,9 @@ function exportHubMapJPEG(){
 // ═══════════════════════════════════════════════════════════════════════════
 
 let ploFilterCore=true, ploFilterElective=true, ploFilterOpen=true, ploFilterSecured=true;
+let ploFilterL1000=true, ploFilterL2000=true, ploFilterL3000=true;
+let ploFilterS1=true, ploFilterS2=true;
+let ploFilterStrong=true, ploFilterMedium=true, ploFilterWeak=true;
 
 // Red→orange→yellow→light-green→green heat gradient
 function heatColor(count, max) {
@@ -1339,27 +1497,67 @@ function togglePLOFilter(type) {
   if(type==='elective') ploFilterElective=!ploFilterElective;
   if(type==='open') ploFilterOpen=!ploFilterOpen;
   if(type==='secured') ploFilterSecured=!ploFilterSecured;
+  if(type==='l1000') ploFilterL1000=!ploFilterL1000;
+  if(type==='l2000') ploFilterL2000=!ploFilterL2000;
+  if(type==='l3000') ploFilterL3000=!ploFilterL3000;
+  if(type==='s1plo') ploFilterS1=!ploFilterS1;
+  if(type==='s2plo') ploFilterS2=!ploFilterS2;
+  if(type==='plo-strong') ploFilterStrong=!ploFilterStrong;
+  if(type==='plo-medium') ploFilterMedium=!ploFilterMedium;
+  if(type==='plo-weak')   ploFilterWeak=!ploFilterWeak;
   const map={
-    'core':   ['toggle-core',   ploFilterCore,   'active-core'],
-    'elective':['toggle-elective',ploFilterElective,'active-elective'],
-    'open':   ['toggle-open',   ploFilterOpen,   'active-open'],
-    'secured':['toggle-secured',ploFilterSecured,'active-secured'],
+    'core':       ['toggle-core',       ploFilterCore,     'active-core',     'Core'],
+    'elective':   ['toggle-elective',   ploFilterElective, 'active-elective', 'Elective'],
+    'open':       ['toggle-open',       ploFilterOpen,     'active-open',     'Open assessment only'],
+    'secured':    ['toggle-secured',    ploFilterSecured,  'active-secured',  'Includes secured assessment'],
+    'l1000':      ['toggle-l1000',      ploFilterL1000,    'active-l1000',    '1000'],
+    'l2000':      ['toggle-l2000',      ploFilterL2000,    'active-l2000',    '2000'],
+    'l3000':      ['toggle-l3000',      ploFilterL3000,    'active-l3000',    '3000'],
+    's1plo':      ['toggle-s1plo',      ploFilterS1,       'active-s1plo',    'S1'],
+    's2plo':      ['toggle-s2plo',      ploFilterS2,       'active-s2plo',    'S2'],
+    'plo-strong': ['toggle-plo-strong', ploFilterStrong,   'active-str-strong','🟢 Strong'],
+    'plo-medium': ['toggle-plo-medium', ploFilterMedium,   'active-str-medium','🟡 Medium'],
+    'plo-weak':   ['toggle-plo-weak',   ploFilterWeak,     'active-str-weak', '🔴 Weak'],
   };
-  Object.values(map).forEach(([id,active,cls])=>{
+  Object.values(map).forEach(([id,active,cls,label])=>{
     const b=document.getElementById(id);
     if(!b)return;
-    b.className='toggle-btn '+(active?cls:'inactive');
-    const labels={'toggle-core':'Core','toggle-elective':'Elective','toggle-open':'Open assessment only','toggle-secured':'Includes secured assessment'};
-    b.textContent=(active?'✓':'✗')+' '+labels[id];
+    b.className='toggle-btn '+(active?cls:'');
+    b.textContent=(active?'✓ ':'')+label;
   });
   renderPLOCoverage();
 }
 
 function renderPLOCoverage() {
   const container=document.getElementById('plo-coverage-grid');
-  const filtered=UNITS.filter(u=>
-    ((u.type==='core'&&ploFilterCore)||(u.type==='elective'&&ploFilterElective))
-  );
+  const filtered=UNITS.filter(u=>{
+    if(!(u.type==='core'&&ploFilterCore)&&!(u.type==='elective'&&ploFilterElective)) return false;
+    if(!ploFilterL1000 && u.level===1000) return false;
+    if(!ploFilterL2000 && u.level===2000) return false;
+    if(!ploFilterL3000 && u.level===3000) return false;
+    const inS1=u.sem==='S1'||u.sem==='S1&S2';
+    const inS2=u.sem==='S2'||u.sem==='S1&S2';
+    if(!ploFilterS1 && inS1 && !inS2) return false;
+    if(!ploFilterS2 && inS2 && !inS1) return false;
+    // Strength filter: compute unit-level strength from UNIT_PROFILES
+    if(!ploFilterStrong || !ploFilterMedium || !ploFilterWeak) {
+      const profile = UNIT_PROFILES.find(p=>p.code===u.code);
+      if (profile) {
+        const secPLOs=new Set(), secULOs=new Set(), allPLOs2=new Set();
+        profile.assessments.forEach(a=>{
+          a.plos.forEach(p=>allPLOs2.add(p));
+          if(a.secured){a.ulos.forEach(n=>secULOs.add(n));a.plos.forEach(p=>secPLOs.add(p));}
+        });
+        const hasSecPLO=secPLOs.size>0;
+        const allULOsSec=profile.ulos.length>0&&secULOs.size===profile.ulos.length;
+        const str=(hasSecPLO&&allULOsSec)?'strong':(hasSecPLO||allULOsSec)?'medium':'weak';
+        if(!ploFilterStrong && str==='strong') return false;
+        if(!ploFilterMedium && str==='medium') return false;
+        if(!ploFilterWeak   && str==='weak')   return false;
+      }
+    }
+    return true;
+  });
   const max=Math.max(...PLOS.map(plo=>UNITS.filter(u=>u.plos[plo.id-1]===1).length),1);
 
   container.innerHTML=PLOS.map(plo=>{
@@ -1374,7 +1572,23 @@ function renderPLOCoverage() {
       const hasSec=u.secured&&u.secured[idx]===1;
       const cls=hasSec?'secured':'open';
       const typeLabel=u.type==='core'?'core':'elective';
-      return `<span class="plo-chip ${cls}"><span class="plo-chip-type">${typeLabel}</span>${u.code}</span>`;
+      // Look up strength rating for this unit+PLO from UNIT_PROFILES
+      const profile = UNIT_PROFILES.find(p=>p.code===u.code);
+      // Unit-level strength: computed from profile data (same dot on every chip for this unit)
+      let unitStrengthForDot = null;
+      if (profile) {
+        const secPLOs = new Set(), secULOs = new Set(), allPLOs2 = new Set();
+        profile.assessments.forEach(a => {
+          a.plos.forEach(p => allPLOs2.add(p));
+          if (a.secured) { a.ulos.forEach(n => secULOs.add(n)); a.plos.forEach(p => secPLOs.add(p)); }
+        });
+        const hasSecPLO = secPLOs.size > 0;
+        const allULOsSec = profile.ulos.length > 0 && secULOs.size === profile.ulos.length;
+        unitStrengthForDot = (hasSecPLO && allULOsSec) ? 'strong' : (hasSecPLO || allULOsSec) ? 'medium' : 'weak';
+      }
+      const dotColor = unitStrengthForDot==='strong'?'#22c55e':unitStrengthForDot==='medium'?'#f59e0b':unitStrengthForDot==='weak'?'#ef4444':'';
+      const dot = dotColor ? `<div class="strength-dot" style="background:${dotColor};" title="${unitStrengthForDot}"></div>` : '';
+      return `<span class="plo-chip ${cls}" title="${u.code}">${dot}<span class="plo-chip-type">${typeLabel}</span>${u.code}</span>`;
     }).join('');
 
     return `
@@ -1924,6 +2138,894 @@ function renderDegreePlanner() {
 }
 
 
+const UNIT_PROFILES = [
+  {
+    code:'PMGT1850', name:'Introduction to Project Management',
+    level:1000, type:'core', sem:'S1',
+    ulos:[
+      'Explain the principles of project management, including formal PM concepts, terminology and nomenclature and how they are applied in different industry contexts',
+      'Describe the basic principles of program and portfolio management and their relationship to projects',
+      'Describe commonly used PM tools',
+      'Conduct research to compare and contrast PM literature and PM standards',
+      'Describe the entire degree in overview and how this subject fits into the degree as a whole',
+      'Determine and compare graduate qualities sought by employers from a range of PM industry contexts',
+      'Apply a selected reflective practice model to the learning gained in this unit',
+    ],
+    assessments:[
+      {title:'MCQ',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:10,week:'Week 13',indGrp:'Individual',hurdle:false,ai:false,duration:'30 min',desc:'In-class assessment comprising multiple choice questions',secured:true,ulos:[1,2,3,4,5,6],plos:[1,2],eft:false},
+      {title:'SAQ',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:20,week:'Week 8',indGrp:'Individual',hurdle:false,ai:false,duration:'60 min',desc:'In-class short answer type questions covering weeks 1\u20137 content',secured:true,ulos:[1,2,3,4],plos:[1,2,3],eft:false},
+      {title:'Early Feedback Task MCQ Check-In Quiz',type:'In-class quiz',category:'Practice or application \u2014 open',weight:2,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'20 min',desc:'10 MCQs from weeks 1 & 2',secured:false,ulos:[2,5],plos:[1],eft:true},
+      {title:'Reflection',type:'Written work',category:'Production and creation \u2014 open',weight:20,week:'Weeks 4 & 11',indGrp:'Individual',hurdle:false,ai:true,duration:'N/A',desc:'Reflection exercises (R1 week 4, R2 week 11)',secured:false,ulos:[1,2,3,4,5,6,7],plos:[1,5,8],eft:false},
+      {title:'Project Proposal for Grant Application',type:'Written work',category:'Production and creation \u2014 open',weight:20,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'N/A',desc:'Group-based project proposal for grant application',secured:false,ulos:[1,3,4,6],plos:[2,3,4,6,7],eft:false},
+      {title:'Group Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:20,week:'Weeks 10 & 11',indGrp:'Group',hurdle:false,ai:true,duration:'5 min each',desc:'In-class presentations in weeks 10 & 11',secured:false,ulos:[1,2,3,4,5,6],plos:[1,5,6,7],eft:false},
+      {title:'Participation',type:'Contribution',category:'Discussion \u2014 open',weight:8,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'N/A',desc:'Meaningful and constructive engagement in workshops & on Canvas',secured:false,ulos:[1,2,3,4,5,6,7],plos:[1,6,8],eft:false},
+    ],
+    ploStrengths:{1:'medium',2:'medium',3:'medium',4:'weak',5:'weak',6:'weak',7:'weak',8:'weak'},
+  },
+  {
+    code:'PMGT1860', name:'Project Initiation and Scope',
+    level:1000, type:'core', sem:'S1',
+    ulos:[
+      'Align the project with organisational mission and vision',
+      'Define strategic outcomes, project objectives, benefits and success criteria \u2014 interpret the business case for the project',
+      'Design the project to comply with relevant legislation, regulations, professional and sustainability principles and prevailing social norms',
+      'Identify and prioritise project and stakeholder needs, requirements and acceptance criteria',
+      'Structure the product, work and responsibility hierarchies',
+      'Develop a quality management plan',
+      'Develop a risk management framework',
+      'Develop a procurement strategy',
+    ],
+    assessments:[
+      {title:'Workshop Quizzes',type:'In-person practical/skills task',category:'In-class \u2014 secure',weight:25,week:'Weekly',indGrp:'Individual',hurdle:false,ai:false,duration:'n/a',desc:'Short in-class quizzes conducted during each workshop to assess attendance and understanding of key concepts',secured:true,ulos:[1,2,3,4,5,6,7,8],plos:[1,2],eft:false},
+      {title:'Early Feedback Task',type:'In-class quiz',category:'Practice or application \u2014 open',weight:0,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'10 min',desc:'Small quiz (non-weighted)',secured:false,ulos:[1,2,3,4],plos:[1],eft:true,nonWeighted:true},
+      {title:'Workshop Participation',type:'Practical skill',category:'Practice or application \u2014 open',weight:5,week:'Ongoing',indGrp:'Individual',hurdle:false,ai:true,duration:'n/a',desc:'Active participation in workshop interactions; contributions recorded after class',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,2,3,6],eft:false},
+      {title:'Individual Academic Writing',type:'Research analysis',category:'Inquiry or investigation \u2014 open',weight:25,week:'Week 7',indGrp:'Individual',hurdle:false,ai:true,duration:'Up to 15 pages',desc:'Thematic literature review of a topic related to project initiation',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,4,5],eft:false},
+      {title:'Individual Reflection \u2014 Learning Journal',type:'Creative work',category:'Production and creation \u2014 open',weight:20,week:'Week 11',indGrp:'Individual',hurdle:false,ai:true,duration:'\u226415 pages',desc:'Weekly learning journals (weeks 1\u201310) reflecting on readings, insights and reflections',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,2,4,5,8],eft:false},
+      {title:'Group Presentation \u2014 Comprehensive Project Initiation Plan',type:'Presentation',category:'Production and creation \u2014 open',weight:25,week:'Week 11',indGrp:'Group',hurdle:false,ai:true,duration:'25 min per group',desc:'Groups present their comprehensive project initiation plan for a real-world or conceptual project',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,2,3,4,5,6,7],eft:false},
+    ],
+    ploStrengths:{1:'strong',2:'strong',3:'medium',4:'medium',5:'medium',6:'medium',7:'medium',8:'medium'},
+  },
+  {
+    code:'PMGT1863', name:'Effective Project Communication',
+    level:1000, type:'core', sem:'S1',
+    ulos:[
+      'Analyse infrastructure, processes and systems for document management and information flow',
+      'Develop a communication plan including emphasis on risk and quality, adapting communication to the needs of the audience',
+      'Construct and nurture networks and alliances',
+      'Provide clear and structured information to others and verify their understanding',
+      'Facilitate and promote open communication, demonstrate empathy and listen effectively',
+      'Promote project vision and goals to gain engagement and commitment',
+      'Communicate effectively with virtual teams',
+      'Consciously develop a personal brand',
+    ],
+    assessments:[
+      {title:'Week 4 Group Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:15,week:'Week 4',indGrp:'Group',hurdle:false,ai:true,duration:'10 min',desc:'Presentations delivered during class',secured:false,ulos:[1,2,3,4,5,6],plos:[1,6],eft:true},
+      {title:'Week 7 Quiz',type:'In-class quiz',category:'Practice or application \u2014 open',weight:10,week:'Week 7',indGrp:'Individual',hurdle:false,ai:true,duration:'1 hour',desc:'Multiple choice and short answer questions \u2014 quiz',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1],eft:false},
+      {title:'Group Report and Video',type:'Written work',category:'Production and creation \u2014 open',weight:20,week:'Week 9',indGrp:'Group',hurdle:false,ai:true,duration:'1500 words + 5 min video',desc:'Students create a communications plan for a project',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[2,3],eft:false},
+      {title:'TED Talk Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:15,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'10 min',desc:'Group presentation during the workshop',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[6],eft:false},
+      {title:'Reflection',type:'Written work',category:'Production and creation \u2014 open',weight:10,week:'Week 13',indGrp:'Individual',hurdle:false,ai:true,duration:'1000 words max',desc:'Student reflections on learning and professional growth',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[8],eft:false},
+      {title:'Week 13 Quiz',type:'In-class quiz',category:'Practice or application \u2014 open',weight:20,week:'Week 13',indGrp:'Individual',hurdle:false,ai:true,duration:'1 hour',desc:'Week 13 Quiz',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1],eft:false},
+      {title:'Participation',type:'Contribution',category:'Discussion \u2014 open',weight:10,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'Varies',desc:'Participation in class activities',secured:false,ulos:[1,2,3,4,6,7],plos:[6],eft:false},
+    ],
+    ploStrengths:{1:'weak',2:'weak',3:'weak',6:'weak',8:'weak'},
+  },
+  {
+    code:'PMGT1711', name:'Systems Thinking in Projects',
+    level:1000, type:'core', sem:'S2',
+    ulos:[
+      'Differentiate between selected key \'control\' systems thinking models',
+      'Differentiate between selected key \'soft\' systems thinking models',
+      'Critique the limitations of different approaches to systems thinking',
+      'Select from appropriate systems thinking models according to context',
+      'Apply systemic conceptual and analytic thinking to understand situations, cultures and strategies',
+      'Explore fallacies of judgement',
+      'Explain the impact of mental models on personal and stakeholder perspectives',
+      'Apply systems thinking approaches to develop and evaluate options with potential to meet needs of all parties',
+    ],
+    assessments:[
+      {title:'Week 3 Quiz',type:'In-class quiz',category:'Practice or application \u2014 open',weight:5,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'10 questions / 15 min',desc:'Online quiz completed in Canvas in class during the workshop',secured:false,ulos:[1,4,7],plos:[1],eft:true},
+      {title:'Focus Questions',type:'Portfolio / journal',category:'Practice or application \u2014 open',weight:10,week:'Weeks 2\u20136',indGrp:'Individual',hurdle:false,ai:true,duration:'150 words each',desc:'Questions answered the Sunday before Weeks 2\u20136 workshops',secured:false,ulos:[1,2,3,4,5],plos:[1,3],eft:false},
+      {title:'Week 6 Quiz',type:'In-class quiz',category:'Practice or application \u2014 open',weight:10,week:'Week 6',indGrp:'Individual',hurdle:false,ai:true,duration:'20 questions / 30 min',desc:'Online quiz completed in Canvas in class during the workshop',secured:false,ulos:[3,4,5,6,7,8],plos:[1,3],eft:false},
+      {title:'Team Charter',type:'Contribution',category:'Discussion \u2014 open',weight:5,week:'Week 8',indGrp:'Group',hurdle:false,ai:true,duration:'4\u20135 pages',desc:'Charter outlining key aspects of teamwork for final presentation',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[2],eft:false},
+      {title:'Week 11 Quiz',type:'In-class quiz',category:'Practice or application \u2014 open',weight:10,week:'Week 11',indGrp:'Individual',hurdle:false,ai:true,duration:'20 questions / 30 min',desc:'Online quiz completed in Canvas in class during the workshop',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,3],eft:false},
+      {title:'Group Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:25,week:'Weeks 12 & 13',indGrp:'Group',hurdle:false,ai:true,duration:'15 min',desc:'A 15 min in-class team presentation on a selected case study',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[2,3,4],eft:false},
+      {title:'Final Exam',type:'Written exam',category:'Final exam \u2014 secure',weight:30,week:'Formal exam period',indGrp:'Individual',hurdle:false,ai:false,duration:'n/a',desc:'Pen-and-paper assessment conducted in exam period',secured:true,ulos:[1,2,3,4,5,6,7,8],plos:[1,3,4,5],eft:false},
+      {title:'Workshop Participation',type:'Contribution',category:'Discussion \u2014 open',weight:5,week:'Ongoing',indGrp:'Individual',hurdle:false,ai:true,duration:'All semester',desc:'Workshop activities and discussions',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[6],eft:false},
+    ],
+    ploStrengths:{1:'strong',2:'medium',3:'strong',4:'strong',5:'strong',6:'medium'},
+  },
+  {
+    code:'PMGT1852', name:'Facilitation and Stakeholder Engagement',
+    level:1000, type:'core', sem:'S2',
+    ulos:[
+      'Identify stakeholders and analyse their interests, influence, needs and requirements',
+      'Demonstrate how embedded values and mental models affect how you and others see and react to the world',
+      'Develop and maintain a stakeholder strategy and communication plan',
+      'Identify and analyse risks associated with poor or inadequate stakeholder management',
+      'Engage with users, partners, suppliers, executive, sponsors and higher management to gain commitment and manage interests and expectations',
+      'Build, facilitate and maintain networks and alliances',
+      'Explore use of formal and informal power and influence over others to achieve the goals',
+      'Select, build and coach the team. Promote cooperation and networking between team members. Delegate tasks amongst team members',
+      'Explore, select and apply facilitation techniques',
+    ],
+    assessments:[
+      {title:'Early Feedback Task: Quiz',type:'In-class quiz',category:'Practice or application \u2014 open',weight:2,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'15 min',desc:'An early feedback formative task in the form of a quiz',secured:false,ulos:[1,2],plos:[1],eft:true},
+      {title:'Group Project: Report',type:'Case studies',category:'Inquiry or investigation \u2014 open',weight:30,week:'Weeks 5 & 12',indGrp:'Group',hurdle:false,ai:true,duration:'N/A',desc:'Stakeholder identification report (wk 5, 5%) and stakeholder assessment & facilitation report (wk 12, 25%)',secured:false,ulos:[1,2,3,4,5,6,7,8,9],plos:[1,2,3,4,5,6,7,8],eft:false},
+      {title:'SAQ',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:25,week:'Week 8',indGrp:'Individual',hurdle:false,ai:false,duration:'1 hour',desc:'Short answer questions covering content from all weeks up to week 8',secured:true,ulos:[1,2,3,4,7,9],plos:[1,2,4],eft:false},
+      {title:'Group Project Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:10,week:'Weeks 10 & 11',indGrp:'Group',hurdle:false,ai:true,duration:'TBA',desc:'Group presentation based on group project',secured:false,ulos:[1,2,3,4,5,6,7,8,9],plos:[4,6,7,8],eft:false},
+      {title:'Participation',type:'Contribution',category:'Discussion \u2014 open',weight:8,week:'Progressive',indGrp:'Individual',hurdle:false,ai:true,duration:'Across semester',desc:'Meaningful contribution in classes and via Canvas',secured:false,ulos:[1,2,3,4,5,6,7,8,9],plos:[6],eft:false},
+      {title:'MCQ',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:25,week:'Week 13',indGrp:'Individual',hurdle:false,ai:false,duration:'30 min',desc:'Multiple choice questions covering content from all weeks',secured:true,ulos:[1,2,3,4,7,9],plos:[1,2,4],eft:false},
+    ],
+    ploStrengths:{1:'medium',2:'medium',3:'weak',4:'medium',5:'weak',6:'weak',7:'weak',8:'weak'},
+  },
+  {
+    code:'PMGT1865', name:'Project Time, Cost and Resources',
+    level:1000, type:'core', sem:'S2',
+    ulos:[
+      'Explain how existing organisational functions and processes may influence planning decisions about schedule, budget, and resources',
+      'Compare implications associated with planning time, cost, and resources in different contexts (contrasting traditional and agile environments)',
+      'Compare and contrast alternative formats of schedule, including milestone plan, precedence diagram, and Gantt chart',
+      'Develop a precedence network from a given work breakdown structure, including durations, and determine the critical path',
+      'Determine the work effort of activities; develop strategic resource plan to deliver the project, and balance resources using schedule',
+      'Estimate project costs and calculate a project budget',
+      'Develop a risk analysis and management plan focusing on effect of risks on time, costs, and resources; calculate impact on the schedule, budget, and resource allocation associated with potential risks',
+      'Relate time cost and evaluation to selection of suppliers and partners',
+    ],
+    assessments:[
+      {title:'Early Feedback Task',type:'Contribution',category:'Discussion \u2014 open',weight:1,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'Weeks 2 & 3',desc:'Students submit task based on in-class activities',secured:false,ulos:[1,2,3,4],plos:[1],eft:true},
+      {title:'In-class Quiz (W6)',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:0,week:'Week 6',indGrp:'Individual',hurdle:false,ai:false,duration:'n/a',desc:'In-class quiz (weight included in Final Quiz total)',secured:true,ulos:[1,2,3,4,5,6],plos:[1,2],eft:false,nonWeighted:true},
+      {title:'Individual Assignment',type:'Case studies',category:'Inquiry or investigation \u2014 open',weight:20,week:'Week 8',indGrp:'Individual',hurdle:false,ai:true,duration:'3500 words',desc:'Students do a case study and write a report',secured:false,ulos:[1,2,3,4,5,6],plos:[1,2,3],eft:false},
+      {title:'Group Assignment',type:'Case studies',category:'Inquiry or investigation \u2014 open',weight:15,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'3500 words',desc:'Students develop project plans for a given case study in groups of 5',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,2,3,5,7],eft:false},
+      {title:'Group Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:25,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'10\u201320 min',desc:'Students present their group projects and answer questions',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[4,6,7],eft:false},
+      {title:'Class/Online Participation',type:'Contribution',category:'Discussion \u2014 open',weight:9,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'N/A',desc:'Marks awarded based on student participation in discussions',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[6],eft:false},
+      {title:'Final Quiz',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:30,week:'Week 13',indGrp:'Individual',hurdle:false,ai:false,duration:'2 hours',desc:'Students do a quiz during their workshop',secured:true,ulos:[1,2,3,4,5,6,7,8],plos:[1,2],eft:false},
+    ],
+    ploStrengths:{1:'strong',2:'strong',3:'medium',4:'medium',5:'medium',6:'medium',7:'medium'},
+  },
+  {
+    code:'PMGT2711', name:'Critical Thinking for Projects',
+    level:2000, type:'core', sem:'S1',
+    ulos:[
+      'Apply conceptual thinking to define situations and strategies',
+      'Promote an holistic view of the project and its context to improve decision-making',
+      'Critically question and challenge assumptions',
+      'Apply logical reasoning to construct and deconstruct arguments',
+      'Inform critical thinking with considerations of human and social aspects of the project',
+      'Select from a variety of critical thinking approaches to suit the situation',
+      'Employ critical thinking to leverage pluralism in a volatile, uncertain, complex and ambiguous environment',
+    ],
+    assessments:[
+      {title:'Final Exam',type:'Written exam',category:'Final exam \u2014 secure',weight:40,week:'Formal exam period',indGrp:'Individual',hurdle:false,ai:false,duration:'n/a',desc:'A written paper to be completed in the exam period, comprising four project scenarios requiring short answers',secured:true,ulos:[1,2,3,4,5,6,7],plos:[1,3,4],eft:false},
+      {title:'Focus Questions (1\u20135, combined)',type:'Out-of-class quiz',category:'Practice or application \u2014 open',weight:5,week:'Weeks 2\u20136',indGrp:'Individual',hurdle:false,ai:true,duration:'150 words each',desc:'Five weekly 150-word answers to a question on the readings for that week',secured:false,ulos:[1,2,3,4,5],plos:[1],eft:false},
+      {title:'Early Feedback Task',type:'In-class quiz',category:'Practice or application \u2014 open',weight:0.5,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'TBA',desc:'Early feedback quiz in Week 3',secured:false,ulos:[1],plos:[],eft:true},
+      {title:'Reflective Learning Journal',type:'Portfolio or journal',category:'Production and creation \u2014 open',weight:20,week:'Week 7',indGrp:'Individual',hurdle:false,ai:true,duration:'1200 words',desc:'Written reflection submitted online, covering Weeks 1\u20136 content',secured:false,ulos:[1,2,3,4,5,6],plos:[4,5,8],eft:false},
+      {title:'Team Charter',type:'Written work',category:'Production and creation \u2014 open',weight:5,week:'Week 8',indGrp:'Group',hurdle:false,ai:true,duration:'5 pages',desc:'Written completion of template',secured:false,ulos:[1,2,3],plos:[],eft:false},
+      {title:'Team Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:25,week:'Week 11',indGrp:'Group',hurdle:false,ai:true,duration:'15 mins',desc:'Team presentation; slides due Week 11, delivered Weeks 12\u201313',secured:false,ulos:[1,2,3,4,5,6,7],plos:[3,4,6],eft:false},
+      {title:'Participation',type:'Contribution',category:'Discussion \u2014 open',weight:4.5,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'Varies',desc:'Assessment of contribution to unit',secured:false,ulos:[1,2,3,4,5,6,7],plos:[6],eft:false},
+    ],
+  },
+  {
+    code:'PMGT2851', name:'Project Analytics',
+    level:2000, type:'core', sem:'S1',
+    ulos:[
+      'Explain the purpose of measurement in different project contexts (hard/soft, large/small, complex/not, different domains, etc.)',
+      'Explain the uses and limitations of measurement in different project contexts',
+      'Explore a range of analytical tools and techniques for monitoring and control that are appropriate to different project contexts',
+      'Select and apply analytic tools and techniques to analyse situations, financial and organisational data, and trends',
+      'Apply analytical tools and techniques to specific project contexts',
+      'Monitor progress and make any necessary adjustments to parameters',
+      'Review and evaluate project performance at handover',
+    ],
+    assessments:[
+      {title:'Final Quiz',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:30,week:'Week 13',indGrp:'Individual',hurdle:false,ai:false,duration:'120 minutes',desc:'Students complete an online quiz based on the learning content',secured:true,ulos:[1,2,3,4,5,6,7],plos:[],eft:false},
+      {title:'Individual Assignment',type:'Data analysis',category:'Inquiry or investigation \u2014 open',weight:20,week:'Week 6',indGrp:'Individual',hurdle:false,ai:true,duration:'2500 words',desc:'Students clean and analyse a given dataset',secured:false,ulos:[1,3,4,5],plos:[2,3,4],eft:false},
+      {title:'Group Assignment',type:'Case studies',category:'Inquiry or investigation \u2014 open',weight:20,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'2500 words',desc:'Students work in groups on a given case study',secured:false,ulos:[2,3,4,5],plos:[2,3,4,5],eft:false},
+      {title:'Group Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:20,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'10 mins presentation + 5 mins Q&A',desc:'Groups present their assignment solutions to the class',secured:false,ulos:[1,2,3,4,5,6,7],plos:[3,6],eft:false},
+      {title:'Early Feedback Tasks',type:'Written work',category:'Production and creation \u2014 open',weight:0,nonWeighted:true,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'30 mins',desc:'Students complete reports based on in-class discussions',secured:false,ulos:[1,2,3,4],plos:[],eft:true},
+      {title:'Participation',type:'Contribution',category:'Discussion \u2014 open',weight:10,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'Ongoing',desc:'Activities completed during or after class',secured:false,ulos:[1,2,3,4,5,6,7],plos:[],eft:false},
+    ],
+  },
+  {
+    code:'PMGT2855', name:'Project Acceptance',
+    level:2000, type:'core', sem:'S1',
+    ulos:[
+      'Understand the key criteria for project success and how to measure them',
+      'Identify and prioritise project benefits, requirements, and acceptance criteria',
+      'Create a feasibility study to assess project acceptance by the board or project sponsor',
+      'Develop a benefits realization strategy to ensure that the project delivers value',
+      'Assess and develop the conditions needed to achieve the project objectives',
+      'Plan, organise and validate project results to meet the objectives',
+      'Manage all phases of the project, including initiation, execution, and closure',
+      'Deliver project results, gain stakeholder approval, and document lessons learned',
+    ],
+    assessments:[
+      {title:'Pre-Tutorial Quiz',type:'Out-of-class quiz',category:'Practice or application \u2014 open',weight:10,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'10 minutes',desc:'Online quiz based on weekly learning materials',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1],eft:false},
+      {title:'Early Feedback Task',type:'Case studies',category:'Inquiry or investigation \u2014 open',weight:0,nonWeighted:true,week:'Week 2',indGrp:'Individual',hurdle:false,ai:true,duration:'10 minutes',desc:'Early feedback case-study task',secured:false,ulos:[1],plos:[],eft:true},
+      {title:'Individual Assignment',type:'Written work',category:'Production and creation \u2014 open',weight:30,week:'Week 9',indGrp:'Individual',hurdle:false,ai:true,duration:'1,000\u20131,200 words',desc:'Front-end evaluation of a real-world project acceptance decision',secured:false,ulos:[1,2,3,5],plos:[2,3,4,5],eft:false},
+      {title:'Group Project',type:'Written work',category:'Production and creation \u2014 open',weight:25,week:'Week 13',indGrp:'Group',hurdle:false,ai:true,duration:'4,000\u20135,000 words',desc:'Collaborative analysis of a real-world project acceptance decision and outcome',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[2,3,4,6,7],eft:false},
+      {title:'Group Project Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:15,week:'Multiple weeks',indGrp:'Group',hurdle:false,ai:true,duration:'10\u201315 minutes',desc:'Group presentation of the group project',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[2,3,4,6,7],eft:false},
+      {title:'Tutorial Participation',type:'Contribution',category:'Discussion \u2014 open',weight:10,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'NA',desc:'Participation in tutorial activities and discussions',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[6,8],eft:false},
+      {title:'Class Attendance',type:'Attendance - accreditation or faculty requirement',category:'Attendance \u2014 accreditation or faculty requirement',weight:10,week:'Weekly',indGrp:'Individual',hurdle:false,ai:false,duration:'NA',desc:'Class attendance',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[],eft:false},
+    ],
+  },
+  {
+    code:'PMGT2800', name:'Project Placement A',
+    level:2000, type:'elective', sem:'S1',
+    ulos:[
+      'Develop cross cultural and inter-disciplinary communication skills through liaising and collaboration with industry stakeholders in professional organisational settings',
+      'Provide experiential learning through the application of project management theories and methodologies in real world and practical settings',
+      'Self-reflect and recognise one\u2019s own limitations through self-reflection of successes and failures during the project life cycle',
+      'Develop critical thinking and analytical skills through working in real life projects during the project planning, execution and monitoring and controlling phases',
+      'Understand the importance of project delivery, the organisational value of achieving key milestones and project deliverables in real world projects',
+    ],
+    assessments:[
+      {title:'Supervisor Feedback report',type:'Peer or expert observation or supervision',category:'Placement, internship, or supervision \u2014 secure',weight:20,week:'Week 11',indGrp:'Individual',hurdle:true,ai:false,duration:'n/a',desc:'Statement of work report report from Supervisor',secured:true,ulos:[1,2,4,5],plos:[6,7,8],eft:false},
+      {title:'Statement of work planning',type:'Written work',category:'Production and creation \u2014 open',weight:10,week:'Week 5',indGrp:'Individual',hurdle:false,ai:true,duration:'N/A',desc:'Statement of work report',secured:false,ulos:[5],plos:[1,3],eft:false},
+      {title:'Final Report',type:'Written work',category:'Production and creation \u2014 open',weight:30,week:'Week 13',indGrp:'Individual',hurdle:true,ai:true,duration:'7000\u20138,000 words',desc:'Written Report',secured:false,ulos:[1,2,3,4,5],plos:[1,2,3,6,7,8],eft:false},
+      {title:'Reflection Journals',type:'Portfolio or journal',category:'Production and creation \u2014 open',weight:20,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'500 words',desc:'Reflection Report',secured:false,ulos:[1,2,3,4,5],plos:[8],eft:false},
+      {title:'Oral Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:20,week:'Week 12',indGrp:'Individual',hurdle:true,ai:true,duration:'15 minutes',desc:'Verbal presentation of the placement experience',secured:false,ulos:[1,2,3,4,5],plos:[6,7,8],eft:false},
+    ],
+  },
+  {
+    code:'PMGT2850', name:'Project Finance',
+    level:2000, type:'elective', sem:'S1',
+    ulos:[
+      'Conduct a broad-based, well-informed project valuation using quantitative methods',
+      'Critically evaluate a given project valuation',
+      'Understand risk from a statistical and sensitivity perspective',
+      'Make decisions on ranking and selecting projects using sound project management principles',
+      'Comprehend how external forces affect project valuation and understand how these forces can be mitigated',
+      'Understand low-probability, high-impact events and behavioural influences in project valuation',
+      'Discuss the valuation of projects within a coherent conceptual framework',
+    ],
+    assessments:[
+      {title:'Early Feedback Task',type:'Out-of-class quiz',category:'Practice or application \u2014 open',weight:0,nonWeighted:true,week:'Week 2',indGrp:'Individual',hurdle:false,ai:true,duration:'20 mins',desc:'Multiple choice questions based on Week 1',secured:false,ulos:[4,5],plos:[1],eft:true},
+      {title:'Five quizzes',type:'Out-of-class quiz',category:'Practice or application \u2014 open',weight:50,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'N/A',desc:'5 online quizzes covering topics introduced over the previous 2 weeks, due in Weeks 4, 6, 8, 10 and 12',secured:false,ulos:[1,2,3,4,5,6],plos:[1,3,5],eft:false},
+      {title:'Interim project report',type:'Written work',category:'Production and creation \u2014 open',weight:10,week:'Week 6',indGrp:'Group',hurdle:false,ai:true,duration:'N/A',desc:'An outline of the chosen group project, with an action plan',secured:false,ulos:[1,2],plos:[1,2,3,4,5,6,7],eft:false},
+      {title:'Project report',type:'Written work',category:'Production and creation \u2014 open',weight:30,week:'Week 13',indGrp:'Group',hurdle:false,ai:true,duration:'N/A',desc:'Teams will develop a business case for their chosen project',secured:false,ulos:[1,2,3,4,5,6,7],plos:[1,2,3,4,5,6,7],eft:false},
+      {title:'Reflection video',type:'Presentation',category:'Production and creation \u2014 open',weight:10,week:'Week 13',indGrp:'Individual',hurdle:false,ai:true,duration:'1\u20133 minutes',desc:'Reflection on learning and competencies development',secured:false,ulos:[2,4,5,7],plos:[8],eft:false},
+    ],
+  },
+  {
+    code:'PMGT2821', name:'Project Conflict Management',
+    level:2000, type:'core', sem:'S2',
+    ulos:[
+      'Identify and analyse the human, and other, causes and consequences of conflicts and crises',
+      'Develop and evaluate options and alternatives with the potential to meet the needs of all parties',
+      'Plan for and reach negotiated agreements that are acceptable to all parties',
+      'Define the difference between conflict and crisis situation, and identify the stages in escalation',
+      'Apply mediation techniques to resolve conflicts and crises',
+      'Select and apply systems thinking tools and methods to the management of conflicts and crises within a range of project contexts',
+      'Identify and share learning from conflicts and crises to improve future practice',
+      'Ability to work in a group to resolve conflict scenarios',
+    ],
+    assessments:[
+      {title:'Group Negotiation Observation',type:'In-person practical, skills, or performance task or test',category:'In-class \u2014 secure',weight:30,week:'Weeks 8\u201310',indGrp:'Group',hurdle:true,ai:false,duration:'Live simulation video (max 10 minutes)',desc:'Students produce 10-minute group observation videos, one per simulation laboratory, across Weeks 8\u201310',secured:true,ulos:[1,2,3,4,5,6,7,8],plos:[],plosNeedConfirm:true,eft:false},
+      {title:'Early Feedback Task',type:'Portfolio or journal',category:'Production and creation \u2014 open',weight:0,nonWeighted:true,week:'Weekly (Wk3 = EFT)',indGrp:'Individual',hurdle:false,ai:true,duration:'10\u201315 minutes',desc:'150-word individual reflective journal submitted weekly; the Week 3 entry serves as the early feedback task',secured:false,ulos:[1,2,3,4,5,6,7],plos:[],plosNeedConfirm:true,eft:true},
+      {title:'Group Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:30,week:'Weeks 11\u201312',indGrp:'Group',hurdle:false,ai:true,duration:'20 minute presentation (including Q&A)',desc:'Project conflict management technique presentations, consolidating theory, Live Simulation Labs and observation activities',secured:false,ulos:[1,2,4,6,7,8],plos:[4,6,7,8],eft:false},
+      {title:'Individual Reflective Portfolio',type:'Portfolio or journal',category:'Production and creation \u2014 open',weight:40,week:'Week 13',indGrp:'Individual',hurdle:false,ai:true,duration:'2500 words',desc:'Capstone assessment synthesising learning from the Reflective Journals, Live Simulation Labs, Group Observations and presentations',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[],plosNeedConfirm:true,eft:false},
+    ],
+  },
+  {
+    code:'PMGT2822', name:'Reframing Projects',
+    level:2000, type:'core', sem:'S2',
+    ulos:[
+      'Reframe the project to enhance value; critically question information presented',
+      'Promote and apply creative techniques to find alternative solutions; stimulate and support an open creative environment',
+      'Explore how different individuals develop and communicate creative solutions',
+      'Explore and apply techniques for the development of creative solutions in groups, including humour and multiple perspective taking',
+      'Investigate and evaluate the process of diffusion of innovation within various project contexts',
+      'Critically question the validity of assumptions and constraints and their impact on the project',
+      'Facilitate communication of new ideas and approaches to key stakeholder groups',
+      'Establish and maintain focus on satisficing customer outcomes',
+      'Demonstrate a full involvement in a group activity',
+      'Demonstrate critical thinking and reflective skills about learning projects',
+      'Demonstrate research skills to explore examples from practice',
+    ],
+    assessments:[
+      {title:'Final Exam',type:'Written exam',category:'Final exam \u2014 secure',weight:30,week:'Formal exam period',indGrp:'Individual',hurdle:true,ai:false,duration:'n/a',desc:'Exam covering material from across the unit',secured:true,ulos:[1,2,3,4,5,6,7,8,10],plos:[1,3],eft:false},
+      {title:'Early Feedback Task',type:'Out-of-class quiz',category:'Practice or application \u2014 open',weight:0,nonWeighted:true,week:'Week 2',indGrp:'Individual',hurdle:false,ai:true,duration:'15 minutes',desc:'Multiple choice questions based on Weeks 1 and 2',secured:false,ulos:[1,3,4,6],plos:[1],eft:true},
+      {title:'Weekly Quizzes',type:'Out-of-class quiz',category:'Practice or application \u2014 open',weight:10,week:'Weeks 3\u201312',indGrp:'Individual',hurdle:false,ai:true,duration:'15 mins',desc:'Multiple choice questions on weekly topics, Weeks 3\u201312',secured:false,ulos:[1,2,3,4,5,6,7,8,10,11],plos:[1,3],eft:false},
+      {title:'Workshop Activities',type:'Practical skill',category:'Practice or application \u2014 open',weight:20,week:'Weeks 3\u201312',indGrp:'Individual',hurdle:false,ai:true,duration:'30 mins',desc:'In-class exercises, Weeks 3\u201312 \u2014 split out from Weekly Quizzes in this version of the outline; same PLO mapping applied as source mapping doc predates the split',secured:false,ulos:[1,2,3,4,5,6,7,8,9,10,11],plos:[1,3],eft:false},
+      {title:'Design Projects (1\u20134, combined)',type:'Creative work',category:'Production and creation \u2014 open',weight:40,week:'Weeks 5, 8, 10 & 13',indGrp:'Individual/Group',hurdle:false,ai:true,duration:'Varies by project',desc:'Four progressive design projects: individual problem framing (Wk5), paired reframing options (Wk8), team solution evaluation (Wk10), and team pitch delivery (Wk13)',secured:false,ulos:[1,2,3,4,5,6,7,8,9,10,11],plos:[2,3,4,5,6,7],eft:false},
+    ],
+  },
+  {
+    code:'PMGT2854', name:'Executing Projects',
+    level:2000, type:'core', sem:'S2',
+    ulos:[
+      'Monitor and control progress against performance expectations and make any necessary adjustments',
+      'Initiate and manage project start-up or the transition to a new project phase',
+      'Allocate and monitor resources',
+      'Evaluate and monitor risks, opportunities and implement responses',
+      'Develop and apply change control and configuration management; obtain agreement on, and implement project changes',
+      'Report on project progress; verify the achievement of project requirements and objectives, including quality and recommend any necessary corrective and/or preventive actions',
+      'Distil critical information, evaluate and review decisions to move the project forward',
+      'Deliver results, get acceptance, close and evaluate a phase or the project',
+    ],
+    assessments:[
+      {title:'Group Assessment #4',type:'Q&A following presentation, submission or placement',category:'In-class \u2014 secure',weight:15,week:'Week 13',indGrp:'Group',hurdle:false,ai:false,duration:'Final group presentation',desc:'Groups prepare and present project closure documentation; final presentation in Weeks 12\u201313 followed by a live Q&A session',secured:true,ulos:[1,2,3,4,5,6,7,8],plos:[4,5,6,8],eft:false},
+      {title:'Early Feedback Task (EFT)',type:'Out-of-class quiz',category:'Practice or application \u2014 open',weight:2,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'5\u201310 minutes',desc:'Tests understanding of basic unit content or presumed knowledge',secured:false,ulos:[1,2,3],plos:[1],eft:true},
+      {title:'In-class Quiz',type:'In-class quiz',category:'Practice or application \u2014 open',weight:13,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'5\u201310 minutes',desc:'5\u201310 questions each workshop (9 weeks), via Respondus LockDown Browser',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1],eft:false},
+      {title:'Individual Assignment',type:'Written work',category:'Production and creation \u2014 open',weight:20,week:'Week 13',indGrp:'Individual',hurdle:false,ai:true,duration:'2000 words +/- 10%',desc:'Post case-simulation project review and lessons learned for future practice',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[3,4,6,7,8],eft:false},
+      {title:'Project Execution Group Assessment #1',type:'Presentation',category:'Production and creation \u2014 open',weight:10,week:'Week 5',indGrp:'Group',hurdle:false,ai:true,duration:'N/A',desc:'Groups amend, update and present planning documents for sign-off',secured:false,ulos:[1,3,4,5],plos:[2,7],eft:false},
+      {title:'Project Execution Group Assessment #2',type:'Presentation',category:'Production and creation \u2014 open',weight:10,week:'Week 7',indGrp:'Group',hurdle:false,ai:true,duration:'N/A',desc:'Groups review risks, respond to a triggered project change, and report actions',secured:false,ulos:[1,4,5,8],plos:[3,4],eft:false},
+      {title:'Project Execution Group Assessment #3',type:'Presentation',category:'Production and creation \u2014 open',weight:10,week:'Week 9',indGrp:'Group',hurdle:false,ai:true,duration:'N/A',desc:'Groups prepare and present a Project Progress Report and Change Request form',secured:false,ulos:[1,5,6,7,8],plos:[3,4],eft:false},
+      {title:'Reflection of Lessonlab Simulation',type:'Written work',category:'Production and creation \u2014 open',weight:5,week:'Week 12',indGrp:'Individual',hurdle:false,ai:true,duration:'500 words',desc:'Reflection on actions and project execution following the Week 10 lessonlab simulation',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[2,8],eft:false},
+      {title:'Reflection of Guest Lecture',type:'Written work',category:'Production and creation \u2014 open',weight:5,week:'Week 12',indGrp:'Individual',hurdle:false,ai:true,duration:'500 words',desc:'Reflection report submitted after the Week 9 guest lecture',secured:false,ulos:[1,2,4,8],plos:[8],eft:false},
+      {title:'Participation and Reflective Practice',type:'Contribution',category:'Discussion \u2014 open',weight:10,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'Participation and contribution each week',desc:'Participation and attendance in class; contribution to the weekly discussion board; conversations with peers',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,6],eft:false},
+    ],
+  },
+  {
+    code:'PMGT2801', name:'Project Placement B',
+    level:2000, type:'elective', sem:'S2',
+    ulos:[
+      'Have developed cross cultural and inter-disciplinary communication skills through liaising and collaboration with industry stakeholders in professional organisational settings',
+      'Apply project management theories and methodologies in real world and practical settings',
+      'Self-reflect and recognise one\u2019s own limitations through self-reflection of successes and failures during the project life cycle',
+      'Have developed critical thinking and analytical skills through working in real life projects during the project planning, execution and monitoring and controlling phases',
+      'Understand the importance of project delivery, the organisational value of achieving key milestones and project deliverables in real world projects',
+    ],
+    assessments:[
+      {title:'Q&A',type:'Q&A following presentation, submission or placement',category:'In-class \u2014 secure',weight:5,week:'Week 12',indGrp:'Individual',hurdle:false,ai:false,duration:'5 minutes',desc:'Live question and answer session regarding the placement',secured:true,ulos:[3,4,5],plos:[],plosNeedConfirm:true,eft:false},
+      {title:'Partner Feedback on performance',type:'Peer or expert observation or supervision',category:'Placement, internship, or supervision \u2014 secure',weight:20,week:'Week 13',indGrp:'Individual',hurdle:true,ai:false,duration:'N/A',desc:'Feedback from the industry partner on the detailed performance of the student over the placement period; this is a hurdle task \u2014 the final mark cannot be higher than this mark',secured:true,ulos:[1,2,3,4,5],plos:[6,7,8],eft:false},
+      {title:'Weekly Reflection Journals (Week 3 EFT)',type:'Portfolio or journal',category:'Production and creation \u2014 open',weight:2,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'500\u2013800 words',desc:'Week 3 progress at work',secured:false,ulos:[1,2,3,4,5],plos:[8],eft:true},
+      {title:'Statement of work',type:'Creative work',category:'Production and creation \u2014 open',weight:10,week:'Week 5',indGrp:'Individual',hurdle:false,ai:true,duration:'500\u2013600 words as a guide',desc:'Project scoping document and expectation setting',secured:false,ulos:[2,5],plos:[2],eft:false},
+      {title:'Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:15,week:'Week 12',indGrp:'Individual',hurdle:true,ai:true,duration:'10 minutes',desc:'Presentation to the class and supervisors to reflect on what you have experienced',secured:false,ulos:[1,2,3,4,5],plos:[6,7],eft:false},
+      {title:'Final report',type:'Written work',category:'Production and creation \u2014 open',weight:30,week:'Week 13',indGrp:'Individual',hurdle:true,ai:true,duration:'6,000\u20137000 words',desc:'Written report',secured:false,ulos:[1,2,3,4,5],plos:[1,2,3,4],eft:false},
+      {title:'Weekly Reflection Journals (Weeks 4\u201312)',type:'Portfolio or journal',category:'Production and creation \u2014 open',weight:18,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'500\u2013800 words',desc:'Weekly progress at work, from Week 4 to Week 12 (9 reflections in all)',secured:false,ulos:[1,2,3,4,5],plos:[8],eft:false},
+    ],
+  },
+  {
+    code:'PMGT3850', name:'Project Management Capstone Project A',
+    level:3000, type:'core', sem:'S1',
+    ulos:[
+      'Describe the approach you are taking to deliver a real-world project, in order to gain buy-in from your team and project stakeholders',
+      'Demonstrate your ability to plan, design and implement a project in a structured manner, working in an independent study mode',
+      'Apply key project methodology, including defining and managing the scope of the project, setting up the project governance, establishing the project schedule, and managing risks and issues',
+      'Measure the success of the project in delivering the promised outcomes and benefits',
+      'Work collaboratively with your team, embracing cross-cultural awareness and sensitivity',
+      'Display professional attitude, including an ability to self-reflect and adapt',
+      'Contribute to innovation and creativity in your team to come up with new solutions',
+      'Manage the relationships with stakeholders, the Capstone directors and the client in a professional way',
+    ],
+    assessments:[
+      {title:'A3 \u2013 Participation Mark',type:'In-person practical/skills task',category:'In-class \u2014 secure',weight:20,week:'Progressive',indGrp:'Individual',hurdle:true,ai:false,duration:'Throughout semester',desc:'Includes attendance, active engagement in workshops, completion of surveys, observations and 1-on-1 tutor interviews',secured:true,ulos:[2,3,4,5,6,7,8],plos:[1,7,8],eft:false},
+      {title:'A1 \u2013 Project Charter',type:'Written work',category:'Production and creation \u2014 open',weight:10,week:'Week 5',indGrp:'Group',hurdle:false,ai:true,duration:'~15 Powerpoint slides',desc:'High-level overview of the selected project that will include a Team Profile and provide evidence of the team\u2019s capabilities to deliver the project',secured:false,ulos:[1,2,3,5,6,8],plos:[1,3,4,5,6,7],eft:false},
+      {title:'A5 \u2013 Product Prototype',type:'Written work',category:'Production and creation \u2014 open',weight:5,week:'Week 5',indGrp:'Group',hurdle:false,ai:true,duration:'~5 max slides/pages',desc:'Description of planned product/solution to be delivered by the project team with evidence and traceability to the original sponsor requirements',secured:false,ulos:[4,5,6,7,8],plos:[1,5,6,7],eft:false},
+      {title:'A2 \u2013 Project Plan',type:'Written work',category:'Production and creation \u2014 open',weight:15,week:'Week 9',indGrp:'Group',hurdle:false,ai:true,duration:'~20+ pages',desc:'Professionally formatted Word document (using Team Branding, not USYD logo) for the project plan including appendices with an attached MS Project file (WBS, network diagram, Gantt chart, resourcing, costs, etc.)',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,2,4,5,6,7],eft:false},
+      {title:'A4 \u2013 Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:10,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'12\u201315 minutes live presentation',desc:'Teams present their approach and their plan to deliver the project',secured:false,ulos:[2,3,4,5,6,7,8],plos:[3,4,5,6,7],eft:false},
+      {title:'A6 \u2013 Product Report',type:'Written work',category:'Production and creation \u2014 open',weight:20,week:'Formal exam period',indGrp:'Group',hurdle:true,ai:true,duration:'~20+ pages with appendices/attachments',desc:'Professionally formatted Word document (using Team Branding, not USYD logo) for the project deliverable, client acceptance, and lessons learned',secured:false,ulos:[2,3,4,5,6,7,8],plos:[2,3,5,7,8],eft:false},
+      {title:'A7 \u2013 Project Status',type:'Written work',category:'Production and creation \u2014 open',weight:10,week:'Formal exam period',indGrp:'Group',hurdle:false,ai:true,duration:'~10+ page doc with Appendices',desc:'Project status at end of semester with comparison to plan and Retrospective/Post Implementation Review (PIR)',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,2,3,4,5,6,7,8],eft:false},
+      {title:'A8 \u2013 Project Journal',type:'Portfolio or journal',category:'Production and creation \u2014 open',weight:10,week:'Formal exam period',indGrp:'Individual',hurdle:true,ai:true,duration:'Weekly through the unit',desc:'Submission that captures your learnings week by week and to be collated at end of semester',secured:false,ulos:[1,6],plos:[5,8],eft:false},
+    ],
+  },
+  {
+    code:'PMGT3854', name:'Legal Aspects of Projects',
+    level:3000, type:'core', sem:'S1',
+    ulos:[
+      'Describe, select and apply appropriate procurement strategies appropriate to different project contexts',
+      'Differentiate between forms of contract; describe how contracts are chosen, initiated and formalised',
+      'Contribute to the negotiation and agreement of contractual terms and conditions that meet project objectives',
+      'Manage the procurement process up to execution of contracts; manage all pre-contractual issues to the satisfaction of all key stakeholders',
+      'Acknowledge and apply ethical values/behaviours to all decisions and actions, including private and public sectors',
+      'Identify, and ensure that the project complies with all relevant legislation, including human resources, health, safety, security and environmental regulations',
+      'Explore implications inherent in employee relations and employee contracts',
+      'Identify, and ensure that the project documents and the project comply with all relevant codes of conduct and professional standards',
+    ],
+    assessments:[
+      {title:'Final exam',type:'Written exam',category:'Final exam \u2014 secure',weight:60,week:'Formal exam period',indGrp:'Individual',hurdle:false,ai:false,duration:'n/a',desc:'BYOD exam sat on campus during the formal exam period',secured:true,ulos:[1,2,3,4,6,7,8],plos:[1,3,5],eft:false},
+      {title:'MCQ (Week 3)',type:'In-person practical, skills, or performance task or test',category:'In-class \u2014 secure',weight:10,week:'Week 3',indGrp:'Individual',hurdle:false,ai:false,duration:'15 minutes',desc:'MCQ',secured:true,ulos:[1,2,3,4],plos:[1],eft:false},
+      {title:'MCQ (Week 5)',type:'In-person practical, skills, or performance task or test',category:'In-class \u2014 secure',weight:10,week:'Week 5',indGrp:'Individual',hurdle:false,ai:false,duration:'15 minutes',desc:'MCQ',secured:true,ulos:[5,6,7,8],plos:[1],eft:false},
+      {title:'Assignment',type:'Written work',category:'Production and creation \u2014 open',weight:15,week:'Week 12',indGrp:'Individual',hurdle:false,ai:true,duration:'n/a',desc:'Short essay style response and presentation',secured:false,ulos:[3,6,7,8],plos:[1,3,5],eft:false},
+      {title:'Tutorial contribution',type:'Contribution',category:'Discussion \u2014 open',weight:5,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'45 minutes',desc:'MCQ, short answer style questions, participation in the tutorial questions',secured:false,ulos:[1,2,3,4,5,6,7],plos:[],eft:false},
+    ],
+  },
+  {
+    code:'PMGT3858', name:'Innovation in Project Context',
+    level:3000, type:'core', sem:'S1',
+    ulos:[
+      'Demonstrate understanding of how methodologies are constructed, particularly in relation to innovation',
+      'Explain the relationship between governance and innovation in project',
+      'Demonstrate how innovation project approaches align with control processes across different contexts',
+      'Identify essential differences between methodologies commonly used in a range of different contexts',
+      'Assess project complexity and its consequences for the approach',
+      'Identify and implement change and transformation requirements related to the project',
+      'Build a methodology to suit the needs of an innovation project',
+    ],
+    assessments:[
+      {title:'Innovation research review',type:'Presentation',category:'Production and creation \u2014 open',weight:25,week:'Week 5',indGrp:'Group',hurdle:false,ai:true,duration:'10 min',desc:'Recorded presentation of a research review in innovation project management (plus in-class oral presentation with live Q&A for students aspiring for above-average marks)',secured:false,ulos:[1,2,3,4,5,6,7],plos:[1,3,6,7],eft:false},
+      {title:'Innovation stakeholder interview',type:'Creative work',category:'Production and creation \u2014 open',weight:15,week:'Week 8',indGrp:'Individual',hurdle:false,ai:true,duration:'5\u20138 min',desc:'Recorded interview with a stakeholder in a real-world innovation project and synthesis with theory',secured:false,ulos:[1,2,3,4,5,6,7],plos:[3,4,6,8],eft:false},
+      {title:'Innovation case study',type:'Presentation',category:'Production and creation \u2014 open',weight:25,week:'Week 11',indGrp:'Group',hurdle:false,ai:true,duration:'10 min',desc:'Recorded presentation of an innovation project case study (plus in-class oral presentation with live Q&A for students aspiring for above-average marks)',secured:false,ulos:[1,2,3,4,5,6,7],plos:[2,3,4,5,7],eft:false},
+      {title:'Top participant bonus',type:'Contribution',category:'Discussion \u2014 open',weight:15.6,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'Live session duration',desc:'Bonus marks for the most pro-active contributions in live classes',secured:false,ulos:[1,2,3,4,5,6,7],plos:[1,6],eft:false},
+      {title:'Peer-review feedback and content reflection',type:'Evaluation',category:'Discussion \u2014 open',weight:19.4,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'Video or graphics with 300\u2013400 words',desc:'Feedback on work of other students and reflection on course content',secured:false,ulos:[1,2,3,4,5,6,7],plos:[1,3,8],eft:false},
+    ],
+  },
+  {
+    code:'PMGT3611', name:'Projects in Controlled Environments',
+    level:3000, type:'elective', sem:'S1',
+    ulos:[
+      'Apply the PRINCE2 principles in context',
+      'Apply and tailor relevant aspects of PRINCE2 themes in context',
+      'Apply (and tailor) relevant aspects of PRINCE2 processes in context',
+    ],
+    assessments:[
+      {title:'Workshop participation',type:'Participation',category:'In-class \u2014 secure',weight:5,week:'Ongoing',indGrp:'Individual',hurdle:false,ai:null,duration:'Ongoing.',desc:'Continuous workshop participation.',secured:true,ulos:[1,2,3],plos:[6,8],eft:false},
+      {title:'Workshop Group Assignment',type:'Presentation',category:'In-class \u2014 secure',weight:5,week:'Week 2',indGrp:'Group',hurdle:false,ai:null,duration:'During the 5-day workshop.',desc:'This assessment includes presentations of group work in the workshop.',secured:true,ulos:[1,2,3],plos:[6,7],eft:false},
+      {title:'PRINCE2 Foundation Exam',type:'Skills-based evaluation',category:'In-class \u2014 secure',weight:15,week:'Week 2',indGrp:'Individual',hurdle:false,ai:null,duration:'One hour.',desc:'This is the exam for PRINCE2 Foundation Certification.',secured:true,ulos:[1,2,3],plos:[1],eft:false},
+      {title:'PRINCE2 Practitioner Exam',type:'Skills-based evaluation',category:'In-class \u2014 secure',weight:25,week:'Week 2',indGrp:'Individual',hurdle:false,ai:null,duration:'1 hour 40 minutes',desc:'This is an exam similar to the PRINCE2 Practitioner Certification.',secured:true,ulos:[1,2,3],plos:[2,3],eft:false},
+      {title:'Pre-Workshop Quiz',type:'Assignment',category:'Practice or application \u2014 open',weight:10,week:'Week 2',indGrp:'Individual',hurdle:false,ai:null,duration:'Undertaken in own time',desc:'The quiz will cover the pre-reading material, available in Canvas.',secured:false,ulos:[1,2,3],plos:[1],eft:false},
+      {title:'Final assessment',type:'Assignment',category:'Production and creation \u2014 open',weight:40,week:'Week 5',indGrp:'Group',hurdle:false,ai:null,duration:'As required.',desc:'An assignment covering all the PRINCE2 elements.',secured:false,ulos:[1,2,3],plos:[1,2,6,7],eft:false},
+    ],
+  },
+  {
+    code:'PMGT3856', name:'Sustainability and Knowledge Management',
+    level:3000, type:'elective', sem:'S1',
+    ulos:[
+      'Contribute to complex project work, within a clear framework, with an emphasis on the incorporation of sustainability principles in project management',
+      'Work in a team to prepare planning documentation for complex projects that incorporate sustainability principles, frameworks and objectives, as well as relevant planning documentation including project proposals, procurement plans, and business cases',
+      'Contribute to the tailoring and selection of project delivery approaches based on the context and objectives of the project. This will include the clear articulation of project objectives and approaches to ensure that benefits are realised',
+      'Interpret and communicate complex material and concepts in a logical, clear, and compelling manner, including the identification of aligned reference sources',
+      'Make competent, thoughtful use of project management language, models, and processes.',
+    ],
+    assessments:[
+      {title:'Report',type:'Written work',category:'Production and creation \u2014 open',weight:30,week:'Week 5',indGrp:'Individual',hurdle:false,ai:true,duration:'2500 words',desc:'Students will prepare an analytical report on a given topic.',secured:false,ulos:[1,3,4,5],plos:[1,3,5],eft:false},
+      {title:'Sustainable Project Planning Portfolio',type:'Written work',category:'Production and creation \u2014 open',weight:25,week:'Week 8',indGrp:'Group',hurdle:false,ai:true,duration:'3000 words (or multimedia equivalent)',desc:'Students will create a workflow portfolio demonstrating sustainability planning for a nominated project.',secured:false,ulos:[1,2,3,4,5],plos:[2,4],eft:false},
+      {title:'Knowledge Management Planning Portfolio',type:'Written work',category:'Production and creation \u2014 open',weight:20,week:'Week 11',indGrp:'Group',hurdle:false,ai:true,duration:'2000 words (or multimedia equivalent)',desc:'Students will build on their previous workflow portfolio to incorporate knowledge management for their nominated project.',secured:false,ulos:[1,2,3,4,5],plos:[3,4,8],eft:false},
+      {title:'Group Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:15,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'10 minutes',desc:'In person Group Presentation. Held during the workshop in weeks 12 and 13.',secured:false,ulos:[1,2,3,4,5],plos:[6,7],eft:false},
+      {title:'Participation and discussion boards',type:'Contribution',category:'Discussion \u2014 open',weight:10,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:true,duration:'n/a',desc:'This will be marked based on students\u2019 involvement.',secured:false,ulos:[1,2,3,4,5],plos:[6,8],eft:false},
+    ],
+  },
+  {
+    code:'PMGT3851', name:'Project Management Capstone Project B',
+    level:3000, type:'core', sem:'S2',
+    ulos:[
+      'Describe the approach you are taking to deliver a real-world project, in order to gain buy-in from your team and project stakeholders',
+      'Demonstrate your ability to plan, design and implement a project in a structured manner, working in an independent study mode',
+      'Apply key project methodology, including defining and managing the scope of the project, setting up the project governance, establishing the project schedule, and managing risks and issues',
+      'Measure the success of the project in delivering the promised outcomes and benefits',
+      'Work collaboratively with your team, embracing cross-cultural awareness and sensitivity',
+      'Display professional attitude, including an ability to self-reflect and adapt',
+      'Contribute to innovation and creativity in your team to come up with new solutions',
+      'Manage the relationships with stakeholders, the Capstone directors and the client in a professional way',
+    ],
+    assessments:[
+      {title:'A0 \u2013 Semester 1 Mark',type:'In-person practical/skills task',category:'In-class \u2014 secure',weight:40,week:'Week -1',indGrp:'Individual',hurdle:false,ai:true,duration:'First semester PMGT3850',desc:'Aggregated mark carried forward from PMGT3850 (completed in Semester 1)',secured:true,ulos:[1,2,3,4,5,6,7,8],plos:[],eft:false},
+      {title:'B0 \u2013 Personal Charter',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:0,nonWeighted:true,week:'Week -3',indGrp:'Individual',hurdle:false,ai:false,duration:'~15 minute structured quiz',desc:'In-class personal reflection, retrospective and contract',secured:true,ulos:[1],plos:[],plosNeedConfirm:true,eft:true},
+      {title:'B1 \u2013 Participation Mark',type:'In-person practical/skills task',category:'In-class \u2014 secure',weight:7,week:'Progressive',indGrp:'Individual',hurdle:true,ai:false,duration:'Attendance + ~30 min/week for 15 weeks',desc:'Participation in surveys, tutorial attendance, peer-evaluations, and result of 1-on-1 tutor interactions (marks not released for these incremental assessments)',secured:true,ulos:[1,2,3,4,5,6,7,8],plos:[1,7,8],eft:false},
+      {title:'B2 \u2013 Project Charter',type:'Written work',category:'Production and creation \u2014 open',weight:5,week:'Week 4',indGrp:'Group',hurdle:false,ai:true,duration:'Powerpoint of ~15 slides',desc:'A high-level overview of the project to be captured in Powerpoint slides',secured:false,ulos:[1,2,3,5,6,8],plos:[1,3,4,5,6,7],eft:false},
+      {title:'B3 \u2013 Project Plan',type:'Written work',category:'Production and creation \u2014 open',weight:10,week:'Week 7',indGrp:'Group',hurdle:false,ai:true,duration:'~20+ pages',desc:'Professionally formatted Word document with appendices capturing the Project Plan \u2014 using Team Branding, no USYD logos',secured:false,ulos:[1,2,3,5,6,7,8],plos:[1,2,4,5,6,7],eft:false},
+      {title:'B4 \u2013 Presentation (Final)',type:'Presentation',category:'Production and creation \u2014 open',weight:5,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'~15 minutes for presentation + Q&A',desc:'Group presentation to sponsor/class',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[3,4,5,6,7],eft:false},
+      {title:'B5 \u2013 Project Poster',type:'Creative work',category:'Production and creation \u2014 open',weight:5,week:'Week 13',indGrp:'Group',hurdle:false,ai:true,duration:'One A1 (form factor) poster',desc:'Final project poster using PPT Template describing key aspects of the capstone project; selected posters printed and displayed at the end-of-semester Expo',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[6,7,8],eft:false},
+      {title:'B6 \u2013 Product Report',type:'Written work',category:'Production and creation \u2014 open',weight:20,week:'Formal exam period',indGrp:'Group',hurdle:true,ai:true,duration:'20+ page doc with evidence in Appendix',desc:'Professionally formatted Word document for sponsor with appendices capturing the Project Plan \u2014 using Team Branding, no USYD logos',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[1,2,3,7,8],eft:false},
+      {title:'B7 \u2013 Project Status',type:'Written work',category:'Production and creation \u2014 open',weight:5,week:'Formal exam period',indGrp:'Group',hurdle:false,ai:true,duration:'~10+ page doc with required Appendices',desc:'Final project status with comparison to plan and Retrospective/Post Implementation Review (PIR)',secured:false,ulos:[1,2,3,5,6,7,8],plos:[1,2,3,4,5,6,7,8],eft:false},
+      {title:'B8 \u2013 Project Journal',type:'Portfolio or journal',category:'Production and creation \u2014 open',weight:3,week:'Formal exam period',indGrp:'Individual',hurdle:true,ai:true,duration:'~20pp or Trello capturing experience',desc:'Final submission of a Project Journal of student\u2019s Capstone experience which collates and formats weekly reflections and project deliverables into a job-application-ready submission',secured:false,ulos:[1,2,3,4,5,6,7,8],plos:[5,8],eft:false},
+    ],
+  },
+  {
+    code:'PMGT3612', name:'Agile Project Management',
+    level:3000, type:'elective', sem:'S2',
+    ulos:[
+      'Critically analyse elements of project planning and performance, with reference to business constraints and requirements.',
+      'Develop more advanced interpersonal skills and practices including creative problem-solving.',
+      'Analyse and recommend team and stakeholder management methods under ideal and non-ideal scenarios',
+      'Successfully facilitate and enable all technical aspects of project planning and execution using Agile Methodologies.',
+      'Determine and apply effective procedures for specific aspects of project planning',
+    ],
+    assessments:[
+      {title:'Group Main Assignment',type:'Assignment',category:'Production and creation \u2014 open',weight:30,week:'Week 5',indGrp:'Group',hurdle:false,ai:null,duration:'Essay of up to 5,000 words.',desc:'Group written essay on a Scrum Project.',secured:false,ulos:[1,2,4],plos:[1,2,3],eft:false},
+      {title:'Group Presentation',type:'Assignment',category:'Production and creation \u2014 open',weight:10,week:'Week 5',indGrp:'Group',hurdle:false,ai:null,duration:'15 minutes.',desc:'Groups to present the project they managed based on the Case Study.',secured:false,ulos:[2,4,5],plos:[2,6,7],eft:false},
+      {title:'Scrum Final Exam',type:'Online task',category:'Practice or application \u2014 open',weight:30,week:'Week 4',indGrp:'Individual',hurdle:false,ai:null,duration:'45 minutes',desc:'40 multiple-choice questions.',secured:false,ulos:[1,2,3],plos:[1,3],eft:false},
+      {title:'Workshop participation',type:'Participation',category:'In-class \u2014 secure',weight:10,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:null,duration:'During the workshops',desc:'Participation is marked based on student\u2019s involvement during the workshop.',secured:true,ulos:[1,2,3],plos:[6,8],eft:false},
+      {title:'Daily Quiz',type:'Small test',category:'Practice or application \u2014 open',weight:10,week:'Multiple weeks',indGrp:'Individual',hurdle:false,ai:null,duration:'10 minutes',desc:'Daily online quizzes will cover the topic discussed on the same day.',secured:false,ulos:[1,3,4,5],plos:[1,3],eft:false},
+      {title:'Daily Discussions',type:'Assignment',category:'Discussion \u2014 open',weight:10,week:'Week 4',indGrp:'Individual',hurdle:false,ai:null,duration:'300-500 words',desc:'Students will be asked to participate in the weekly discussion on Canvas.',secured:false,ulos:[1,3,4,5],plos:[6,8],eft:false},
+    ],
+  },
+  {
+    code:'PMGT3623', name:'Scheduling',
+    level:3000, type:'elective', sem:'S2',
+    ulos:[
+      'Select appropriate planning and scheduling approaches for different project types.',
+      'Understand different formats of project schedules such as precedence diagrams and Gantt charts.',
+      'Demonstrate competence in the creation of project schedules, manually and using commonly used computer software.',
+      'Demonstrate the ability to construct feasible project schedules under resource constraints.',
+      'Demonstrate the ability to track and manage costs using scheduling tools.',
+      'Demonstrate the ability to track and manage task progress using scheduling tools.',
+      'Demonstrate the ability to extract relevant management reporting information from scheduling tools.',
+    ],
+    assessments:[
+      {title:'Final Exam',type:'Written exam',category:'Final exam \u2014 secure',weight:50,week:'Formal exam period',indGrp:'Individual',hurdle:false,ai:false,duration:'n/a',desc:'Short questions, closed book, during the final exam period.',secured:true,ulos:[1,2,3,4,5,6,7],plos:[1,2,3],eft:false},
+      {title:'Knowledge Test',type:'In-class quiz',category:'Practice or application \u2014 open',weight:20,week:'Week 7',indGrp:'Individual',hurdle:false,ai:true,duration:'40-50 minutes',desc:'In-semester small test.',secured:false,ulos:[1,2,3,4,5,6],plos:[1,2],eft:false},
+      {title:'Weekly Task',type:'Out-of-class quiz',category:'Practice or application \u2014 open',weight:10,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'10-20 minutes',desc:'Weekly tasks related to the workshop topics.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[1,2],eft:false},
+      {title:'Group Assignment Report Submission',type:'Written work',category:'Production and creation \u2014 open',weight:15,week:'Week 13',indGrp:'Group',hurdle:false,ai:true,duration:'Full report from each group',desc:'MS Project-based feasible solution design and report.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[2,3,4,7],eft:false},
+      {title:'Group Assignment Presentation',type:'Presentation',category:'Production and creation \u2014 open',weight:5,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'10 minutes per group',desc:'Presentation based on the group assignment report.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[1,6],eft:false},
+      {title:'Early feedback task',type:'Contribution',category:'Discussion \u2014 open',weight:0,nonWeighted:true,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'10 mins',desc:'Provides students with feedback on whether they are on track for academic success in the unit.',secured:false,ulos:[1],plos:[],plosNeedConfirm:true,eft:true},
+    ],
+  },
+  {
+    code:'PMGT3624', name:'Change and Transformation',
+    level:3000, type:'elective', sem:'S2',
+    ulos:[
+      'Identify change requirements and transformation opportunities',
+      'Develop a transformation strategy',
+      'Assess the adaptability to change of the organisation(s)',
+      'Design and implement a change management strategy',
+      'Define culture and identify what types of cultures create the capacity for change and innovation',
+      'Identify the leadership capabilities that enable transformational change',
+      'Assess the culture and values of the organisation and their implications for the project',
+    ],
+    assessments:[
+      {title:'A1 (Part A): Transformation strategy',type:'Presentation',category:'Production and creation \u2014 open',weight:15,week:'Week 4',indGrp:'Group',hurdle:false,ai:true,duration:'-',desc:'Recorded video presentation.',secured:false,ulos:[1,2,3],plos:[6,7],eft:false},
+      {title:'A1 (Part B): Transformation Strategy',type:'Written work',category:'Production and creation \u2014 open',weight:0,nonWeighted:true,week:'Week 3',indGrp:'Group',hurdle:false,ai:true,duration:'-',desc:'Team progress report.',secured:false,ulos:[1,2,3],plos:[6,7],eft:true},
+      {title:'A1 (Part C): Transformation strategy',type:'Written work',category:'Production and creation \u2014 open',weight:5,week:'Week 5',indGrp:'Group',hurdle:false,ai:true,duration:'-',desc:'Feedback on two other group presentations.',secured:false,ulos:[1,2,3],plos:[6,7],eft:false},
+      {title:'A2: Transformation Programme Design',type:'Case studies',category:'Inquiry or investigation \u2014 open',weight:30,week:'Week 8',indGrp:'Individual',hurdle:false,ai:true,duration:'-',desc:'Written document/report.',secured:false,ulos:[1,2,4],plos:[2,3,4,8],eft:false},
+      {title:'A3 (Part A): Change Impact Assessment and Change Management Strategy',type:'Creative work',category:'Production and creation \u2014 open',weight:25,week:'Week 11',indGrp:'Group',hurdle:false,ai:true,duration:'-',desc:'Development of a change management strategy and assessment of change impact. Delivered in a report format.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[3,4,5,6,7],eft:false},
+      {title:'A3 (Part B): Change Impact Assessment and Change Management Strategy',type:'Q&A following presentation, submission or placement',category:'In-class \u2014 secure',weight:10,week:'Week 12',indGrp:'Group',hurdle:false,ai:false,duration:'-',desc:'Group presentation with slides.',secured:true,ulos:[1,2,3,4,5,6,7],plos:[3,4,5,6,7],eft:false},
+      {title:'A3 (Part C): Change Impact Assessment and Change Management Strategy',type:'Written work',category:'Production and creation \u2014 open',weight:5,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'-',desc:'Feedback on two other group presentations.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[3,4,5,6,7],eft:false},
+      {title:'Participation Mark',type:'Practical skill',category:'Practice or application \u2014 open',weight:10,week:'Ongoing',indGrp:'Individual',hurdle:false,ai:true,duration:'-',desc:'Workshop attendance, participation in weekly activities (e.g., Padlet/Menti meter), peer-evaluations.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[],plosNeedConfirm:true,eft:false},
+    ],
+  },
+  {
+    code:'PMGT3857', name:'International Project Management',
+    level:3000, type:'elective', sem:'S2',
+    ulos:[
+      'Understand the international project environment',
+      'Evaluate the contextual factors of international projects and determine the actions to take in response to issues that arise',
+      'Identify stakeholders, the relevance these play in international projects, and develop knowledge of stakeholders management',
+      'Appreciate the diversity of international projects',
+      'Develop cross-cultural awareness, integrity and professionalism',
+      'Lead International Projects: considerations on cross-culture, power, communication, ethics, and sustainability when managing international projects',
+      'Assess potential reasons for international project success or failure',
+    ],
+    assessments:[
+      {title:'Mid Term Quiz',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:25,week:'Week 6',indGrp:'Individual',hurdle:false,ai:false,duration:'1 hour',desc:'Quiz.',secured:true,ulos:[1,2,3,4,5,6,7],plos:[1,3],eft:false},
+      {title:'Final Quiz',type:'In-person written or creative task',category:'In-class \u2014 secure',weight:30,week:'Week 13',indGrp:'Individual',hurdle:false,ai:false,duration:'1 hour',desc:'Quiz.',secured:true,ulos:[1,2,3,4,5,6,7],plos:[1,3],eft:false},
+      {title:'Group Presentation 1 + Summary Report',type:'Presentation',category:'Production and creation \u2014 open',weight:15,week:'Week 5',indGrp:'Group',hurdle:false,ai:true,duration:'5-10 min Presentation + Summary Report',desc:'Presentation slides + summary report submission.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[3,5],eft:false},
+      {title:'Interactive Group Presentation 2',type:'Presentation',category:'Production and creation \u2014 open',weight:20,week:'Week 12',indGrp:'Group',hurdle:false,ai:true,duration:'7-10 minutes + Summary Report',desc:'In-class group presentation, plus summary report and presentation slides submitted to Canvas.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[2,3,6],eft:false},
+      {title:'Participation Mark',type:'Contribution',category:'Discussion \u2014 open',weight:10,week:'Weekly',indGrp:'Individual',hurdle:false,ai:true,duration:'Each Week',desc:'This is not an attendance mark; it reflects how well students participate during the in-person class sessions, each week.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[6,8],eft:false},
+      {title:'Early Feedback Task',type:'Evaluation',category:'Discussion \u2014 open',weight:0,nonWeighted:true,week:'Week 3',indGrp:'Individual',hurdle:false,ai:true,duration:'150 words',desc:'Write a 150-word reflection on the course.',secured:false,ulos:[1,2,3,4,5,6,7],plos:[],plosNeedConfirm:true,eft:true},
+    ],
+  },
+];
+
+// ── Profile rendering ──────────────────────────────────────────────────────
+let profileFilterCore = true, profileFilterElective = true;
+let profileFilterS1 = false, profileFilterS2 = false;
+let profileFilterL1000 = true, profileFilterL2000 = true, profileFilterL3000 = true;
+let profileFilterStrong = true, profileFilterMedium = true, profileFilterWeak = true;
+
+function toggleProfileFilter(f) {
+  if (f === 'core') {
+    profileFilterCore = !profileFilterCore;
+    const btn = document.getElementById('prof-toggle-core');
+    btn.textContent = (profileFilterCore ? '✓ ' : '') + 'Core';
+    btn.className = profileFilterCore ? 'toggle-btn active-core' : 'toggle-btn';
+  } else if (f === 'elective') {
+    profileFilterElective = !profileFilterElective;
+    const btn = document.getElementById('prof-toggle-elective');
+    btn.textContent = (profileFilterElective ? '✓ ' : '') + 'Elective';
+    btn.className = profileFilterElective ? 'toggle-btn active-elective' : 'toggle-btn';
+  } else if (f === 's1') {
+    profileFilterS1 = !profileFilterS1;
+    const btn = document.getElementById('prof-toggle-s1');
+    btn.textContent = (profileFilterS1 ? '✓ ' : '') + 'S1';
+    btn.style.background = profileFilterS1 ? 'var(--badge-s1-bg,#e6f4ea)' : 'white';
+  } else if (f === 's2') {
+    profileFilterS2 = !profileFilterS2;
+    const btn = document.getElementById('prof-toggle-s2');
+    btn.textContent = (profileFilterS2 ? '✓ ' : '') + 'S2';
+    btn.style.background = profileFilterS2 ? 'var(--badge-s2-bg,#fff4e6)' : 'white';
+  } else if (f === 'l1000') {
+    profileFilterL1000 = !profileFilterL1000;
+    const btn = document.getElementById('prof-toggle-l1000');
+    btn.textContent = (profileFilterL1000 ? '✓ ' : '') + '1000';
+    btn.className = profileFilterL1000 ? 'toggle-btn active-l1000' : 'toggle-btn';
+  } else if (f === 'l2000') {
+    profileFilterL2000 = !profileFilterL2000;
+    const btn = document.getElementById('prof-toggle-l2000');
+    btn.textContent = (profileFilterL2000 ? '✓ ' : '') + '2000';
+    btn.className = profileFilterL2000 ? 'toggle-btn active-l2000' : 'toggle-btn';
+  } else if (f === 'l3000') {
+    profileFilterL3000 = !profileFilterL3000;
+    const btn = document.getElementById('prof-toggle-l3000');
+    btn.textContent = (profileFilterL3000 ? '✓ ' : '') + '3000';
+    btn.className = profileFilterL3000 ? 'toggle-btn active-l3000' : 'toggle-btn';
+  } else if (f === 'strong') {
+    profileFilterStrong = !profileFilterStrong;
+    const btn = document.getElementById('prof-toggle-strong');
+    btn.textContent = (profileFilterStrong ? '✓ ' : '') + '🟢 Strong';
+    btn.className = profileFilterStrong ? 'toggle-btn active-str-strong' : 'toggle-btn';
+  } else if (f === 'medium') {
+    profileFilterMedium = !profileFilterMedium;
+    const btn = document.getElementById('prof-toggle-medium');
+    btn.textContent = (profileFilterMedium ? '✓ ' : '') + '🟡 Medium';
+    btn.className = profileFilterMedium ? 'toggle-btn active-str-medium' : 'toggle-btn';
+  } else if (f === 'weak') {
+    profileFilterWeak = !profileFilterWeak;
+    const btn = document.getElementById('prof-toggle-weak');
+    btn.textContent = (profileFilterWeak ? '✓ ' : '') + '🔴 Weak';
+    btn.className = profileFilterWeak ? 'toggle-btn active-str-weak' : 'toggle-btn';
+  }
+  renderProfiles();
+}
+
+function renderProfiles() {
+  const grid = document.getElementById('profiles-grid');
+  if (!grid) return;
+  const searchVal = (document.getElementById('profiles-search')?.value || '').toLowerCase().trim();
+  const ploMaxPct = parseInt(document.getElementById('prof-plo-slider')?.value ?? 100);
+  const uloMaxPct = parseInt(document.getElementById('prof-ulo-slider')?.value ?? 100);
+
+  const filtered = UNIT_PROFILES.filter(u => {
+    if (!profileFilterCore && u.type === 'core') return false;
+    if (!profileFilterElective && u.type === 'elective') return false;
+    if (!profileFilterL1000 && u.level === 1000) return false;
+    if (!profileFilterL2000 && u.level === 2000) return false;
+    if (!profileFilterL3000 && u.level === 3000) return false;
+    if (profileFilterS1 && u.sem !== 'S1' && u.sem !== 'S1&S2') return false;
+    if (profileFilterS2 && u.sem !== 'S2' && u.sem !== 'S1&S2') return false;
+    if (searchVal && !u.code.toLowerCase().includes(searchVal) && !u.name.toLowerCase().includes(searchVal)) return false;
+    // Slider filters: compute pcts for this unit
+    const securedULOsF = new Set();
+    const allPLOsF = new Set();
+    const securedPLOsF = new Set();
+    u.assessments.forEach(a => {
+      a.plos.forEach(p => allPLOsF.add(p));
+      if (a.secured) { a.ulos.forEach(n => securedULOsF.add(n)); a.plos.forEach(p => securedPLOsF.add(p)); }
+    });
+    const uloPctF = u.ulos.length > 0 ? Math.round((securedULOsF.size / u.ulos.length) * 100) : 0;
+    const ploPctF = allPLOsF.size > 0 ? Math.round((securedPLOsF.size / allPLOsF.size) * 100) : 0;
+    if (uloPctF > uloMaxPct) return false;
+    if (ploPctF > ploMaxPct) return false;
+    // Unit-level strength: Strong = 1+ PLO secured AND all ULOs secured
+    //                      Medium = 1+ PLO secured OR all ULOs secured
+    //                      Weak   = neither
+    const hasSecuredPLO = securedPLOsF.size > 0;
+    const allULOsSecured = u.ulos.length > 0 && securedULOsF.size === u.ulos.length;
+    const unitStrength = (hasSecuredPLO && allULOsSecured) ? 'strong'
+                       : (hasSecuredPLO || allULOsSecured) ? 'medium' : 'weak';
+    if (!profileFilterStrong && unitStrength === 'strong') return false;
+    if (!profileFilterMedium && unitStrength === 'medium') return false;
+    if (!profileFilterWeak && unitStrength === 'weak') return false;
+    return true;
+  });
+
+  // Helper: parse week to sort order number
+  function weekOrder(w) {
+    if (!w) return 99;
+    const mNeg = w.match(/week[a-z]*\s*-\s*(\d+)/i);
+    if (mNeg) return -parseInt(mNeg[1]);
+    const m = w.match(/week[a-z]*\s*(\d+)/i);
+    if (m) return parseInt(m[1]);
+    const m2 = w.match(/\bw(?:k)?\.?\s*(\d+)\b/i);
+    if (m2) return parseInt(m2[1]);
+    if (/ongoing|progressive|weekly|multiple/i.test(w)) return 90;
+    if (/formal|exam period/i.test(w)) return 95;
+    return 99;
+  }
+
+  grid.innerHTML = filtered.map(u => {
+    const typeBadge = u.type === 'core'
+      ? '<span class="badge badge-core">Core</span>'
+      : '<span class="badge badge-elective">Elective</span>';
+    const lvlBadge = `<span class="badge badge-level">${u.level}</span>`;
+    const semBadge = u.sem === 'S1' ? '<span class="badge badge-s1">S1</span>'
+      : u.sem === 'S2' ? '<span class="badge badge-s2">S2</span>'
+      : '<span class="badge badge-both">S1&S2</span>';
+
+    // Secured ULOs (union of all secured assessments)
+    const securedULOs = new Set();
+    const assessedULOs = new Set();
+    u.assessments.forEach(a => {
+      a.ulos.forEach(n => assessedULOs.add(n));
+      if (a.secured) a.ulos.forEach(n => securedULOs.add(n));
+    });
+
+    // All PLOs addressed and which are secured
+    const allPLOs = new Set();
+    const securedPLOs = new Set();
+    u.assessments.forEach(a => {
+      a.plos.forEach(p => allPLOs.add(p));
+      if (a.secured) a.plos.forEach(p => securedPLOs.add(p));
+    });
+
+    // Orange ULO pillboxes: bright orange = secured, light orange = open only
+    const uloPills = u.ulos.map((text, i) => {
+      const num = i + 1;
+      const isSecured = securedULOs.has(num);
+      const bg = isSecured ? '#f58509' : '#ffd9a0';
+      const color = isSecured ? 'white' : '#7a3a00';
+      const border = isSecured ? '#c06000' : '#e8a050';
+      const title = isSecured ? `ULO${num}: Securely assessed` : `ULO${num}: Open assessment only`;
+      return `<div style="display:inline-flex;align-items:center;justify-content:center;
+        min-width:48px;height:32px;border-radius:5px;padding:0 6px;
+        background:${bg};border:1.5px solid ${border};
+        color:${color};font-size:11px;font-weight:700;
+        font-family:var(--font-mono);cursor:default;flex-shrink:0;white-space:nowrap;"
+        title="${title}">ULO${num}</div>`;
+    }).join('');
+
+    // ULO detail list (text, narrower)
+    const uloRows = u.ulos.map((text, i) => {
+      const num = i + 1;
+      const isSecured = securedULOs.has(num);
+      const bg = isSecured ? '#fff4e6' : 'transparent';
+      return `<li class="ulo-item" style="background:${bg};border-radius:4px;padding:4px 5px;">
+        <div style="flex-shrink:0;min-width:36px;height:22px;border-radius:4px;padding:0 4px;
+          background:${isSecured?'#f58509':'#ffd9a0'};
+          border:1.5px solid ${isSecured?'#c06000':'#e8a050'};
+          color:${isSecured?'white':'#7a3a00'};
+          display:flex;align-items:center;justify-content:center;white-space:nowrap;
+          font-size:8px;font-weight:700;font-family:var(--font-mono);">ULO${num}</div>
+        <div style="font-size:10px;line-height:1.35;flex:1;">${text}</div>
+      </li>`;
+    }).join('');
+
+    // Pink PLO chips in header: dark pink = secured, light pink = open — rounded pill, slightly bigger
+    const ploPills = [...allPLOs].sort((a,b)=>a-b).map(p => {
+      const isSecured = securedPLOs.has(p);
+      const bg = isSecured ? '#fd689a' : '#ffb7c8';
+      const color = isSecured ? 'white' : '#7a0030';
+      const border = isSecured ? '#c0205a' : '#e0607c';
+      return `<span style="display:inline-flex;align-items:center;
+        background:${bg};color:${color};border:1.5px solid ${border};
+        font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px;
+        font-family:var(--font-mono);white-space:nowrap;"
+        title="${isSecured?'PLO'+p+': Securely assessed':'PLO'+p+': Open assessment only'}">PLO${p}</span>`;
+    }).join('');
+
+    // Sort assessments by week
+    const sortedAssessments = [...u.assessments].sort((a,b) => weekOrder(a.week) - weekOrder(b.week));
+
+    // Inline mini pill helper for assessment table
+    function uloMiniPill(num, secured) {
+      const bg = secured ? '#f58509' : '#ffd9a0';
+      const col = secured ? 'white' : '#7a3a00';
+      const bdr = secured ? '#c06000' : '#e8a050';
+      return `<div style="display:inline-flex;align-items:center;justify-content:center;
+        min-width:32px;height:18px;border-radius:3px;padding:0 3px;margin:1px;
+        background:${bg};border:1px solid ${bdr};
+        color:${col};font-size:7.5px;font-weight:700;font-family:var(--font-mono);white-space:nowrap;">ULO${num}</div>`;
+    }
+    function ploMiniPill(num, secured) {
+      const bg = secured ? '#fd689a' : '#ffb7c8';
+      const col = secured ? 'white' : '#7a0030';
+      const bdr = secured ? '#c0205a' : '#e0607c';
+      return `<div style="display:inline-flex;align-items:center;justify-content:center;
+        width:26px;height:20px;border-radius:3px;margin:1px;
+        background:${bg};border:1px solid ${bdr};
+        color:${col};font-size:8px;font-weight:700;font-family:var(--font-mono);">P${num}</div>`;
+    }
+
+    // Assessment table rows
+    const asmtRows = sortedAssessments.map(a => {
+      const secPill = a.secured
+        ? '<span class="sec-pill secured">🔒 Secured</span>'
+        : '<span class="sec-pill open">Open</span>';
+      const eftPill = a.eft ? '<span class="eft-pill">EFT</span>' : '';
+      const aiPill = `<span class="ai-pill">${a.ai === null || a.ai === undefined ? '? AI' : (a.ai ? '✓ AI' : '✗ AI')}</span>`;
+      const hurdlePill = a.hurdle ? '✅' : '❌';
+      const weightDisplay = a.nonWeighted ? 'Non-weighted' : `${a.weight}%`;
+      const uloPillsRow = a.ulos.map(n => uloMiniPill(n, a.secured)).join('');
+      const needsConfirmBadge = a.plosNeedConfirm
+        ? '<span title="PLO mapping unconfirmed \u2014 source mapping document predates a unit redesign; needs verification against an updated mapping doc" style="display:inline-flex;align-items:center;gap:2px;margin:1px;padding:1px 5px;border-radius:3px;background:#dc2626;border:1px solid #b91c1c;color:#ffffff;font-size:8px;font-weight:700;white-space:nowrap;">\u26a0\ufe0f REQUIRES CONFIRMATION</span>'
+        : '';
+      const ploPillsRow = a.plos.map(p => ploMiniPill(p, a.secured)).join('') + needsConfirmBadge;
+      return `<tr class="${a.secured?'secured-row':'open-row'}">
+        <td><strong>${a.title}</strong>${eftPill}<br><span style="font-size:9px;color:var(--text-muted);">${a.type}</span></td>
+        <td>${secPill}<br>${aiPill}</td>
+        <td style="font-weight:600;">${weightDisplay}</td>
+        <td>${a.week}</td>
+        <td>${a.indGrp}</td>
+        <td style="text-align:center;">${hurdlePill}</td>
+        <td>${a.duration}</td>
+        <td style="font-size:10px;color:var(--text-muted);max-width:120px;white-space:normal;word-wrap:break-word;">${a.desc}</td>
+        <td><div style="display:flex;flex-wrap:wrap;gap:1px;">${uloPillsRow}</div></td>
+        <td><div style="display:flex;flex-wrap:wrap;gap:1px;">${ploPillsRow}</div></td>
+      </tr>`;
+    }).join('');
+
+    // Unit-level strength for card background
+    const hasSecuredPLO2 = securedPLOs.size > 0;
+    const allULOsSecured2 = u.ulos.length > 0 && securedULOs.size === u.ulos.length;
+    const cardStrength = (hasSecuredPLO2 && allULOsSecured2) ? 'strong'
+                       : (hasSecuredPLO2 || allULOsSecured2) ? 'medium' : 'weak';
+
+    return `<div class="profile-card strength-${cardStrength}">
+      <div class="profile-header" onclick="toggleProfile('${u.code}')" style="background:transparent;">
+        <div style="flex:1;">
+          <div class="profile-title-row">
+            <span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--unit-code-color);">${u.code}</span>
+            <span class="profile-unit-name">${u.name}</span>
+            ${typeBadge}${lvlBadge}${semBadge}
+          </div>
+          <!-- Pills + percentage badges all on same row -->
+          <div style="display:flex;flex-wrap:wrap;margin-top:8px;align-items:center;justify-content:space-between;gap:4px;">
+            <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+              <span style="font-size:9px;color:var(--text-muted);margin-right:2px;">PLOs:</span>
+              ${ploPills}
+              <span style="font-size:9px;color:var(--text-muted);margin-left:10px;margin-right:2px;">ULOs:</span>
+              ${uloPills}
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+              ${(()=>{
+                const uloPct = u.ulos.length > 0 ? Math.round((securedULOs.size / u.ulos.length) * 100) : 0;
+                const ploPct = allPLOs.size > 0 ? Math.round((securedPLOs.size / allPLOs.size) * 100) : 0;
+                function pctColor(p) {
+                  if(p>=85) return {bg:'#d1fae5',border:'#6ee7b7'};
+                  if(p>=70) return {bg:'#dcfce7',border:'#86efac'};
+                  if(p>=50) return {bg:'#fef9c3',border:'#fde047'};
+                  if(p>=30) return {bg:'#ffedd5',border:'#fdba74'};
+                  return {bg:'#fee2e2',border:'#fca5a5'};
+                }
+                function pctBadge(label, pct) {
+                  const {bg, border} = pctColor(pct);
+                  return `<div style="display:flex;flex-direction:column;align-items:center;
+                    background:${bg};border:1.5px solid ${border};border-radius:7px;padding:5px 10px;min-width:72px;text-align:center;">
+                    <div style="font-size:8px;font-weight:600;color:#111;opacity:.7;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;">${label}</div>
+                    <div style="font-size:15px;font-weight:700;color:#111;line-height:1.2;">${pct}%</div>
+                  </div>`;
+                }
+                return pctBadge("PLO's securely assessed", ploPct) + pctBadge("ULO's securely assessed", uloPct);
+              })()}
+            </div>
+          </div>
+        </div>
+        <div class="profile-chevron" id="chev-${u.code}">▼</div>
+      </div>
+      <div class="profile-body" id="body-${u.code}">
+        <div style="display:grid;grid-template-columns:220px 1fr;gap:16px;margin-top:14px;">
+          <!-- ULOs — narrow -->
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px;">
+              Unit Learning Outcomes
+            </div>
+            <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text-muted);">
+                <div style="width:12px;height:12px;border-radius:3px;background:#f58509;border:1px solid #c06000;"></div> Secured
+                <div style="width:12px;height:12px;border-radius:3px;background:#ffd9a0;border:1px solid #e8a050;margin-left:6px;"></div> Open only
+              </div>
+            </div>
+            <ul class="ulo-list">${uloRows}</ul>
+          </div>
+          <!-- Assessments — wide -->
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px;">Assessment Structure</div>
+            <div style="overflow-x:auto;">
+              <table class="assessment-table">
+                <thead>
+                  <tr>
+                    <th>Assessment</th>
+                    <th>Secured</th>
+                    <th>Weight</th>
+                    <th>Week</th>
+                    <th>Ind/Grp</th>
+                    <th>Hurdle</th>
+                    <th>Duration</th>
+                    <th style="max-width:120px;">Description</th>
+                    <th style="min-width:90px;">ULOs</th>
+                    <th style="min-width:70px;">PLOs</th>
+                  </tr>
+                </thead>
+                <tbody>${asmtRows}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleProfile(code) {
+  const body = document.getElementById('body-' + code);
+  const chev = document.getElementById('chev-' + code);
+  if (!body) return;
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+
 function showBanner(msg){
   const b=document.getElementById('banner');b.textContent=msg;b.classList.add('show');
   clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),3200);
@@ -1939,7 +3041,7 @@ renderHubMap();
 renderPLOCoverage();
 
 // ── Last updated timestamp — update this each time you push to GitHub ──────
-const LAST_UPDATED = '26 Jun 2026, 13:30';
+const LAST_UPDATED = '21 Jul 2026, 12:30';
 // ─────────────────────────────────────────────────────────────────────────
 document.getElementById('live-clock').textContent = `Last updated: ${LAST_UPDATED}`;
 </script>
