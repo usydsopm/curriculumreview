@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPM Proposal Dashboard — Coming Soon</title>
+<style>
+  :root{
+    --red:#E64626; --charcoal:#414042; --blush:#FCEDE2; --white:#fff;
+    --line:#E6DED8; --slate:#8A817B; --green:#28c18b; --orange:#f9a149;
+    --board:#F3D9C4; --frame:#D9AE8C;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--blush); color:var(--charcoal); min-height:100vh;
+    font-family:'Apercu Pro','Apercu',system-ui,-apple-system,sans-serif;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:24px;}
+
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px; margin-bottom:14px; padding:7px 14px;
+    border:1.5px solid var(--line); background:var(--white); border-radius:20px;
+    font-size:12px; font-weight:700; color:var(--charcoal); text-decoration:none;
+  }
+
+  .eyebrow{
+    font-size:11px; font-weight:700; letter-spacing:2px; color:var(--red);
+    text-transform:uppercase; margin-bottom:4px;
+  }
+  .title{
+    font-family:'Lyon Display','Lyon Display Medium',Georgia,serif;
+    font-size:26px; font-weight:500; color:var(--charcoal);
+  }
+
+  .header-note{
+    position:relative; display:inline-block; background:#fffdf8; border-radius:3px;
+    padding:20px 40px; transform:rotate(-1deg); box-shadow:3px 5px 10px rgba(0,0,0,0.3);
+  }
+  .pin{
+    position:absolute; top:-8px; width:17px; height:17px; border-radius:50%;
+    border:2px solid #fff; box-shadow:1px 2px 3px rgba(0,0,0,0.35); background:var(--red);
+  }
+  .pin::after{
+    content:""; position:absolute; top:2px; left:2px; width:5px; height:5px;
+    border-radius:50%; background:rgba(255,255,255,0.55);
+  }
+  .pin.l{left:30px;} .pin.r{right:30px;}
+
+  .header-wrap{text-align:center; margin-bottom:28px;}
+  .header-desc{
+    color:var(--slate); font-size:13.5px; margin:16px auto 0; max-width:560px; line-height:1.5;
+  }
+
+  .board{
+    position:relative; border-radius:10px; padding:60px 26px; margin-bottom:40px;
+    background-color:var(--board); border:10px solid var(--frame);
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(180,100,60,0.10) 0, rgba(180,100,60,0.10) 2px, transparent 2px),
+      radial-gradient(circle at 70% 60%, rgba(180,100,60,0.08) 0, rgba(180,100,60,0.08) 2px, transparent 2px),
+      radial-gradient(circle at 45% 85%, rgba(180,100,60,0.08) 0, rgba(180,100,60,0.08) 2px, transparent 2px),
+      radial-gradient(circle at 85% 15%, rgba(180,100,60,0.08) 0, rgba(180,100,60,0.08) 2px, transparent 2px);
+    background-size:60px 60px;
+    display:flex; align-items:center; justify-content:center;
+    min-height:340px;
+  }
+
+  .soon-note{
+    position:relative; background:#fffdf8; border-radius:3px; padding:34px 50px;
+    text-align:center; transform:rotate(-1.5deg); box-shadow:4px 6px 12px rgba(0,0,0,0.3);
+    max-width:400px;
+  }
+  .soon-note .pin{top:-9px;}
+  .soon-note .pin.l{left:24px;} .soon-note .pin.r{right:24px;}
+  .soon-eyebrow{
+    font-size:11px; font-weight:700; letter-spacing:2px; color:var(--red);
+    text-transform:uppercase; margin-bottom:8px;
+  }
+  .soon-title{
+    font-family:'Lyon Display','Lyon Display Medium',Georgia,serif;
+    font-size:30px; font-weight:500; color:var(--charcoal); margin-bottom:10px;
+  }
+  .soon-body{
+    font-size:13px; color:var(--slate); line-height:1.55;
+  }
+
+  .legend{
+    display:flex; justify-content:center; gap:18px; font-size:11.5px; color:var(--slate);
+    flex-wrap:wrap;
+  }
+  .legend span{display:flex; align-items:center; gap:6px;}
+  .risk-badge{
+    display:inline-block; padding:3px 10px; border-radius:20px; font-size:10.5px;
+    font-weight:700; color:#fff; white-space:nowrap;
+  }
+  .r-high{background:var(--red);} .r-med{background:var(--orange);} .r-low{background:var(--green);}
+
+  .footer{text-align:center; color:var(--slate); font-size:11px; margin:6px 0 22px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="https://usydsopm.github.io/curriculumreview">← Back to home</a>
+
+  <div class="header-wrap">
+    <div class="header-note">
+      <span class="pin l"></span><span class="pin r"></span>
+      <div class="eyebrow">Master of Project Management · Curriculum Review</div>
+      <div class="title">Proposal Dashboard</div>
+    </div>
+    <p class="header-desc">
+      All nine proposals raised at the MPM curriculum review workshop, pinned up by area.
+      Open a proposal for the detailed modelling tool where one exists, or its working notes otherwise.
+    </p>
+    <div class="legend">
+      <span><span class="risk-badge r-low">Low</span> minor impact</span>
+      <span><span class="risk-badge r-med">Medium</span> needs further data or sign-off</span>
+      <span><span class="risk-badge r-high">High</span> major structural or accreditation risk</span>
+    </div>
+  </div>
+
+  <div class="board">
+    <div class="soon-note">
+      <span class="pin l"></span><span class="pin r"></span>
+      <div class="soon-eyebrow">Under construction</div>
+      <div class="soon-title">Coming soon</div>
+      <div class="soon-body">This dashboard is still being pinned up. Check back shortly for the full set of proposals.</div>
+    </div>
+  </div>
+
+  <div class="footer">Outcomes from the MPM curriculum review workshop · updated as proposals progress</div>
+
+</div>
+</body>
+</html>
